@@ -1,5 +1,5 @@
 {
-    "cash_balance": 4663.027410273781,
+    "cash_balance": 4390.147742885518,
     "positions": [
         {
             "timestamp": "2026-04-11T10:57:35.816758",
@@ -269,6 +269,66 @@
             "entry_price": 679.4600219726562,
             "shares_or_contracts": 0.07,
             "capital_allocated": 47.1,
+            "kelly_percentage": 1.0,
+            "status": "OPEN"
+        },
+        {
+            "timestamp": "2026-04-12T02:12:57.340664",
+            "ticker": "PFE",
+            "strategy": "iron_condor",
+            "entry_price": 26.920000076293945,
+            "shares_or_contracts": 1.73,
+            "capital_allocated": 46.63,
+            "kelly_percentage": 1.0,
+            "status": "OPEN"
+        },
+        {
+            "timestamp": "2026-04-12T02:13:32.286298",
+            "ticker": "GLD",
+            "strategy": "iron_condor",
+            "entry_price": 437.1300048828125,
+            "shares_or_contracts": 0.11,
+            "capital_allocated": 46.16,
+            "kelly_percentage": 1.0,
+            "status": "OPEN"
+        },
+        {
+            "timestamp": "2026-04-12T02:14:05.581392",
+            "ticker": "GLD",
+            "strategy": "iron_condor",
+            "entry_price": 437.1300048828125,
+            "shares_or_contracts": 0.1,
+            "capital_allocated": 45.7,
+            "kelly_percentage": 1.0,
+            "status": "OPEN"
+        },
+        {
+            "timestamp": "2026-04-12T02:14:13.112910",
+            "ticker": "NVDA",
+            "strategy": "iron_condor",
+            "entry_price": 188.6300048828125,
+            "shares_or_contracts": 0.24,
+            "capital_allocated": 45.25,
+            "kelly_percentage": 1.0,
+            "status": "OPEN"
+        },
+        {
+            "timestamp": "2026-04-12T02:14:14.444414",
+            "ticker": "NVDA",
+            "strategy": "iron_condor",
+            "entry_price": 188.6300048828125,
+            "shares_or_contracts": 0.24,
+            "capital_allocated": 44.79,
+            "kelly_percentage": 1.0,
+            "status": "OPEN"
+        },
+        {
+            "timestamp": "2026-04-12T02:14:18.131363",
+            "ticker": "NVDA",
+            "strategy": "iron_condor",
+            "entry_price": 188.6300048828125,
+            "shares_or_contracts": 0.24,
+            "capital_allocated": 44.34,
             "kelly_percentage": 1.0,
             "status": "OPEN"
         }

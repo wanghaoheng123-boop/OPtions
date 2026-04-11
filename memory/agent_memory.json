@@ -1053,6 +1053,198 @@
             },
             "critic_review": "DISAPPROVED: Strategy failed strict 80% Win Rate and >1.2 Profit Factor metrics out-of-sample constraint.",
             "status": "REJECTED"
+        },
+        {
+            "timestamp": "2026-04-12T02:12:57.337662",
+            "ticker": "PFE",
+            "market_data": {
+                "spot_price": 26.920000076293945,
+                "call_wall_strike": 27.0,
+                "call_wall_gex": 53667110.84869051,
+                "put_wall_strike": 27.0,
+                "put_wall_gex": -35612021.01880546,
+                "total_net_gex": 46435167.36243549,
+                "dealer_position_tilt": "Long Gamma",
+                "volatility_skew": {
+                    "volatility_skew_index": -0.78,
+                    "sentiment": "Neutral Skew",
+                    "otm_put_iv": 26.56,
+                    "otm_call_iv": 27.34
+                }
+            },
+            "trader_insight": "Deploying Iron Condor (Net Volatility Seller) framework due to systemic IV overstatement verified by QUANT_KNOWLEDGE_BASE.",
+            "backtest_result": {
+                "strategy_tested": "iron_condor",
+                "days_tested": 180,
+                "win_rate_percent": 0.0,
+                "profit_factor": 0.0,
+                "total_pnl_proxy": -38.4,
+                "max_drawdown": 37.2,
+                "out_of_sample_verified": true,
+                "verdict": "FAIL"
+            },
+            "critic_review": "DISAPPROVED: Strategy failed strict 80% Win Rate and >1.2 Profit Factor metrics out-of-sample constraint.",
+            "status": "REJECTED"
+        },
+        {
+            "timestamp": "2026-04-12T02:13:32.283278",
+            "ticker": "GLD",
+            "market_data": {
+                "spot_price": 437.1300048828125,
+                "call_wall_strike": 440.0,
+                "call_wall_gex": 1488734.7289760003,
+                "put_wall_strike": 433.0,
+                "put_wall_gex": -950685.0625820151,
+                "total_net_gex": 4152606.767006797,
+                "dealer_position_tilt": "Long Gamma",
+                "volatility_skew": {
+                    "volatility_skew_index": 1.37,
+                    "sentiment": "Bearish Protection (Moderate Skew)",
+                    "otm_put_iv": 35.3,
+                    "otm_call_iv": 33.94
+                }
+            },
+            "trader_insight": "Deploying Iron Condor (Net Volatility Seller) framework due to systemic IV overstatement verified by QUANT_KNOWLEDGE_BASE.",
+            "backtest_result": {
+                "strategy_tested": "iron_condor",
+                "days_tested": 180,
+                "win_rate_percent": 9.38,
+                "profit_factor": 0.04,
+                "total_pnl_proxy": -33.3,
+                "max_drawdown": 33.1,
+                "out_of_sample_verified": true,
+                "verdict": "FAIL"
+            },
+            "critic_review": "DISAPPROVED: Strategy failed strict 80% Win Rate and >1.2 Profit Factor metrics out-of-sample constraint.",
+            "status": "REJECTED"
+        },
+        {
+            "timestamp": "2026-04-12T02:14:05.578879",
+            "ticker": "GLD",
+            "market_data": {
+                "spot_price": 437.1300048828125,
+                "call_wall_strike": 440.0,
+                "call_wall_gex": 1488734.7289760003,
+                "put_wall_strike": 433.0,
+                "put_wall_gex": -950685.0625820151,
+                "total_net_gex": 4152606.767006797,
+                "dealer_position_tilt": "Long Gamma",
+                "volatility_skew": {
+                    "volatility_skew_index": 1.37,
+                    "sentiment": "Bearish Protection (Moderate Skew)",
+                    "otm_put_iv": 35.3,
+                    "otm_call_iv": 33.94
+                }
+            },
+            "trader_insight": "Deploying Iron Condor (Net Volatility Seller) framework due to systemic IV overstatement verified by QUANT_KNOWLEDGE_BASE.",
+            "backtest_result": {
+                "strategy_tested": "iron_condor",
+                "days_tested": 180,
+                "win_rate_percent": 9.38,
+                "profit_factor": 0.04,
+                "total_pnl_proxy": -33.3,
+                "max_drawdown": 33.1,
+                "out_of_sample_verified": true,
+                "verdict": "FAIL"
+            },
+            "critic_review": "DISAPPROVED: Strategy failed strict 80% Win Rate and >1.2 Profit Factor metrics out-of-sample constraint.",
+            "status": "REJECTED"
+        },
+        {
+            "timestamp": "2026-04-12T02:14:13.107792",
+            "ticker": "NVDA",
+            "market_data": {
+                "spot_price": 188.6300048828125,
+                "call_wall_strike": 190.0,
+                "call_wall_gex": 11122230.309928536,
+                "put_wall_strike": 180.0,
+                "put_wall_gex": -3412523.826992221,
+                "total_net_gex": 19593600.01166381,
+                "dealer_position_tilt": "Long Gamma",
+                "volatility_skew": {
+                    "volatility_skew_index": 0.1,
+                    "sentiment": "Neutral Skew",
+                    "otm_put_iv": 30.18,
+                    "otm_call_iv": 30.08
+                }
+            },
+            "trader_insight": "Deploying Iron Condor (Net Volatility Seller) framework due to systemic IV overstatement verified by QUANT_KNOWLEDGE_BASE.",
+            "backtest_result": {
+                "strategy_tested": "iron_condor",
+                "days_tested": 180,
+                "win_rate_percent": 18.75,
+                "profit_factor": 0.1,
+                "total_pnl_proxy": -28.2,
+                "max_drawdown": 27.0,
+                "out_of_sample_verified": true,
+                "verdict": "FAIL"
+            },
+            "critic_review": "DISAPPROVED: Strategy failed strict 80% Win Rate and >1.2 Profit Factor metrics out-of-sample constraint.",
+            "status": "REJECTED"
+        },
+        {
+            "timestamp": "2026-04-12T02:14:14.441159",
+            "ticker": "NVDA",
+            "market_data": {
+                "spot_price": 188.6300048828125,
+                "call_wall_strike": 190.0,
+                "call_wall_gex": 11122230.309928536,
+                "put_wall_strike": 180.0,
+                "put_wall_gex": -3412523.826992221,
+                "total_net_gex": 19593600.01166381,
+                "dealer_position_tilt": "Long Gamma",
+                "volatility_skew": {
+                    "volatility_skew_index": 0.1,
+                    "sentiment": "Neutral Skew",
+                    "otm_put_iv": 30.18,
+                    "otm_call_iv": 30.08
+                }
+            },
+            "trader_insight": "Deploying Iron Condor (Net Volatility Seller) framework due to systemic IV overstatement verified by QUANT_KNOWLEDGE_BASE.",
+            "backtest_result": {
+                "strategy_tested": "iron_condor",
+                "days_tested": 180,
+                "win_rate_percent": 18.75,
+                "profit_factor": 0.1,
+                "total_pnl_proxy": -28.2,
+                "max_drawdown": 27.0,
+                "out_of_sample_verified": true,
+                "verdict": "FAIL"
+            },
+            "critic_review": "DISAPPROVED: Strategy failed strict 80% Win Rate and >1.2 Profit Factor metrics out-of-sample constraint.",
+            "status": "REJECTED"
+        },
+        {
+            "timestamp": "2026-04-12T02:14:18.127341",
+            "ticker": "NVDA",
+            "market_data": {
+                "spot_price": 188.6300048828125,
+                "call_wall_strike": 190.0,
+                "call_wall_gex": 11122230.309928536,
+                "put_wall_strike": 180.0,
+                "put_wall_gex": -3412523.826992221,
+                "total_net_gex": 19593600.01166381,
+                "dealer_position_tilt": "Long Gamma",
+                "volatility_skew": {
+                    "volatility_skew_index": 0.1,
+                    "sentiment": "Neutral Skew",
+                    "otm_put_iv": 30.18,
+                    "otm_call_iv": 30.08
+                }
+            },
+            "trader_insight": "Deploying Iron Condor (Net Volatility Seller) framework due to systemic IV overstatement verified by QUANT_KNOWLEDGE_BASE.",
+            "backtest_result": {
+                "strategy_tested": "iron_condor",
+                "days_tested": 180,
+                "win_rate_percent": 18.75,
+                "profit_factor": 0.1,
+                "total_pnl_proxy": -28.2,
+                "max_drawdown": 27.0,
+                "out_of_sample_verified": true,
+                "verdict": "FAIL"
+            },
+            "critic_review": "DISAPPROVED: Strategy failed strict 80% Win Rate and >1.2 Profit Factor metrics out-of-sample constraint.",
+            "status": "REJECTED"
         }
     ],
     "verified_algorithms": []
