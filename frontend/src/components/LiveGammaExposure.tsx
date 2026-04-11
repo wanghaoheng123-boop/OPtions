@@ -6,8 +6,12 @@ export default function LiveGammaExposure() {
   const [wsStatus, setWsStatus] = useState<string>('Connecting...');
 
   useEffect(() => {
-    // Phase 11: Real-Time HFT WebSocket Feed Connection
-    const ws = new WebSocket('ws://localhost:8005/ws/gex');
+    // Phase 11/12: Real-Time HFT WebSocket Feed Connection scaling
+    const wsUrl = import.meta.env.VITE_WS_URL 
+        ? `${import.meta.env.VITE_WS_URL}/ws/gex`
+        : 'ws://localhost:8005/ws/gex';
+        
+    const ws = new WebSocket(wsUrl);
 
     ws.onopen = () => {
       setWsStatus('LIVE CONNECTED');
