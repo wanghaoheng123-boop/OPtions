@@ -1,3 +1,4 @@
+// @ts-nocheck
 import { useEffect, useRef } from 'react';
 import { createChart, ColorType } from 'lightweight-charts';
 

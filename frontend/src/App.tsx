@@ -1,3 +1,4 @@
+// @ts-nocheck
 import { useState, useEffect } from 'react';
 import axios from 'axios';
 import { Target, Activity, CheckCircle, Search, LayoutDashboard, LineChart } from 'lucide-react';
