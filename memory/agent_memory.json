@@ -1,0 +1,1059 @@
+{
+    "sessions": [
+        {
+            "timestamp": "2026-04-11T10:40:29.078813",
+            "ticker": "SPY",
+            "market_data": {
+                "spot_price": 679.4600219726562,
+                "call_wall_strike": 685.0,
+                "call_wall_gex": 135692259.25330186,
+                "put_wall_strike": 660.0,
+                "put_wall_gex": -31135615.352886777,
+                "total_net_gex": 197599796.58178762,
+                "dealer_position_tilt": "Long Gamma"
+            },
+            "trader_insight": "Dealer Gamma is positive. Incorporating SpotGamma-Approximation: market makers will buy dips suppressing volatility. A range-bound strategy like 'covered_call' near '685.0' is preferred.",
+            "backtest_result": {
+                "strategy_tested": "covered_call",
+                "days_tested": 90,
+                "win_rate_percent": 47.54,
+                "total_pnl_proxy": -1.74,
+                "max_drawdown": 9.14,
+                "verdict": "FAIL"
+            },
+            "critic_review": "CRITIC REJECTED: The strategy exhibited excessive risk or negative expectancy (Drawdown: 9.14%, Verdict: FAIL). Do not execute.",
+            "status": "REJECTED"
+        },
+        {
+            "timestamp": "2026-04-11T10:41:46.682760",
+            "ticker": "SPY",
+            "market_data": {
+                "spot_price": 679.4600219726562,
+                "call_wall_strike": 685.0,
+                "call_wall_gex": 135692259.25330186,
+                "put_wall_strike": 660.0,
+                "put_wall_gex": -31135615.352886777,
+                "total_net_gex": 197599796.58178762,
+                "dealer_position_tilt": "Long Gamma"
+            },
+            "trader_insight": "Dealer Gamma is positive. Incorporating SpotGamma-Approximation: market makers will buy dips suppressing volatility. A range-bound strategy like 'covered_call' near '685.0' is preferred.",
+            "backtest_result": {
+                "strategy_tested": "covered_call",
+                "days_tested": 90,
+                "win_rate_percent": 47.54,
+                "total_pnl_proxy": -1.74,
+                "max_drawdown": 9.14,
+                "verdict": "FAIL"
+            },
+            "critic_review": "CRITIC REJECTED: The strategy exhibited excessive risk or negative expectancy (Drawdown: 9.14%, Verdict: FAIL). Do not execute.",
+            "status": "REJECTED"
+        },
+        {
+            "timestamp": "2026-04-11T10:46:37.663939",
+            "ticker": "SPY",
+            "market_data": {
+                "spot_price": 679.4600219726562,
+                "call_wall_strike": 685.0,
+                "call_wall_gex": 135692259.25330186,
+                "put_wall_strike": 660.0,
+                "put_wall_gex": -31135615.352886777,
+                "total_net_gex": 197599796.58178762,
+                "dealer_position_tilt": "Long Gamma"
+            },
+            "trader_insight": "Dealer Gamma is positive. Incorporating SpotGamma-Approximation: market makers will buy dips suppressing volatility. A range-bound strategy like 'covered_call' near '685.0' is preferred.",
+            "backtest_result": {
+                "strategy_tested": "covered_call",
+                "days_tested": 90,
+                "win_rate_percent": 47.54,
+                "total_pnl_proxy": -1.74,
+                "max_drawdown": 9.14,
+                "verdict": "FAIL"
+            },
+            "critic_review": "CRITIC REJECTED: The strategy exhibited excessive risk or negative expectancy (Drawdown: 9.14%, Verdict: FAIL). Do not execute.",
+            "status": "REJECTED"
+        },
+        {
+            "timestamp": "2026-04-11T10:47:05.655009",
+            "ticker": "SPY",
+            "market_data": {
+                "spot_price": 679.4600219726562,
+                "call_wall_strike": 685.0,
+                "call_wall_gex": 135692259.25330186,
+                "put_wall_strike": 660.0,
+                "put_wall_gex": -31135615.352886777,
+                "total_net_gex": 197599796.58178762,
+                "dealer_position_tilt": "Long Gamma"
+            },
+            "trader_insight": "Dealer Gamma is positive. Incorporating SpotGamma-Approximation: market makers will buy dips suppressing volatility. A range-bound strategy like 'covered_call' near '685.0' is preferred.",
+            "backtest_result": {
+                "strategy_tested": "covered_call",
+                "days_tested": 90,
+                "win_rate_percent": 75.41,
+                "total_pnl_proxy": 21.17,
+                "max_drawdown": 2.49,
+                "verdict": "PASS"
+            },
+            "critic_review": "CRITIC APPROVED: The covered_call strategy historically returned a profit without breaching risk limits (Drawdown: 2.49%).",
+            "status": "APPROVED"
+        },
+        {
+            "timestamp": "2026-04-11T10:57:35.815677",
+            "ticker": "SPY",
+            "market_data": {
+                "spot_price": 679.4600219726562,
+                "call_wall_strike": 685.0,
+                "call_wall_gex": 135692259.25330186,
+                "put_wall_strike": 660.0,
+                "put_wall_gex": -31135615.352886777,
+                "total_net_gex": 197599796.58178762,
+                "dealer_position_tilt": "Long Gamma"
+            },
+            "trader_insight": "Dealer Gamma is positive. Incorporating SpotGamma-Approximation: market makers will buy dips suppressing volatility. A range-bound strategy like 'covered_call' near '685.0' is preferred.",
+            "backtest_result": {
+                "strategy_tested": "covered_call",
+                "days_tested": 90,
+                "win_rate_percent": 75.41,
+                "total_pnl_proxy": 21.17,
+                "max_drawdown": 2.49,
+                "verdict": "PASS"
+            },
+            "critic_review": "CRITIC APPROVED: The covered_call strategy historically returned a profit without breaching risk limits (Drawdown: 2.49%).",
+            "status": "APPROVED"
+        },
+        {
+            "timestamp": "2026-04-11T10:58:00.411293",
+            "ticker": "SPY",
+            "market_data": {
+                "spot_price": 679.4600219726562,
+                "call_wall_strike": 685.0,
+                "call_wall_gex": 135692259.25330186,
+                "put_wall_strike": 660.0,
+                "put_wall_gex": -31135615.352886777,
+                "total_net_gex": 197599796.58178762,
+                "dealer_position_tilt": "Long Gamma"
+            },
+            "trader_insight": "Dealer Gamma is positive. Incorporating SpotGamma-Approximation: market makers will buy dips suppressing volatility. A range-bound strategy like 'covered_call' near '685.0' is preferred.",
+            "backtest_result": {
+                "strategy_tested": "covered_call",
+                "days_tested": 90,
+                "win_rate_percent": 75.41,
+                "total_pnl_proxy": 21.17,
+                "max_drawdown": 2.49,
+                "verdict": "PASS"
+            },
+            "critic_review": "CRITIC APPROVED: The covered_call strategy historically returned a profit without breaching risk limits (Drawdown: 2.49%).",
+            "status": "APPROVED"
+        },
+        {
+            "timestamp": "2026-04-11T10:58:00.771460",
+            "ticker": "SPY",
+            "market_data": {
+                "spot_price": 679.4600219726562,
+                "call_wall_strike": 685.0,
+                "call_wall_gex": 135692259.25330186,
+                "put_wall_strike": 660.0,
+                "put_wall_gex": -31135615.352886777,
+                "total_net_gex": 197599796.58178762,
+                "dealer_position_tilt": "Long Gamma"
+            },
+            "trader_insight": "Dealer Gamma is positive. Incorporating SpotGamma-Approximation: market makers will buy dips suppressing volatility. A range-bound strategy like 'covered_call' near '685.0' is preferred.",
+            "backtest_result": {
+                "strategy_tested": "covered_call",
+                "days_tested": 90,
+                "win_rate_percent": 75.41,
+                "total_pnl_proxy": 21.17,
+                "max_drawdown": 2.49,
+                "verdict": "PASS"
+            },
+            "critic_review": "CRITIC APPROVED: The covered_call strategy historically returned a profit without breaching risk limits (Drawdown: 2.49%).",
+            "status": "APPROVED"
+        },
+        {
+            "timestamp": "2026-04-11T10:59:14.311815",
+            "ticker": "SPY",
+            "market_data": {
+                "spot_price": 679.4600219726562,
+                "call_wall_strike": 685.0,
+                "call_wall_gex": 135692259.25330186,
+                "put_wall_strike": 660.0,
+                "put_wall_gex": -31135615.352886777,
+                "total_net_gex": 197599796.58178762,
+                "dealer_position_tilt": "Long Gamma"
+            },
+            "trader_insight": "Dealer Gamma is positive. Incorporating SpotGamma-Approximation: market makers will buy dips suppressing volatility. A range-bound strategy like 'covered_call' near '685.0' is preferred.",
+            "backtest_result": {
+                "strategy_tested": "covered_call",
+                "days_tested": 90,
+                "win_rate_percent": 75.41,
+                "total_pnl_proxy": 21.17,
+                "max_drawdown": 2.49,
+                "verdict": "PASS"
+            },
+            "critic_review": "CRITIC APPROVED: The covered_call strategy historically returned a profit without breaching risk limits (Drawdown: 2.49%).",
+            "status": "APPROVED"
+        },
+        {
+            "timestamp": "2026-04-11T10:59:14.327630",
+            "ticker": "SPY",
+            "market_data": {
+                "spot_price": 679.4600219726562,
+                "call_wall_strike": 685.0,
+                "call_wall_gex": 135692259.25330186,
+                "put_wall_strike": 660.0,
+                "put_wall_gex": -31135615.352886777,
+                "total_net_gex": 197599796.58178762,
+                "dealer_position_tilt": "Long Gamma"
+            },
+            "trader_insight": "Dealer Gamma is positive. Incorporating SpotGamma-Approximation: market makers will buy dips suppressing volatility. A range-bound strategy like 'covered_call' near '685.0' is preferred.",
+            "backtest_result": {
+                "strategy_tested": "covered_call",
+                "days_tested": 90,
+                "win_rate_percent": 75.41,
+                "total_pnl_proxy": 21.17,
+                "max_drawdown": 2.49,
+                "verdict": "PASS"
+            },
+            "critic_review": "CRITIC APPROVED: The covered_call strategy historically returned a profit without breaching risk limits (Drawdown: 2.49%).",
+            "status": "APPROVED"
+        },
+        {
+            "timestamp": "2026-04-11T10:59:43.368733",
+            "ticker": "SPY",
+            "market_data": {
+                "spot_price": 679.4600219726562,
+                "call_wall_strike": 685.0,
+                "call_wall_gex": 135692259.25330186,
+                "put_wall_strike": 660.0,
+                "put_wall_gex": -31135615.352886777,
+                "total_net_gex": 197599796.58178762,
+                "dealer_position_tilt": "Long Gamma"
+            },
+            "trader_insight": "Dealer Gamma is positive. Incorporating SpotGamma-Approximation: market makers will buy dips suppressing volatility. A range-bound strategy like 'covered_call' near '685.0' is preferred.",
+            "backtest_result": {
+                "strategy_tested": "covered_call",
+                "days_tested": 90,
+                "win_rate_percent": 75.41,
+                "total_pnl_proxy": 21.17,
+                "max_drawdown": 2.49,
+                "verdict": "PASS"
+            },
+            "critic_review": "CRITIC APPROVED: The covered_call strategy historically returned a profit without breaching risk limits (Drawdown: 2.49%).",
+            "status": "APPROVED"
+        },
+        {
+            "timestamp": "2026-04-11T10:59:43.389391",
+            "ticker": "SPY",
+            "market_data": {
+                "spot_price": 679.4600219726562,
+                "call_wall_strike": 685.0,
+                "call_wall_gex": 135692259.25330186,
+                "put_wall_strike": 660.0,
+                "put_wall_gex": -31135615.352886777,
+                "total_net_gex": 197599796.58178762,
+                "dealer_position_tilt": "Long Gamma"
+            },
+            "trader_insight": "Dealer Gamma is positive. Incorporating SpotGamma-Approximation: market makers will buy dips suppressing volatility. A range-bound strategy like 'covered_call' near '685.0' is preferred.",
+            "backtest_result": {
+                "strategy_tested": "covered_call",
+                "days_tested": 90,
+                "win_rate_percent": 75.41,
+                "total_pnl_proxy": 21.17,
+                "max_drawdown": 2.49,
+                "verdict": "PASS"
+            },
+            "critic_review": "CRITIC APPROVED: The covered_call strategy historically returned a profit without breaching risk limits (Drawdown: 2.49%).",
+            "status": "APPROVED"
+        },
+        {
+            "timestamp": "2026-04-11T10:59:45.674347",
+            "ticker": "SPY",
+            "market_data": {
+                "spot_price": 679.4600219726562,
+                "call_wall_strike": 685.0,
+                "call_wall_gex": 135692259.25330186,
+                "put_wall_strike": 660.0,
+                "put_wall_gex": -31135615.352886777,
+                "total_net_gex": 197599796.58178762,
+                "dealer_position_tilt": "Long Gamma"
+            },
+            "trader_insight": "Dealer Gamma is positive. Incorporating SpotGamma-Approximation: market makers will buy dips suppressing volatility. A range-bound strategy like 'covered_call' near '685.0' is preferred.",
+            "backtest_result": {
+                "error": "could not convert string to float: 'XLV'"
+            },
+            "critic_review": "CRITIC REJECTED: Backtest execution failed. could not convert string to float: 'XLV'",
+            "status": "REJECTED"
+        },
+        {
+            "timestamp": "2026-04-11T10:59:46.036148",
+            "ticker": "SPY",
+            "market_data": {
+                "spot_price": 679.4600219726562,
+                "call_wall_strike": 685.0,
+                "call_wall_gex": 135692259.25330186,
+                "put_wall_strike": 660.0,
+                "put_wall_gex": -31135615.352886777,
+                "total_net_gex": 197599796.58178762,
+                "dealer_position_tilt": "Long Gamma"
+            },
+            "trader_insight": "Dealer Gamma is positive. Incorporating SpotGamma-Approximation: market makers will buy dips suppressing volatility. A range-bound strategy like 'covered_call' near '685.0' is preferred.",
+            "backtest_result": {
+                "strategy_tested": "covered_call",
+                "days_tested": 90,
+                "win_rate_percent": 75.41,
+                "total_pnl_proxy": 21.17,
+                "max_drawdown": 2.49,
+                "verdict": "PASS"
+            },
+            "critic_review": "CRITIC APPROVED: The covered_call strategy historically returned a profit without breaching risk limits (Drawdown: 2.49%).",
+            "status": "APPROVED"
+        },
+        {
+            "timestamp": "2026-04-11T10:59:58.379264",
+            "ticker": "SPY",
+            "market_data": {
+                "spot_price": 679.4600219726562,
+                "call_wall_strike": 685.0,
+                "call_wall_gex": 135692259.25330186,
+                "put_wall_strike": 660.0,
+                "put_wall_gex": -31135615.352886777,
+                "total_net_gex": 197599796.58178762,
+                "dealer_position_tilt": "Long Gamma"
+            },
+            "trader_insight": "Dealer Gamma is positive. Incorporating SpotGamma-Approximation: market makers will buy dips suppressing volatility. A range-bound strategy like 'covered_call' near '685.0' is preferred.",
+            "backtest_result": {
+                "strategy_tested": "covered_call",
+                "days_tested": 90,
+                "win_rate_percent": 75.41,
+                "total_pnl_proxy": 21.17,
+                "max_drawdown": 2.49,
+                "verdict": "PASS"
+            },
+            "critic_review": "CRITIC APPROVED: The covered_call strategy historically returned a profit without breaching risk limits (Drawdown: 2.49%).",
+            "status": "APPROVED"
+        },
+        {
+            "timestamp": "2026-04-11T10:59:58.693593",
+            "ticker": "SPY",
+            "market_data": {
+                "spot_price": 679.4600219726562,
+                "call_wall_strike": 685.0,
+                "call_wall_gex": 135692259.25330186,
+                "put_wall_strike": 660.0,
+                "put_wall_gex": -31135615.352886777,
+                "total_net_gex": 197599796.58178762,
+                "dealer_position_tilt": "Long Gamma"
+            },
+            "trader_insight": "Dealer Gamma is positive. Incorporating SpotGamma-Approximation: market makers will buy dips suppressing volatility. A range-bound strategy like 'covered_call' near '685.0' is preferred.",
+            "backtest_result": {
+                "strategy_tested": "covered_call",
+                "days_tested": 90,
+                "win_rate_percent": 75.41,
+                "total_pnl_proxy": 21.17,
+                "max_drawdown": 2.49,
+                "verdict": "PASS"
+            },
+            "critic_review": "CRITIC APPROVED: The covered_call strategy historically returned a profit without breaching risk limits (Drawdown: 2.49%).",
+            "status": "APPROVED"
+        },
+        {
+            "timestamp": "2026-04-11T10:59:58.704853",
+            "ticker": "SPY",
+            "market_data": {
+                "spot_price": 679.4600219726562,
+                "call_wall_strike": 685.0,
+                "call_wall_gex": 135692259.25330186,
+                "put_wall_strike": 660.0,
+                "put_wall_gex": -31135615.352886777,
+                "total_net_gex": 197599796.58178762,
+                "dealer_position_tilt": "Long Gamma"
+            },
+            "trader_insight": "Dealer Gamma is positive. Incorporating SpotGamma-Approximation: market makers will buy dips suppressing volatility. A range-bound strategy like 'covered_call' near '685.0' is preferred.",
+            "backtest_result": {
+                "strategy_tested": "covered_call",
+                "days_tested": 90,
+                "win_rate_percent": 75.41,
+                "total_pnl_proxy": 21.17,
+                "max_drawdown": 2.49,
+                "verdict": "PASS"
+            },
+            "critic_review": "CRITIC APPROVED: The covered_call strategy historically returned a profit without breaching risk limits (Drawdown: 2.49%).",
+            "status": "APPROVED"
+        },
+        {
+            "timestamp": "2026-04-11T11:54:21.154881",
+            "ticker": "SPY",
+            "market_data": {
+                "spot_price": 679.4600219726562,
+                "call_wall_strike": 685.0,
+                "call_wall_gex": 135692259.25330186,
+                "put_wall_strike": 660.0,
+                "put_wall_gex": -31135615.352886777,
+                "total_net_gex": 197599796.58178762,
+                "dealer_position_tilt": "Long Gamma"
+            },
+            "trader_insight": "Dealer Gamma is positive. Incorporating SpotGamma-Approximation: market makers will buy dips suppressing volatility. A range-bound strategy like 'covered_call' near '685.0' is preferred.",
+            "backtest_result": {
+                "strategy_tested": "covered_call",
+                "days_tested": 90,
+                "win_rate_percent": 75.41,
+                "total_pnl_proxy": 21.17,
+                "max_drawdown": 2.49,
+                "verdict": "PASS"
+            },
+            "critic_review": "CRITIC APPROVED: The covered_call strategy historically returned a profit without breaching risk limits (Drawdown: 2.49%).",
+            "status": "APPROVED"
+        },
+        {
+            "timestamp": "2026-04-11T11:55:30.881872",
+            "ticker": "SPY",
+            "market_data": {
+                "spot_price": 679.4600219726562,
+                "call_wall_strike": 685.0,
+                "call_wall_gex": 135692259.25330186,
+                "put_wall_strike": 660.0,
+                "put_wall_gex": -31135615.352886777,
+                "total_net_gex": 197599796.58178762,
+                "dealer_position_tilt": "Long Gamma"
+            },
+            "trader_insight": "Dealer Gamma is positive. Incorporating SpotGamma-Approximation: market makers will buy dips suppressing volatility. A range-bound strategy like 'covered_call' near '685.0' is preferred.",
+            "backtest_result": {
+                "error": "could not convert string to float: 'XLY'"
+            },
+            "critic_review": "CRITIC REJECTED: Backtest execution failed. could not convert string to float: 'XLY'",
+            "status": "REJECTED"
+        },
+        {
+            "timestamp": "2026-04-11T11:55:31.283670",
+            "ticker": "SPY",
+            "market_data": {
+                "spot_price": 679.4600219726562,
+                "call_wall_strike": 685.0,
+                "call_wall_gex": 135692259.25330186,
+                "put_wall_strike": 660.0,
+                "put_wall_gex": -31135615.352886777,
+                "total_net_gex": 197599796.58178762,
+                "dealer_position_tilt": "Long Gamma"
+            },
+            "trader_insight": "Dealer Gamma is positive. Incorporating SpotGamma-Approximation: market makers will buy dips suppressing volatility. A range-bound strategy like 'covered_call' near '685.0' is preferred.",
+            "backtest_result": {
+                "strategy_tested": "covered_call",
+                "days_tested": 90,
+                "win_rate_percent": 75.41,
+                "total_pnl_proxy": 21.17,
+                "max_drawdown": 2.49,
+                "verdict": "PASS"
+            },
+            "critic_review": "CRITIC APPROVED: The covered_call strategy historically returned a profit without breaching risk limits (Drawdown: 2.49%).",
+            "status": "APPROVED"
+        },
+        {
+            "timestamp": "2026-04-11T11:55:49.870061",
+            "ticker": "SPY",
+            "market_data": {
+                "spot_price": 679.4600219726562,
+                "call_wall_strike": 685.0,
+                "call_wall_gex": 135692259.25330186,
+                "put_wall_strike": 660.0,
+                "put_wall_gex": -31135615.352886777,
+                "total_net_gex": 197599796.58178762,
+                "dealer_position_tilt": "Long Gamma"
+            },
+            "trader_insight": "Dealer Gamma is positive. Incorporating SpotGamma-Approximation: market makers will buy dips suppressing volatility. A range-bound strategy like 'covered_call' near '685.0' is preferred.",
+            "backtest_result": {
+                "strategy_tested": "covered_call",
+                "days_tested": 90,
+                "win_rate_percent": 75.41,
+                "total_pnl_proxy": 21.17,
+                "max_drawdown": 2.49,
+                "verdict": "PASS"
+            },
+            "critic_review": "CRITIC APPROVED: The covered_call strategy historically returned a profit without breaching risk limits (Drawdown: 2.49%).",
+            "status": "APPROVED"
+        },
+        {
+            "timestamp": "2026-04-11T11:55:50.180181",
+            "ticker": "SPY",
+            "market_data": {
+                "spot_price": 679.4600219726562,
+                "call_wall_strike": 685.0,
+                "call_wall_gex": 135692259.25330186,
+                "put_wall_strike": 660.0,
+                "put_wall_gex": -31135615.352886777,
+                "total_net_gex": 197599796.58178762,
+                "dealer_position_tilt": "Long Gamma"
+            },
+            "trader_insight": "Dealer Gamma is positive. Incorporating SpotGamma-Approximation: market makers will buy dips suppressing volatility. A range-bound strategy like 'covered_call' near '685.0' is preferred.",
+            "backtest_result": {
+                "strategy_tested": "covered_call",
+                "days_tested": 90,
+                "win_rate_percent": 75.41,
+                "total_pnl_proxy": 21.17,
+                "max_drawdown": 2.49,
+                "verdict": "PASS"
+            },
+            "critic_review": "CRITIC APPROVED: The covered_call strategy historically returned a profit without breaching risk limits (Drawdown: 2.49%).",
+            "status": "APPROVED"
+        },
+        {
+            "timestamp": "2026-04-11T12:01:05.719588",
+            "ticker": "SPY",
+            "market_data": {
+                "spot_price": 679.4600219726562,
+                "call_wall_strike": 685.0,
+                "call_wall_gex": 135692259.25330186,
+                "put_wall_strike": 660.0,
+                "put_wall_gex": -31135615.352886777,
+                "total_net_gex": 197599796.58178762,
+                "dealer_position_tilt": "Long Gamma"
+            },
+            "trader_insight": "Dealer Gamma is positive. Incorporating SpotGamma-Approximation: market makers will buy dips suppressing volatility. A range-bound strategy like 'covered_call' near '685.0' is preferred.",
+            "backtest_result": {
+                "strategy_tested": "covered_call",
+                "days_tested": 90,
+                "win_rate_percent": 75.41,
+                "total_pnl_proxy": 21.17,
+                "max_drawdown": 2.49,
+                "verdict": "PASS"
+            },
+            "critic_review": "CRITIC APPROVED: The covered_call strategy historically returned a profit without breaching risk limits (Drawdown: 2.49%).",
+            "status": "APPROVED"
+        },
+        {
+            "timestamp": "2026-04-11T12:01:05.734442",
+            "ticker": "SPY",
+            "market_data": {
+                "spot_price": 679.4600219726562,
+                "call_wall_strike": 685.0,
+                "call_wall_gex": 135692259.25330186,
+                "put_wall_strike": 660.0,
+                "put_wall_gex": -31135615.352886777,
+                "total_net_gex": 197599796.58178762,
+                "dealer_position_tilt": "Long Gamma"
+            },
+            "trader_insight": "Dealer Gamma is positive. Incorporating SpotGamma-Approximation: market makers will buy dips suppressing volatility. A range-bound strategy like 'covered_call' near '685.0' is preferred.",
+            "backtest_result": {
+                "strategy_tested": "covered_call",
+                "days_tested": 90,
+                "win_rate_percent": 75.41,
+                "total_pnl_proxy": 21.17,
+                "max_drawdown": 2.49,
+                "verdict": "PASS"
+            },
+            "critic_review": "CRITIC APPROVED: The covered_call strategy historically returned a profit without breaching risk limits (Drawdown: 2.49%).",
+            "status": "APPROVED"
+        },
+        {
+            "timestamp": "2026-04-11T12:29:10.144994",
+            "ticker": "SPY",
+            "market_data": {
+                "spot_price": 679.4600219726562,
+                "call_wall_strike": 685.0,
+                "call_wall_gex": 135692259.25330186,
+                "put_wall_strike": 660.0,
+                "put_wall_gex": -31135615.352886777,
+                "total_net_gex": 197599796.58178762,
+                "dealer_position_tilt": "Long Gamma"
+            },
+            "trader_insight": "Dealer Gamma is positive. Incorporating SpotGamma-Approximation: market makers will buy dips suppressing volatility. A range-bound strategy like 'covered_call' near '685.0' is preferred.",
+            "backtest_result": {
+                "strategy_tested": "covered_call",
+                "days_tested": 90,
+                "win_rate_percent": 75.41,
+                "total_pnl_proxy": 21.17,
+                "max_drawdown": 2.49,
+                "verdict": "PASS"
+            },
+            "critic_review": "CRITIC APPROVED: The covered_call strategy historically returned a profit without breaching risk limits (Drawdown: 2.49%).",
+            "status": "APPROVED"
+        },
+        {
+            "timestamp": "2026-04-11T12:29:24.009191",
+            "ticker": "SPY",
+            "market_data": {
+                "spot_price": 679.4600219726562,
+                "call_wall_strike": 685.0,
+                "call_wall_gex": 135692259.25330186,
+                "put_wall_strike": 660.0,
+                "put_wall_gex": -31135615.352886777,
+                "total_net_gex": 197599796.58178762,
+                "dealer_position_tilt": "Long Gamma"
+            },
+            "trader_insight": "Dealer Gamma is positive. Incorporating SpotGamma-Approximation: market makers will buy dips suppressing volatility. A range-bound strategy like 'covered_call' near '685.0' is preferred.",
+            "backtest_result": {
+                "strategy_tested": "covered_call",
+                "days_tested": 90,
+                "win_rate_percent": 75.41,
+                "total_pnl_proxy": 21.17,
+                "max_drawdown": 2.49,
+                "verdict": "PASS"
+            },
+            "critic_review": "CRITIC APPROVED: The covered_call strategy historically returned a profit without breaching risk limits (Drawdown: 2.49%).",
+            "status": "APPROVED"
+        },
+        {
+            "timestamp": "2026-04-11T14:02:09.723869",
+            "ticker": "SPY",
+            "market_data": {
+                "spot_price": 679.4600219726562,
+                "call_wall_strike": 685.0,
+                "call_wall_gex": 135692259.25330186,
+                "put_wall_strike": 660.0,
+                "put_wall_gex": -31135615.352886777,
+                "total_net_gex": 197599796.58178762,
+                "dealer_position_tilt": "Long Gamma"
+            },
+            "trader_insight": "Dealer Gamma is positive. Incorporating SpotGamma-Approximation: market makers will buy dips suppressing volatility. A range-bound strategy like 'covered_call' near '685.0' is preferred.",
+            "backtest_result": {
+                "strategy_tested": "covered_call",
+                "days_tested": 90,
+                "win_rate_percent": 75.41,
+                "total_pnl_proxy": 21.17,
+                "max_drawdown": 2.49,
+                "verdict": "PASS"
+            },
+            "critic_review": "CRITIC APPROVED: The covered_call strategy historically returned a profit without breaching risk limits (Drawdown: 2.49%).",
+            "status": "APPROVED"
+        },
+        {
+            "timestamp": "2026-04-11T14:02:42.858782",
+            "ticker": "SPY",
+            "market_data": {
+                "spot_price": 679.4600219726562,
+                "call_wall_strike": 685.0,
+                "call_wall_gex": 135692259.25330186,
+                "put_wall_strike": 660.0,
+                "put_wall_gex": -31135615.352886777,
+                "total_net_gex": 197599796.58178762,
+                "dealer_position_tilt": "Long Gamma"
+            },
+            "trader_insight": "Dealer Gamma is positive. Incorporating SpotGamma-Approximation: market makers will buy dips suppressing volatility. A range-bound strategy like 'covered_call' near '685.0' is preferred.",
+            "backtest_result": {
+                "strategy_tested": "covered_call",
+                "days_tested": 90,
+                "win_rate_percent": 75.41,
+                "total_pnl_proxy": 21.17,
+                "max_drawdown": 2.49,
+                "verdict": "PASS"
+            },
+            "critic_review": "CRITIC APPROVED: The covered_call strategy historically returned a profit without breaching risk limits (Drawdown: 2.49%).",
+            "status": "APPROVED"
+        },
+        {
+            "timestamp": "2026-04-11T14:03:03.114305",
+            "ticker": "SPY",
+            "market_data": {
+                "spot_price": 679.4600219726562,
+                "call_wall_strike": 685.0,
+                "call_wall_gex": 135692259.25330186,
+                "put_wall_strike": 660.0,
+                "put_wall_gex": -31135615.352886777,
+                "total_net_gex": 197599796.58178762,
+                "dealer_position_tilt": "Long Gamma"
+            },
+            "trader_insight": "Dealer Gamma is positive. Incorporating SpotGamma-Approximation: market makers will buy dips suppressing volatility. A range-bound strategy like 'covered_call' near '685.0' is preferred.",
+            "backtest_result": {
+                "strategy_tested": "covered_call",
+                "days_tested": 90,
+                "win_rate_percent": 75.41,
+                "total_pnl_proxy": 21.17,
+                "max_drawdown": 2.49,
+                "verdict": "PASS"
+            },
+            "critic_review": "CRITIC APPROVED: The covered_call strategy historically returned a profit without breaching risk limits (Drawdown: 2.49%).",
+            "status": "APPROVED"
+        },
+        {
+            "timestamp": "2026-04-11T14:04:03.712906",
+            "ticker": "SPY",
+            "market_data": {
+                "total_net_gex": 100,
+                "volatility_skew": {
+                    "sentiment": "Extreme Fear"
+                }
+            },
+            "trader_insight": "Market exhibits Extreme Fear. Executing Cash-Secured Puts (Wheel) deep OTM as dictated by QUANT_KNOWLEDGE_BASE.",
+            "backtest_result": {
+                "strategy_tested": "wheel",
+                "days_tested": 180,
+                "win_rate_percent": 70.27,
+                "profit_factor": 3.78,
+                "total_pnl_proxy": 12.47,
+                "max_drawdown": 6.49,
+                "out_of_sample_verified": true,
+                "verdict": "FAIL"
+            },
+            "critic_review": "DISAPPROVED: Strategy failed strict 80% Win Rate and >1.2 Profit Factor metrics out-of-sample constraint.",
+            "status": "REJECTED"
+        },
+        {
+            "timestamp": "2026-04-11T14:21:24.396087",
+            "ticker": "SPY",
+            "market_data": {
+                "spot_price": 679.4600219726562,
+                "call_wall_strike": 685.0,
+                "call_wall_gex": 135692259.25330186,
+                "put_wall_strike": 660.0,
+                "put_wall_gex": -31135615.352886777,
+                "total_net_gex": 197599796.58178762,
+                "dealer_position_tilt": "Long Gamma"
+            },
+            "trader_insight": "Dealer Gamma is positive. Incorporating SpotGamma-Approximation: market makers will buy dips suppressing volatility. A range-bound strategy like 'covered_call' near '685.0' is preferred.",
+            "backtest_result": {
+                "strategy_tested": "covered_call",
+                "days_tested": 90,
+                "win_rate_percent": 75.41,
+                "total_pnl_proxy": 21.17,
+                "max_drawdown": 2.49,
+                "verdict": "PASS"
+            },
+            "critic_review": "CRITIC APPROVED: The covered_call strategy historically returned a profit without breaching risk limits (Drawdown: 2.49%).",
+            "status": "APPROVED"
+        },
+        {
+            "timestamp": "2026-04-11T14:21:24.416766",
+            "ticker": "SPY",
+            "market_data": {
+                "spot_price": 679.4600219726562,
+                "call_wall_strike": 685.0,
+                "call_wall_gex": 135692259.25330186,
+                "put_wall_strike": 660.0,
+                "put_wall_gex": -31135615.352886777,
+                "total_net_gex": 197599796.58178762,
+                "dealer_position_tilt": "Long Gamma"
+            },
+            "trader_insight": "Dealer Gamma is positive. Incorporating SpotGamma-Approximation: market makers will buy dips suppressing volatility. A range-bound strategy like 'covered_call' near '685.0' is preferred.",
+            "backtest_result": {
+                "strategy_tested": "covered_call",
+                "days_tested": 90,
+                "win_rate_percent": 75.41,
+                "total_pnl_proxy": 21.17,
+                "max_drawdown": 2.49,
+                "verdict": "PASS"
+            },
+            "critic_review": "CRITIC APPROVED: The covered_call strategy historically returned a profit without breaching risk limits (Drawdown: 2.49%).",
+            "status": "APPROVED"
+        },
+        {
+            "timestamp": "2026-04-11T14:28:18.605478",
+            "ticker": "SPY",
+            "market_data": {
+                "spot_price": 679.4600219726562,
+                "call_wall_strike": 685.0,
+                "call_wall_gex": 135692259.25330186,
+                "put_wall_strike": 660.0,
+                "put_wall_gex": -31135615.352886777,
+                "total_net_gex": 197599796.58178762,
+                "dealer_position_tilt": "Long Gamma"
+            },
+            "trader_insight": "Dealer Gamma is positive. Incorporating SpotGamma-Approximation: market makers will buy dips suppressing volatility. A range-bound strategy like 'covered_call' near '685.0' is preferred.",
+            "backtest_result": {
+                "strategy_tested": "covered_call",
+                "days_tested": 90,
+                "win_rate_percent": 75.41,
+                "total_pnl_proxy": 21.17,
+                "max_drawdown": 2.49,
+                "verdict": "PASS"
+            },
+            "critic_review": "CRITIC APPROVED: The covered_call strategy historically returned a profit without breaching risk limits (Drawdown: 2.49%).",
+            "status": "APPROVED"
+        },
+        {
+            "timestamp": "2026-04-11T14:28:18.640523",
+            "ticker": "SPY",
+            "market_data": {
+                "spot_price": 679.4600219726562,
+                "call_wall_strike": 685.0,
+                "call_wall_gex": 135692259.25330186,
+                "put_wall_strike": 660.0,
+                "put_wall_gex": -31135615.352886777,
+                "total_net_gex": 197599796.58178762,
+                "dealer_position_tilt": "Long Gamma"
+            },
+            "trader_insight": "Dealer Gamma is positive. Incorporating SpotGamma-Approximation: market makers will buy dips suppressing volatility. A range-bound strategy like 'covered_call' near '685.0' is preferred.",
+            "backtest_result": {
+                "strategy_tested": "covered_call",
+                "days_tested": 90,
+                "win_rate_percent": 75.41,
+                "total_pnl_proxy": 21.17,
+                "max_drawdown": 2.49,
+                "verdict": "PASS"
+            },
+            "critic_review": "CRITIC APPROVED: The covered_call strategy historically returned a profit without breaching risk limits (Drawdown: 2.49%).",
+            "status": "APPROVED"
+        },
+        {
+            "timestamp": "2026-04-11T14:28:55.070835",
+            "ticker": "SPY",
+            "market_data": {
+                "spot_price": 679.4600219726562,
+                "call_wall_strike": 685.0,
+                "call_wall_gex": 135692259.25330186,
+                "put_wall_strike": 660.0,
+                "put_wall_gex": -31135615.352886777,
+                "total_net_gex": 197599796.58178762,
+                "dealer_position_tilt": "Long Gamma"
+            },
+            "trader_insight": "Dealer Gamma is positive. Incorporating SpotGamma-Approximation: market makers will buy dips suppressing volatility. A range-bound strategy like 'covered_call' near '685.0' is preferred.",
+            "backtest_result": {
+                "strategy_tested": "covered_call",
+                "days_tested": 90,
+                "win_rate_percent": 75.41,
+                "total_pnl_proxy": 21.17,
+                "max_drawdown": 2.49,
+                "verdict": "PASS"
+            },
+            "critic_review": "CRITIC APPROVED: The covered_call strategy historically returned a profit without breaching risk limits (Drawdown: 2.49%).",
+            "status": "APPROVED"
+        },
+        {
+            "timestamp": "2026-04-11T14:28:58.417906",
+            "ticker": "PFE",
+            "market_data": {
+                "spot_price": 26.920000076293945,
+                "call_wall_strike": 27.0,
+                "call_wall_gex": 53667110.84869051,
+                "put_wall_strike": 27.0,
+                "put_wall_gex": -35612021.01880546,
+                "total_net_gex": 46435167.36243549,
+                "dealer_position_tilt": "Long Gamma"
+            },
+            "trader_insight": "Dealer Gamma is positive. Incorporating SpotGamma-Approximation: market makers will buy dips suppressing volatility. A range-bound strategy like 'covered_call' near '27.0' is preferred.",
+            "backtest_result": {
+                "strategy_tested": "covered_call",
+                "days_tested": 90,
+                "win_rate_percent": 62.3,
+                "total_pnl_proxy": 13.08,
+                "max_drawdown": 3.67,
+                "verdict": "PASS"
+            },
+            "critic_review": "CRITIC APPROVED: The covered_call strategy historically returned a profit without breaching risk limits (Drawdown: 3.67%).",
+            "status": "APPROVED"
+        },
+        {
+            "timestamp": "2026-04-11T14:29:19.103895",
+            "ticker": "CAG",
+            "market_data": {
+                "spot_price": 15.180000305175781,
+                "call_wall_strike": 16.0,
+                "call_wall_gex": 886389.6020446832,
+                "put_wall_strike": 15.0,
+                "put_wall_gex": -2653405.4586558603,
+                "total_net_gex": -2337432.7899836996,
+                "dealer_position_tilt": "Short Gamma"
+            },
+            "trader_insight": "Dealer Gamma is negative. Incorporating SpotGamma-Approximation: makers sell weakness. Volatility is expanding. Initiate long variance 'long_gamma'.",
+            "backtest_result": {
+                "strategy_tested": "long_gamma",
+                "days_tested": 90,
+                "win_rate_percent": 40.98,
+                "total_pnl_proxy": -0.11,
+                "max_drawdown": 7.82,
+                "verdict": "FAIL"
+            },
+            "critic_review": "CRITIC REJECTED: The strategy exhibited excessive risk or negative expectancy (Drawdown: 7.82%, Verdict: FAIL). Do not execute.",
+            "status": "REJECTED"
+        },
+        {
+            "timestamp": "2026-04-11T14:29:43.844082",
+            "ticker": "NVDA",
+            "market_data": {
+                "spot_price": 188.6300048828125,
+                "call_wall_strike": 190.0,
+                "call_wall_gex": 11122230.309928536,
+                "put_wall_strike": 180.0,
+                "put_wall_gex": -3412523.826992221,
+                "total_net_gex": 19593600.01166381,
+                "dealer_position_tilt": "Long Gamma"
+            },
+            "trader_insight": "Dealer Gamma is positive. Incorporating SpotGamma-Approximation: market makers will buy dips suppressing volatility. A range-bound strategy like 'covered_call' near '190.0' is preferred.",
+            "backtest_result": {
+                "strategy_tested": "covered_call",
+                "days_tested": 90,
+                "win_rate_percent": 60.66,
+                "total_pnl_proxy": -5.02,
+                "max_drawdown": 16.55,
+                "verdict": "FAIL"
+            },
+            "critic_review": "CRITIC REJECTED: The strategy exhibited excessive risk or negative expectancy (Drawdown: 16.55%, Verdict: FAIL). Do not execute.",
+            "status": "REJECTED"
+        },
+        {
+            "timestamp": "2026-04-11T14:29:53.347878",
+            "ticker": "C",
+            "market_data": {
+                "spot_price": 124.38999938964844,
+                "call_wall_strike": 125.0,
+                "call_wall_gex": 8485107.390177445,
+                "put_wall_strike": 110.0,
+                "put_wall_gex": -2301981.4724021084,
+                "total_net_gex": 32622344.924643673,
+                "dealer_position_tilt": "Long Gamma"
+            },
+            "trader_insight": "Dealer Gamma is positive. Incorporating SpotGamma-Approximation: market makers will buy dips suppressing volatility. A range-bound strategy like 'covered_call' near '125.0' is preferred.",
+            "backtest_result": {
+                "strategy_tested": "covered_call",
+                "days_tested": 90,
+                "win_rate_percent": 68.85,
+                "total_pnl_proxy": -2.53,
+                "max_drawdown": 15.36,
+                "verdict": "FAIL"
+            },
+            "critic_review": "CRITIC REJECTED: The strategy exhibited excessive risk or negative expectancy (Drawdown: 15.36%, Verdict: FAIL). Do not execute.",
+            "status": "REJECTED"
+        },
+        {
+            "timestamp": "2026-04-11T14:29:57.923588",
+            "ticker": "C",
+            "market_data": {
+                "spot_price": 124.38999938964844,
+                "call_wall_strike": 125.0,
+                "call_wall_gex": 8485107.390177445,
+                "put_wall_strike": 110.0,
+                "put_wall_gex": -2301981.4724021084,
+                "total_net_gex": 32622344.924643673,
+                "dealer_position_tilt": "Long Gamma"
+            },
+            "trader_insight": "Dealer Gamma is positive. Incorporating SpotGamma-Approximation: market makers will buy dips suppressing volatility. A range-bound strategy like 'covered_call' near '125.0' is preferred.",
+            "backtest_result": {
+                "strategy_tested": "covered_call",
+                "days_tested": 90,
+                "win_rate_percent": 68.85,
+                "total_pnl_proxy": -2.53,
+                "max_drawdown": 15.36,
+                "verdict": "FAIL"
+            },
+            "critic_review": "CRITIC REJECTED: The strategy exhibited excessive risk or negative expectancy (Drawdown: 15.36%, Verdict: FAIL). Do not execute.",
+            "status": "REJECTED"
+        },
+        {
+            "timestamp": "2026-04-11T14:29:59.820925",
+            "ticker": "C",
+            "market_data": {
+                "spot_price": 124.38999938964844,
+                "call_wall_strike": 125.0,
+                "call_wall_gex": 8485107.390177445,
+                "put_wall_strike": 110.0,
+                "put_wall_gex": -2301981.4724021084,
+                "total_net_gex": 32622344.924643673,
+                "dealer_position_tilt": "Long Gamma"
+            },
+            "trader_insight": "Dealer Gamma is positive. Incorporating SpotGamma-Approximation: market makers will buy dips suppressing volatility. A range-bound strategy like 'covered_call' near '125.0' is preferred.",
+            "backtest_result": {
+                "strategy_tested": "covered_call",
+                "days_tested": 90,
+                "win_rate_percent": 68.85,
+                "total_pnl_proxy": -2.53,
+                "max_drawdown": 15.36,
+                "verdict": "FAIL"
+            },
+            "critic_review": "CRITIC REJECTED: The strategy exhibited excessive risk or negative expectancy (Drawdown: 15.36%, Verdict: FAIL). Do not execute.",
+            "status": "REJECTED"
+        },
+        {
+            "timestamp": "2026-04-11T15:05:13.956536",
+            "ticker": "SPY",
+            "market_data": {
+                "total_net_gex": 100,
+                "call_wall_strike": 500,
+                "put_wall_strike": 400,
+                "dealer_position_tilt": "Long Gamma",
+                "volatility_skew": {
+                    "volatility_skew_index": -1.5,
+                    "sentiment": "Fear",
+                    "otm_call_iv": 15,
+                    "otm_put_iv": 25
+                }
+            },
+            "trader_insight": "Deploying Iron Condor (Net Volatility Seller) framework due to systemic IV overstatement verified by QUANT_KNOWLEDGE_BASE.",
+            "backtest_result": {
+                "error": "name 'ret' is not defined"
+            },
+            "critic_review": "DISAPPROVED: Strategy failed strict 80% Win Rate and >1.2 Profit Factor metrics out-of-sample constraint.",
+            "status": "REJECTED"
+        },
+        {
+            "timestamp": "2026-04-11T15:05:31.983629",
+            "ticker": "SPY",
+            "market_data": {
+                "total_net_gex": 100,
+                "call_wall_strike": 500,
+                "put_wall_strike": 400,
+                "dealer_position_tilt": "Long Gamma",
+                "volatility_skew": {
+                    "volatility_skew_index": -1.5,
+                    "sentiment": "Fear",
+                    "otm_call_iv": 15,
+                    "otm_put_iv": 25
+                }
+            },
+            "trader_insight": "Deploying Iron Condor (Net Volatility Seller) framework due to systemic IV overstatement verified by QUANT_KNOWLEDGE_BASE.",
+            "backtest_result": {
+                "error": "name 'ret' is not defined"
+            },
+            "critic_review": "DISAPPROVED: Strategy failed strict 80% Win Rate and >1.2 Profit Factor metrics out-of-sample constraint.",
+            "status": "REJECTED"
+        },
+        {
+            "timestamp": "2026-04-11T15:06:02.113298",
+            "ticker": "SPY",
+            "market_data": {
+                "total_net_gex": 100,
+                "call_wall_strike": 500,
+                "put_wall_strike": 400,
+                "dealer_position_tilt": "Long Gamma",
+                "volatility_skew": {
+                    "volatility_skew_index": -1.5,
+                    "sentiment": "Fear",
+                    "otm_call_iv": 15,
+                    "otm_put_iv": 25
+                }
+            },
+            "trader_insight": "Deploying Iron Condor (Net Volatility Seller) framework due to systemic IV overstatement verified by QUANT_KNOWLEDGE_BASE.",
+            "backtest_result": {
+                "strategy_tested": "iron_condor",
+                "days_tested": 180,
+                "win_rate_percent": 0.0,
+                "profit_factor": 0.0,
+                "total_pnl_proxy": -38.4,
+                "max_drawdown": 37.2,
+                "out_of_sample_verified": true,
+                "verdict": "FAIL"
+            },
+            "critic_review": "DISAPPROVED: Strategy failed strict 80% Win Rate and >1.2 Profit Factor metrics out-of-sample constraint.",
+            "status": "REJECTED"
+        },
+        {
+            "timestamp": "2026-04-12T02:00:08.277051",
+            "ticker": "SPY",
+            "market_data": {
+                "spot_price": 679.4600219726562,
+                "call_wall_strike": 685.0,
+                "call_wall_gex": 135692259.25330186,
+                "put_wall_strike": 660.0,
+                "put_wall_gex": -31135615.352886777,
+                "total_net_gex": 197599796.58178762,
+                "dealer_position_tilt": "Long Gamma",
+                "volatility_skew": {
+                    "volatility_skew_index": 3.71,
+                    "sentiment": "Bearish Protection (Moderate Skew)",
+                    "otm_put_iv": 24.02,
+                    "otm_call_iv": 20.31
+                }
+            },
+            "trader_insight": "Deploying Iron Condor (Net Volatility Seller) framework due to systemic IV overstatement verified by QUANT_KNOWLEDGE_BASE.",
+            "backtest_result": {
+                "strategy_tested": "iron_condor",
+                "days_tested": 180,
+                "win_rate_percent": 0.0,
+                "profit_factor": 0.0,
+                "total_pnl_proxy": -38.4,
+                "max_drawdown": 37.2,
+                "out_of_sample_verified": true,
+                "verdict": "FAIL"
+            },
+            "critic_review": "DISAPPROVED: Strategy failed strict 80% Win Rate and >1.2 Profit Factor metrics out-of-sample constraint.",
+            "status": "REJECTED"
+        }
+    ],
+    "verified_algorithms": []
+}

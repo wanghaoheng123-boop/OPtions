@@ -1,0 +1,21 @@
+# Python
+__pycache__/
+*.pyc
+venv/
+.env
+
+# Node / React
+frontend/node_modules/
+frontend/dist/
+frontend/.env
+*.log
+
+# IDEs
+.vscode/
+.idea/
+.DS_Store
+
+# Temporary Database / Logs
+data/
+logs/
+*.sqlite3

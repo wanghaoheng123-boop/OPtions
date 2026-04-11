@@ -1,0 +1,277 @@
+{
+    "cash_balance": 4663.027410273781,
+    "positions": [
+        {
+            "timestamp": "2026-04-11T10:57:35.816758",
+            "ticker": "SPY",
+            "strategy": "covered_call",
+            "entry_price": 679.4600219726562,
+            "shares_or_contracts": 14.72,
+            "capital_allocated": 10000.0,
+            "status": "OPEN"
+        },
+        {
+            "timestamp": "2026-04-11T10:58:00.412300",
+            "ticker": "SPY",
+            "strategy": "covered_call",
+            "entry_price": 679.4600219726562,
+            "shares_or_contracts": 13.25,
+            "capital_allocated": 9000.0,
+            "status": "OPEN"
+        },
+        {
+            "timestamp": "2026-04-11T10:58:00.771968",
+            "ticker": "SPY",
+            "strategy": "covered_call",
+            "entry_price": 679.4600219726562,
+            "shares_or_contracts": 11.92,
+            "capital_allocated": 8100.0,
+            "status": "OPEN"
+        },
+        {
+            "timestamp": "2026-04-11T10:59:14.312839",
+            "ticker": "SPY",
+            "strategy": "covered_call",
+            "entry_price": 679.4600219726562,
+            "shares_or_contracts": 10.73,
+            "capital_allocated": 7290.0,
+            "status": "OPEN"
+        },
+        {
+            "timestamp": "2026-04-11T10:59:14.335209",
+            "ticker": "SPY",
+            "strategy": "covered_call",
+            "entry_price": 679.4600219726562,
+            "shares_or_contracts": 9.66,
+            "capital_allocated": 6561.0,
+            "status": "OPEN"
+        },
+        {
+            "timestamp": "2026-04-11T10:59:43.370344",
+            "ticker": "SPY",
+            "strategy": "covered_call",
+            "entry_price": 679.4600219726562,
+            "shares_or_contracts": 8.69,
+            "capital_allocated": 5904.9,
+            "status": "OPEN"
+        },
+        {
+            "timestamp": "2026-04-11T10:59:43.405120",
+            "ticker": "SPY",
+            "strategy": "covered_call",
+            "entry_price": 679.4600219726562,
+            "shares_or_contracts": 7.82,
+            "capital_allocated": 5314.41,
+            "status": "OPEN"
+        },
+        {
+            "timestamp": "2026-04-11T10:59:46.039668",
+            "ticker": "SPY",
+            "strategy": "covered_call",
+            "entry_price": 679.4600219726562,
+            "shares_or_contracts": 7.04,
+            "capital_allocated": 4782.97,
+            "status": "OPEN"
+        },
+        {
+            "timestamp": "2026-04-11T10:59:58.390316",
+            "ticker": "SPY",
+            "strategy": "covered_call",
+            "entry_price": 679.4600219726562,
+            "shares_or_contracts": 6.34,
+            "capital_allocated": 4304.67,
+            "status": "OPEN"
+        },
+        {
+            "timestamp": "2026-04-11T10:59:58.704853",
+            "ticker": "SPY",
+            "strategy": "covered_call",
+            "entry_price": 679.4600219726562,
+            "shares_or_contracts": 5.7,
+            "capital_allocated": 3874.2,
+            "status": "OPEN"
+        },
+        {
+            "timestamp": "2026-04-11T10:59:58.710550",
+            "ticker": "SPY",
+            "strategy": "covered_call",
+            "entry_price": 679.4600219726562,
+            "shares_or_contracts": 5.13,
+            "capital_allocated": 3486.78,
+            "status": "OPEN"
+        },
+        {
+            "timestamp": "2026-04-11T11:54:21.156392",
+            "ticker": "SPY",
+            "strategy": "covered_call",
+            "entry_price": 679.4600219726562,
+            "shares_or_contracts": 4.62,
+            "capital_allocated": 3138.11,
+            "status": "OPEN"
+        },
+        {
+            "timestamp": "2026-04-11T11:55:31.285670",
+            "ticker": "SPY",
+            "strategy": "covered_call",
+            "entry_price": 679.4600219726562,
+            "shares_or_contracts": 4.16,
+            "capital_allocated": 2824.3,
+            "status": "OPEN"
+        },
+        {
+            "timestamp": "2026-04-11T11:55:49.895317",
+            "ticker": "SPY",
+            "strategy": "covered_call",
+            "entry_price": 679.4600219726562,
+            "shares_or_contracts": 3.74,
+            "capital_allocated": 2541.87,
+            "status": "OPEN"
+        },
+        {
+            "timestamp": "2026-04-11T11:55:50.198651",
+            "ticker": "SPY",
+            "strategy": "covered_call",
+            "entry_price": 679.4600219726562,
+            "shares_or_contracts": 3.37,
+            "capital_allocated": 2287.68,
+            "status": "OPEN"
+        },
+        {
+            "timestamp": "2026-04-11T12:01:05.721780",
+            "ticker": "SPY",
+            "strategy": "covered_call",
+            "entry_price": 679.4600219726562,
+            "shares_or_contracts": 3.03,
+            "capital_allocated": 2058.91,
+            "status": "OPEN"
+        },
+        {
+            "timestamp": "2026-04-11T12:01:05.744474",
+            "ticker": "SPY",
+            "strategy": "covered_call",
+            "entry_price": 679.4600219726562,
+            "shares_or_contracts": 2.73,
+            "capital_allocated": 1853.02,
+            "status": "OPEN"
+        },
+        {
+            "timestamp": "2026-04-11T12:29:10.147394",
+            "ticker": "SPY",
+            "strategy": "covered_call",
+            "entry_price": 679.4600219726562,
+            "shares_or_contracts": 2.45,
+            "capital_allocated": 1667.72,
+            "status": "OPEN"
+        },
+        {
+            "timestamp": "2026-04-11T12:29:10.148428",
+            "ticker": "SPY",
+            "strategy": "covered_call",
+            "entry_price": 679.4600219726562,
+            "shares_or_contracts": 2.21,
+            "capital_allocated": 1500.95,
+            "status": "OPEN"
+        },
+        {
+            "timestamp": "2026-04-11T12:29:24.012255",
+            "ticker": "SPY",
+            "strategy": "covered_call",
+            "entry_price": 679.4600219726562,
+            "shares_or_contracts": 1.99,
+            "capital_allocated": 1350.85,
+            "status": "OPEN"
+        },
+        {
+            "timestamp": "2026-04-11T14:02:09.725872",
+            "ticker": "SPY",
+            "strategy": "covered_call",
+            "entry_price": 679.4600219726562,
+            "shares_or_contracts": 1.79,
+            "capital_allocated": 1215.77,
+            "status": "OPEN"
+        },
+        {
+            "timestamp": "2026-04-11T14:02:42.860357",
+            "ticker": "SPY",
+            "strategy": "covered_call",
+            "entry_price": 679.4600219726562,
+            "shares_or_contracts": 1.61,
+            "capital_allocated": 1094.19,
+            "status": "OPEN"
+        },
+        {
+            "timestamp": "2026-04-11T14:03:03.115892",
+            "ticker": "SPY",
+            "strategy": "covered_call",
+            "entry_price": 679.4600219726562,
+            "shares_or_contracts": 1.45,
+            "capital_allocated": 984.77,
+            "status": "OPEN"
+        },
+        {
+            "timestamp": "2026-04-11T14:21:24.399266",
+            "ticker": "SPY",
+            "strategy": "covered_call",
+            "entry_price": 679.4600219726562,
+            "shares_or_contracts": 1.3,
+            "capital_allocated": 886.29,
+            "status": "OPEN"
+        },
+        {
+            "timestamp": "2026-04-11T14:21:24.425682",
+            "ticker": "SPY",
+            "strategy": "covered_call",
+            "entry_price": 679.4600219726562,
+            "shares_or_contracts": 1.17,
+            "capital_allocated": 797.66,
+            "status": "OPEN"
+        },
+        {
+            "timestamp": "2026-04-11T14:28:18.608641",
+            "ticker": "SPY",
+            "strategy": "covered_call",
+            "entry_price": 679.4600219726562,
+            "shares_or_contracts": 1.06,
+            "capital_allocated": 717.9,
+            "status": "OPEN"
+        },
+        {
+            "timestamp": "2026-04-11T14:28:18.650642",
+            "ticker": "SPY",
+            "strategy": "covered_call",
+            "entry_price": 679.4600219726562,
+            "shares_or_contracts": 0.95,
+            "capital_allocated": 646.11,
+            "status": "OPEN"
+        },
+        {
+            "timestamp": "2026-04-11T14:28:55.073845",
+            "ticker": "SPY",
+            "strategy": "covered_call",
+            "entry_price": 679.4600219726562,
+            "shares_or_contracts": 0.86,
+            "capital_allocated": 581.5,
+            "status": "OPEN"
+        },
+        {
+            "timestamp": "2026-04-11T14:28:58.420485",
+            "ticker": "PFE",
+            "strategy": "covered_call",
+            "entry_price": 26.920000076293945,
+            "shares_or_contracts": 19.44,
+            "capital_allocated": 523.35,
+            "status": "OPEN"
+        },
+        {
+            "timestamp": "2026-04-12T02:00:08.282334",
+            "ticker": "SPY",
+            "strategy": "iron_condor",
+            "entry_price": 679.4600219726562,
+            "shares_or_contracts": 0.07,
+            "capital_allocated": 47.1,
+            "kelly_percentage": 1.0,
+            "status": "OPEN"
+        }
+    ],
+    "pnl_history": []
+}
