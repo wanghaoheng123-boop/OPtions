@@ -1,0 +1,478 @@
+{
+  "source_files": {
+    "tickers": "E:\\ANTIGRAVITY\\OPTION TRADING APP\\review\\SECTOR_DEEP_DIVE\\TICKER_RESULTS.json",
+    "sectors": "E:\\ANTIGRAVITY\\OPTION TRADING APP\\review\\SECTOR_DEEP_DIVE\\SECTOR_SUMMARY.json"
+  },
+  "counts_by_classification": {
+    "FAILING": 18,
+    "MARGINAL": 14,
+    "WORKING": 3
+  },
+  "failing_tickers_by_sector": {
+    "Consumer_Discretionary": [
+      "AMZN",
+      "TSLA",
+      "HD",
+      "NKE"
+    ],
+    "Consumer_Staples": [
+      "WMT",
+      "KO",
+      "PEP",
+      "PG"
+    ],
+    "Energy": [
+      "XOM",
+      "CVX",
+      "COP",
+      "EOG"
+    ],
+    "Financials": [
+      "BAC",
+      "MS"
+    ],
+    "Healthcare": [
+      "UNH"
+    ],
+    "Industrials": [
+      "BA",
+      "CAT",
+      "UPS"
+    ]
+  },
+  "low_sample_trades": [
+    {
+      "ticker": "AAPL",
+      "sector": "Technology",
+      "n_trades": 3,
+      "tag": "quant"
+    },
+    {
+      "ticker": "MSFT",
+      "sector": "Technology",
+      "n_trades": 3,
+      "tag": "quant"
+    },
+    {
+      "ticker": "NVDA",
+      "sector": "Technology",
+      "n_trades": 3,
+      "tag": "quant"
+    },
+    {
+      "ticker": "META",
+      "sector": "Technology",
+      "n_trades": 3,
+      "tag": "quant"
+    },
+    {
+      "ticker": "GOOGL",
+      "sector": "Technology",
+      "n_trades": 3,
+      "tag": "quant"
+    },
+    {
+      "ticker": "JPM",
+      "sector": "Financials",
+      "n_trades": 3,
+      "tag": "quant"
+    },
+    {
+      "ticker": "BAC",
+      "sector": "Financials",
+      "n_trades": 3,
+      "tag": "quant"
+    },
+    {
+      "ticker": "GS",
+      "sector": "Financials",
+      "n_trades": 3,
+      "tag": "quant"
+    },
+    {
+      "ticker": "MS",
+      "sector": "Financials",
+      "n_trades": 3,
+      "tag": "quant"
+    },
+    {
+      "ticker": "V",
+      "sector": "Financials",
+      "n_trades": 3,
+      "tag": "quant"
+    },
+    {
+      "ticker": "UNH",
+      "sector": "Healthcare",
+      "n_trades": 3,
+      "tag": "quant"
+    },
+    {
+      "ticker": "JNJ",
+      "sector": "Healthcare",
+      "n_trades": 3,
+      "tag": "quant"
+    },
+    {
+      "ticker": "LLY",
+      "sector": "Healthcare",
+      "n_trades": 3,
+      "tag": "quant"
+    },
+    {
+      "ticker": "ABBV",
+      "sector": "Healthcare",
+      "n_trades": 3,
+      "tag": "quant"
+    },
+    {
+      "ticker": "MRK",
+      "sector": "Healthcare",
+      "n_trades": 3,
+      "tag": "quant"
+    },
+    {
+      "ticker": "AMZN",
+      "sector": "Consumer_Discretionary",
+      "n_trades": 3,
+      "tag": "quant"
+    },
+    {
+      "ticker": "TSLA",
+      "sector": "Consumer_Discretionary",
+      "n_trades": 3,
+      "tag": "quant"
+    },
+    {
+      "ticker": "HD",
+      "sector": "Consumer_Discretionary",
+      "n_trades": 3,
+      "tag": "quant"
+    },
+    {
+      "ticker": "MCD",
+      "sector": "Consumer_Discretionary",
+      "n_trades": 3,
+      "tag": "quant"
+    },
+    {
+      "ticker": "NKE",
+      "sector": "Consumer_Discretionary",
+      "n_trades": 3,
+      "tag": "quant"
+    },
+    {
+      "ticker": "WMT",
+      "sector": "Consumer_Staples",
+      "n_trades": 3,
+      "tag": "quant"
+    },
+    {
+      "ticker": "KO",
+      "sector": "Consumer_Staples",
+      "n_trades": 3,
+      "tag": "quant"
+    },
+    {
+      "ticker": "PEP",
+      "sector": "Consumer_Staples",
+      "n_trades": 3,
+      "tag": "quant"
+    },
+    {
+      "ticker": "PG",
+      "sector": "Consumer_Staples",
+      "n_trades": 3,
+      "tag": "quant"
+    },
+    {
+      "ticker": "COST",
+      "sector": "Consumer_Staples",
+      "n_trades": 3,
+      "tag": "quant"
+    },
+    {
+      "ticker": "XOM",
+      "sector": "Energy",
+      "n_trades": 3,
+      "tag": "quant"
+    },
+    {
+      "ticker": "CVX",
+      "sector": "Energy",
+      "n_trades": 3,
+      "tag": "quant"
+    },
+    {
+      "ticker": "COP",
+      "sector": "Energy",
+      "n_trades": 3,
+      "tag": "quant"
+    },
+    {
+      "ticker": "EOG",
+      "sector": "Energy",
+      "n_trades": 3,
+      "tag": "quant"
+    },
+    {
+      "ticker": "SLB",
+      "sector": "Energy",
+      "n_trades": 3,
+      "tag": "quant"
+    },
+    {
+      "ticker": "BA",
+      "sector": "Industrials",
+      "n_trades": 3,
+      "tag": "quant"
+    },
+    {
+      "ticker": "CAT",
+      "sector": "Industrials",
+      "n_trades": 3,
+      "tag": "quant"
+    },
+    {
+      "ticker": "GE",
+      "sector": "Industrials",
+      "n_trades": 3,
+      "tag": "quant"
+    },
+    {
+      "ticker": "RTX",
+      "sector": "Industrials",
+      "n_trades": 3,
+      "tag": "quant"
+    },
+    {
+      "ticker": "UPS",
+      "sector": "Industrials",
+      "n_trades": 3,
+      "tag": "quant"
+    }
+  ],
+  "high_sl_failing": [],
+  "persona_backlog": [
+    {
+      "persona": "portfolio_manager",
+      "priority": "P1",
+      "item": "Sector Consumer_Discretionary: negative P&L (-5114.68) and weak avg WR (40.0); cap or exclude until next engine iteration."
+    },
+    {
+      "persona": "portfolio_manager",
+      "priority": "P1",
+      "item": "Sector Consumer_Discretionary: 4/5 FAILING - default stance: no sleeve expansion."
+    },
+    {
+      "persona": "portfolio_manager",
+      "priority": "P1",
+      "item": "Sector Consumer_Staples: negative P&L (-6907.39) and weak avg WR (46.67); cap or exclude until next engine iteration."
+    },
+    {
+      "persona": "portfolio_manager",
+      "priority": "P1",
+      "item": "Sector Consumer_Staples: 4/5 FAILING - default stance: no sleeve expansion."
+    },
+    {
+      "persona": "portfolio_manager",
+      "priority": "P1",
+      "item": "Sector Energy: negative P&L (-10615.45) and weak avg WR (26.67); cap or exclude until next engine iteration."
+    },
+    {
+      "persona": "portfolio_manager",
+      "priority": "P1",
+      "item": "Sector Energy: 4/5 FAILING - default stance: no sleeve expansion."
+    },
+    {
+      "persona": "portfolio_manager",
+      "priority": "P1",
+      "item": "Sector Industrials: negative P&L (-9949.74) and weak avg WR (46.67); cap or exclude until next engine iteration."
+    },
+    {
+      "persona": "portfolio_manager",
+      "priority": "P2",
+      "item": "Multiple WORKING names (AAPL, META, GE) - correlation cluster risk; enforce per-name and basket notional caps."
+    },
+    {
+      "persona": "quant_analyst",
+      "priority": "P2",
+      "item": "AAPL (Technology): only 3 OOS trades - do not promote on ratios alone; extend window or walk-forward."
+    },
+    {
+      "persona": "quant_analyst",
+      "priority": "P2",
+      "item": "MSFT (Technology): only 3 OOS trades - do not promote on ratios alone; extend window or walk-forward."
+    },
+    {
+      "persona": "quant_analyst",
+      "priority": "P2",
+      "item": "NVDA (Technology): only 3 OOS trades - do not promote on ratios alone; extend window or walk-forward."
+    },
+    {
+      "persona": "quant_analyst",
+      "priority": "P2",
+      "item": "META (Technology): only 3 OOS trades - do not promote on ratios alone; extend window or walk-forward."
+    },
+    {
+      "persona": "quant_analyst",
+      "priority": "P2",
+      "item": "GOOGL (Technology): only 3 OOS trades - do not promote on ratios alone; extend window or walk-forward."
+    },
+    {
+      "persona": "quant_analyst",
+      "priority": "P2",
+      "item": "JPM (Financials): only 3 OOS trades - do not promote on ratios alone; extend window or walk-forward."
+    },
+    {
+      "persona": "quant_analyst",
+      "priority": "P2",
+      "item": "BAC (Financials): only 3 OOS trades - do not promote on ratios alone; extend window or walk-forward."
+    },
+    {
+      "persona": "quant_analyst",
+      "priority": "P2",
+      "item": "GS (Financials): only 3 OOS trades - do not promote on ratios alone; extend window or walk-forward."
+    },
+    {
+      "persona": "quant_analyst",
+      "priority": "P2",
+      "item": "MS (Financials): only 3 OOS trades - do not promote on ratios alone; extend window or walk-forward."
+    },
+    {
+      "persona": "quant_analyst",
+      "priority": "P2",
+      "item": "V (Financials): only 3 OOS trades - do not promote on ratios alone; extend window or walk-forward."
+    },
+    {
+      "persona": "quant_analyst",
+      "priority": "P2",
+      "item": "UNH (Healthcare): only 3 OOS trades - do not promote on ratios alone; extend window or walk-forward."
+    },
+    {
+      "persona": "quant_analyst",
+      "priority": "P2",
+      "item": "JNJ (Healthcare): only 3 OOS trades - do not promote on ratios alone; extend window or walk-forward."
+    },
+    {
+      "persona": "quant_analyst",
+      "priority": "P2",
+      "item": "LLY (Healthcare): only 3 OOS trades - do not promote on ratios alone; extend window or walk-forward."
+    },
+    {
+      "persona": "quant_analyst",
+      "priority": "P2",
+      "item": "ABBV (Healthcare): only 3 OOS trades - do not promote on ratios alone; extend window or walk-forward."
+    },
+    {
+      "persona": "quant_analyst",
+      "priority": "P2",
+      "item": "MRK (Healthcare): only 3 OOS trades - do not promote on ratios alone; extend window or walk-forward."
+    },
+    {
+      "persona": "quant_analyst",
+      "priority": "P2",
+      "item": "AMZN (Consumer_Discretionary): only 3 OOS trades - do not promote on ratios alone; extend window or walk-forward."
+    },
+    {
+      "persona": "quant_analyst",
+      "priority": "P2",
+      "item": "TSLA (Consumer_Discretionary): only 3 OOS trades - do not promote on ratios alone; extend window or walk-forward."
+    },
+    {
+      "persona": "quant_analyst",
+      "priority": "P2",
+      "item": "HD (Consumer_Discretionary): only 3 OOS trades - do not promote on ratios alone; extend window or walk-forward."
+    },
+    {
+      "persona": "quant_analyst",
+      "priority": "P2",
+      "item": "MCD (Consumer_Discretionary): only 3 OOS trades - do not promote on ratios alone; extend window or walk-forward."
+    },
+    {
+      "persona": "quant_analyst",
+      "priority": "P2",
+      "item": "NKE (Consumer_Discretionary): only 3 OOS trades - do not promote on ratios alone; extend window or walk-forward."
+    },
+    {
+      "persona": "quant_analyst",
+      "priority": "P2",
+      "item": "WMT (Consumer_Staples): only 3 OOS trades - do not promote on ratios alone; extend window or walk-forward."
+    },
+    {
+      "persona": "quant_analyst",
+      "priority": "P2",
+      "item": "KO (Consumer_Staples): only 3 OOS trades - do not promote on ratios alone; extend window or walk-forward."
+    },
+    {
+      "persona": "quant_analyst",
+      "priority": "P2",
+      "item": "PEP (Consumer_Staples): only 3 OOS trades - do not promote on ratios alone; extend window or walk-forward."
+    },
+    {
+      "persona": "quant_analyst",
+      "priority": "P2",
+      "item": "PG (Consumer_Staples): only 3 OOS trades - do not promote on ratios alone; extend window or walk-forward."
+    },
+    {
+      "persona": "quant_analyst",
+      "priority": "P2",
+      "item": "COST (Consumer_Staples): only 3 OOS trades - do not promote on ratios alone; extend window or walk-forward."
+    },
+    {
+      "persona": "quant_analyst",
+      "priority": "P2",
+      "item": "XOM (Energy): only 3 OOS trades - do not promote on ratios alone; extend window or walk-forward."
+    },
+    {
+      "persona": "quant_analyst",
+      "priority": "P2",
+      "item": "CVX (Energy): only 3 OOS trades - do not promote on ratios alone; extend window or walk-forward."
+    },
+    {
+      "persona": "quant_analyst",
+      "priority": "P2",
+      "item": "COP (Energy): only 3 OOS trades - do not promote on ratios alone; extend window or walk-forward."
+    },
+    {
+      "persona": "quant_analyst",
+      "priority": "P2",
+      "item": "EOG (Energy): only 3 OOS trades - do not promote on ratios alone; extend window or walk-forward."
+    },
+    {
+      "persona": "quant_analyst",
+      "priority": "P2",
+      "item": "SLB (Energy): only 3 OOS trades - do not promote on ratios alone; extend window or walk-forward."
+    },
+    {
+      "persona": "quant_analyst",
+      "priority": "P2",
+      "item": "BA (Industrials): only 3 OOS trades - do not promote on ratios alone; extend window or walk-forward."
+    },
+    {
+      "persona": "quant_analyst",
+      "priority": "P2",
+      "item": "CAT (Industrials): only 3 OOS trades - do not promote on ratios alone; extend window or walk-forward."
+    },
+    {
+      "persona": "quant_analyst",
+      "priority": "P2",
+      "item": "GE (Industrials): only 3 OOS trades - do not promote on ratios alone; extend window or walk-forward."
+    },
+    {
+      "persona": "quant_analyst",
+      "priority": "P2",
+      "item": "RTX (Industrials): only 3 OOS trades - do not promote on ratios alone; extend window or walk-forward."
+    },
+    {
+      "persona": "quant_analyst",
+      "priority": "P2",
+      "item": "UPS (Industrials): only 3 OOS trades - do not promote on ratios alone; extend window or walk-forward."
+    },
+    {
+      "persona": "programmer",
+      "priority": "P3",
+      "item": "Any change to `backtester_audit.py`: add regression check (golden subset or deterministic fixture) before merging."
+    }
+  ]
+}

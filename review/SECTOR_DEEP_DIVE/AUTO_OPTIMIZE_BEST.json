@@ -1,0 +1,23 @@
+{
+  "generated_utc": "2026-04-12T12:07:06.193123+00:00",
+  "sort_key": [
+    3,
+    14,
+    41830
+  ],
+  "metrics": {
+    "working": 3,
+    "marginal": 14,
+    "failing": 18,
+    "no_data": 0,
+    "total_pnl": 41830.02,
+    "mean_max_drawdown_pct": 4.18,
+    "mean_sharpe": 0.583
+  },
+  "recommended_params": {
+    "profit_take_pct": 0.55,
+    "stop_loss_mult": 1.0,
+    "volatility_ratio": 1.5,
+    "min_credit_pct_of_risk": 0.1
+  }
+}

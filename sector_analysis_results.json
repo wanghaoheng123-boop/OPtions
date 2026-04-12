@@ -1,0 +1,3156 @@
+{
+  "AAPL": {
+    "Standard (50% PT, 1.0x SL)": {
+      "wr": 100.0,
+      "pf": 99.99,
+      "dd": 0.0,
+      "sharpe": 4.32,
+      "pnl": 1179.66,
+      "n": 3,
+      "verdict": "PASS"
+    },
+    "Aggressive (70% PT, 1.0x SL)": {
+      "wr": 100.0,
+      "pf": 99.99,
+      "dd": 0.0,
+      "sharpe": 4.46,
+      "pnl": 1179.66,
+      "n": 3,
+      "verdict": "PASS"
+    },
+    "Wide Wing (50% PT, 1.0x SL, 7%)": {
+      "wr": 100.0,
+      "pf": 99.99,
+      "dd": 0.0,
+      "sharpe": 4.32,
+      "pnl": 1179.66,
+      "n": 3,
+      "verdict": "PASS"
+    },
+    "Short DTE (50% PT, 21 DTE)": {
+      "wr": 75.0,
+      "pf": 1.47,
+      "dd": 1.26,
+      "sharpe": 0.55,
+      "pnl": 377.76,
+      "n": 4,
+      "verdict": "PASS"
+    }
+  },
+  "MSFT": {
+    "Standard (50% PT, 1.0x SL)": {
+      "wr": 66.67,
+      "pf": 0.87,
+      "dd": 1.46,
+      "sharpe": 0.8,
+      "pnl": -185.04,
+      "n": 3,
+      "verdict": "FAIL"
+    },
+    "Aggressive (70% PT, 1.0x SL)": {
+      "wr": 66.67,
+      "pf": 0.87,
+      "dd": 2.45,
+      "sharpe": -0.58,
+      "pnl": -185.04,
+      "n": 3,
+      "verdict": "FAIL"
+    },
+    "Wide Wing (50% PT, 1.0x SL, 7%)": {
+      "wr": 66.67,
+      "pf": 0.87,
+      "dd": 1.46,
+      "sharpe": 0.8,
+      "pnl": -185.04,
+      "n": 3,
+      "verdict": "FAIL"
+    },
+    "Short DTE (50% PT, 21 DTE)": {
+      "wr": 75.0,
+      "pf": 1.08,
+      "dd": 1.46,
+      "sharpe": 1.57,
+      "pnl": 120.04,
+      "n": 4,
+      "verdict": "FAIL"
+    }
+  },
+  "NVDA": {
+    "Standard (50% PT, 1.0x SL)": {
+      "wr": 66.67,
+      "pf": 7.9,
+      "dd": 0.13,
+      "sharpe": 3.5,
+      "pnl": 927.72,
+      "n": 3,
+      "verdict": "FAIL"
+    },
+    "Aggressive (70% PT, 1.0x SL)": {
+      "wr": 66.67,
+      "pf": 7.9,
+      "dd": 0.13,
+      "sharpe": 3.56,
+      "pnl": 927.72,
+      "n": 3,
+      "verdict": "FAIL"
+    },
+    "Wide Wing (50% PT, 1.0x SL, 7%)": {
+      "wr": 66.67,
+      "pf": 7.9,
+      "dd": 0.13,
+      "sharpe": 3.5,
+      "pnl": 927.72,
+      "n": 3,
+      "verdict": "FAIL"
+    },
+    "Short DTE (50% PT, 21 DTE)": {
+      "wr": 75.0,
+      "pf": 10.56,
+      "dd": 0.1,
+      "sharpe": 4.06,
+      "pnl": 960.9,
+      "n": 4,
+      "verdict": "PASS"
+    }
+  },
+  "AVGO": {
+    "Standard (50% PT, 1.0x SL)": {
+      "wr": 66.67,
+      "pf": 2.88,
+      "dd": 0.89,
+      "sharpe": 2.33,
+      "pnl": 1678.35,
+      "n": 3,
+      "verdict": "FAIL"
+    },
+    "Aggressive (70% PT, 1.0x SL)": {
+      "wr": 66.67,
+      "pf": 2.88,
+      "dd": 0.89,
+      "sharpe": 2.33,
+      "pnl": 1678.35,
+      "n": 3,
+      "verdict": "FAIL"
+    },
+    "Wide Wing (50% PT, 1.0x SL, 7%)": {
+      "wr": 66.67,
+      "pf": 2.88,
+      "dd": 0.89,
+      "sharpe": 2.33,
+      "pnl": 1678.35,
+      "n": 3,
+      "verdict": "FAIL"
+    },
+    "Short DTE (50% PT, 21 DTE)": {
+      "wr": 75.0,
+      "pf": 3.72,
+      "dd": 0.89,
+      "sharpe": 3.83,
+      "pnl": 2427.6,
+      "n": 4,
+      "verdict": "PASS"
+    }
+  },
+  "CRM": {
+    "Standard (50% PT, 1.0x SL)": {
+      "wr": 33.33,
+      "pf": 0.56,
+      "dd": 1.07,
+      "sharpe": -1.17,
+      "pnl": -437.24,
+      "n": 3,
+      "verdict": "FAIL"
+    },
+    "Aggressive (70% PT, 1.0x SL)": {
+      "wr": 33.33,
+      "pf": 0.56,
+      "dd": 1.07,
+      "sharpe": -1.17,
+      "pnl": -437.24,
+      "n": 3,
+      "verdict": "FAIL"
+    },
+    "Wide Wing (50% PT, 1.0x SL, 7%)": {
+      "wr": 33.33,
+      "pf": 0.56,
+      "dd": 1.07,
+      "sharpe": -1.17,
+      "pnl": -437.24,
+      "n": 3,
+      "verdict": "FAIL"
+    },
+    "Short DTE (50% PT, 21 DTE)": {
+      "wr": 25.0,
+      "pf": 0.22,
+      "dd": 1.72,
+      "sharpe": -3.15,
+      "pnl": -1092.01,
+      "n": 4,
+      "verdict": "FAIL"
+    }
+  },
+  "ORCL": {
+    "Standard (50% PT, 1.0x SL)": {
+      "wr": 66.67,
+      "pf": 3.36,
+      "dd": 0.37,
+      "sharpe": 1.89,
+      "pnl": 601.16,
+      "n": 3,
+      "verdict": "FAIL"
+    },
+    "Aggressive (70% PT, 1.0x SL)": {
+      "wr": 66.67,
+      "pf": 3.36,
+      "dd": 0.37,
+      "sharpe": 1.89,
+      "pnl": 601.16,
+      "n": 3,
+      "verdict": "FAIL"
+    },
+    "Wide Wing (50% PT, 1.0x SL, 7%)": {
+      "wr": 66.67,
+      "pf": 3.36,
+      "dd": 0.37,
+      "sharpe": 1.89,
+      "pnl": 601.16,
+      "n": 3,
+      "verdict": "FAIL"
+    },
+    "Short DTE (50% PT, 21 DTE)": {
+      "wr": 50.0,
+      "pf": 1.0,
+      "dd": 0.51,
+      "sharpe": 0.85,
+      "pnl": -0.7,
+      "n": 4,
+      "verdict": "FAIL"
+    }
+  },
+  "AMD": {
+    "Standard (50% PT, 1.0x SL)": {
+      "wr": 66.67,
+      "pf": 4.01,
+      "dd": 0.36,
+      "sharpe": 2.29,
+      "pnl": 1081.4,
+      "n": 3,
+      "verdict": "FAIL"
+    },
+    "Aggressive (70% PT, 1.0x SL)": {
+      "wr": 66.67,
+      "pf": 4.01,
+      "dd": 0.36,
+      "sharpe": 2.29,
+      "pnl": 1081.4,
+      "n": 3,
+      "verdict": "FAIL"
+    },
+    "Wide Wing (50% PT, 1.0x SL, 7%)": {
+      "wr": 66.67,
+      "pf": 4.01,
+      "dd": 0.36,
+      "sharpe": 2.29,
+      "pnl": 1081.4,
+      "n": 3,
+      "verdict": "FAIL"
+    },
+    "Short DTE (50% PT, 21 DTE)": {
+      "wr": 25.0,
+      "pf": 0.65,
+      "dd": 1.24,
+      "sharpe": -0.58,
+      "pnl": -330.74,
+      "n": 4,
+      "verdict": "FAIL"
+    }
+  },
+  "INTC": {
+    "Standard (50% PT, 1.0x SL)": {
+      "wr": 66.67,
+      "pf": 2.61,
+      "dd": 0.06,
+      "sharpe": 1.75,
+      "pnl": 95.78,
+      "n": 3,
+      "verdict": "FAIL"
+    },
+    "Aggressive (70% PT, 1.0x SL)": {
+      "wr": 66.67,
+      "pf": 2.61,
+      "dd": 0.06,
+      "sharpe": 1.75,
+      "pnl": 95.78,
+      "n": 3,
+      "verdict": "FAIL"
+    },
+    "Wide Wing (50% PT, 1.0x SL, 7%)": {
+      "wr": 66.67,
+      "pf": 2.61,
+      "dd": 0.06,
+      "sharpe": 1.75,
+      "pnl": 95.78,
+      "n": 3,
+      "verdict": "FAIL"
+    },
+    "Short DTE (50% PT, 21 DTE)": {
+      "wr": 75.0,
+      "pf": 4.95,
+      "dd": 0.06,
+      "sharpe": 3.52,
+      "pnl": 251.39,
+      "n": 4,
+      "verdict": "PASS"
+    }
+  },
+  "UNH": {
+    "Standard (50% PT, 1.0x SL)": {
+      "wr": 33.33,
+      "pf": 0.1,
+      "dd": 1.56,
+      "sharpe": -2.36,
+      "pnl": -1115.52,
+      "n": 3,
+      "verdict": "FAIL"
+    },
+    "Aggressive (70% PT, 1.0x SL)": {
+      "wr": 33.33,
+      "pf": 0.1,
+      "dd": 1.56,
+      "sharpe": -2.09,
+      "pnl": -1115.52,
+      "n": 3,
+      "verdict": "FAIL"
+    },
+    "Wide Wing (50% PT, 1.0x SL, 7%)": {
+      "wr": 33.33,
+      "pf": 0.1,
+      "dd": 1.56,
+      "sharpe": -2.36,
+      "pnl": -1115.52,
+      "n": 3,
+      "verdict": "FAIL"
+    },
+    "Short DTE (50% PT, 21 DTE)": {
+      "wr": 50.0,
+      "pf": 1.2,
+      "dd": 1.61,
+      "sharpe": 0.61,
+      "pnl": 238.92,
+      "n": 4,
+      "verdict": "FAIL"
+    }
+  },
+  "JNJ": {
+    "Standard (50% PT, 1.0x SL)": {
+      "wr": 66.67,
+      "pf": 1.3,
+      "dd": 1.1,
+      "sharpe": -0.02,
+      "pnl": 192.41,
+      "n": 3,
+      "verdict": "FAIL"
+    },
+    "Aggressive (70% PT, 1.0x SL)": {
+      "wr": 66.67,
+      "pf": 1.3,
+      "dd": 1.1,
+      "sharpe": 0.1,
+      "pnl": 192.41,
+      "n": 3,
+      "verdict": "FAIL"
+    },
+    "Wide Wing (50% PT, 1.0x SL, 7%)": {
+      "wr": 66.67,
+      "pf": 1.3,
+      "dd": 1.1,
+      "sharpe": -0.02,
+      "pnl": 192.41,
+      "n": 3,
+      "verdict": "FAIL"
+    },
+    "Short DTE (50% PT, 21 DTE)": {
+      "wr": 50.0,
+      "pf": 1.39,
+      "dd": 1.13,
+      "sharpe": -0.24,
+      "pnl": 223.84,
+      "n": 4,
+      "verdict": "FAIL"
+    }
+  },
+  "PFE": {
+    "Standard (50% PT, 1.0x SL)": {
+      "wr": 66.67,
+      "pf": 3.53,
+      "dd": 0.04,
+      "sharpe": 2.33,
+      "pnl": 89.42,
+      "n": 3,
+      "verdict": "FAIL"
+    },
+    "Aggressive (70% PT, 1.0x SL)": {
+      "wr": 66.67,
+      "pf": 3.53,
+      "dd": 0.04,
+      "sharpe": 2.43,
+      "pnl": 89.42,
+      "n": 3,
+      "verdict": "FAIL"
+    },
+    "Wide Wing (50% PT, 1.0x SL, 7%)": {
+      "wr": 66.67,
+      "pf": 3.53,
+      "dd": 0.04,
+      "sharpe": 2.33,
+      "pnl": 89.42,
+      "n": 3,
+      "verdict": "FAIL"
+    },
+    "Short DTE (50% PT, 21 DTE)": {
+      "wr": 100.0,
+      "pf": 99.99,
+      "dd": 0.0,
+      "sharpe": 5.05,
+      "pnl": 158.56,
+      "n": 4,
+      "verdict": "PASS"
+    }
+  },
+  "ABBV": {
+    "Standard (50% PT, 1.0x SL)": {
+      "wr": 66.67,
+      "pf": 1.65,
+      "dd": 0.57,
+      "sharpe": 2.08,
+      "pnl": 371.81,
+      "n": 3,
+      "verdict": "FAIL"
+    },
+    "Aggressive (70% PT, 1.0x SL)": {
+      "wr": 66.67,
+      "pf": 1.65,
+      "dd": 0.57,
+      "sharpe": 2.2,
+      "pnl": 371.81,
+      "n": 3,
+      "verdict": "FAIL"
+    },
+    "Wide Wing (50% PT, 1.0x SL, 7%)": {
+      "wr": 66.67,
+      "pf": 1.65,
+      "dd": 0.57,
+      "sharpe": 2.08,
+      "pnl": 371.81,
+      "n": 3,
+      "verdict": "FAIL"
+    },
+    "Short DTE (50% PT, 21 DTE)": {
+      "wr": 75.0,
+      "pf": 3.36,
+      "dd": 0.45,
+      "sharpe": 3.54,
+      "pnl": 1061.73,
+      "n": 4,
+      "verdict": "PASS"
+    }
+  },
+  "MRK": {
+    "Standard (50% PT, 1.0x SL)": {
+      "wr": 66.67,
+      "pf": 2.31,
+      "dd": 0.24,
+      "sharpe": 2.41,
+      "pnl": 315.63,
+      "n": 3,
+      "verdict": "FAIL"
+    },
+    "Aggressive (70% PT, 1.0x SL)": {
+      "wr": 66.67,
+      "pf": 2.31,
+      "dd": 0.24,
+      "sharpe": 2.3,
+      "pnl": 315.63,
+      "n": 3,
+      "verdict": "FAIL"
+    },
+    "Wide Wing (50% PT, 1.0x SL, 7%)": {
+      "wr": 66.67,
+      "pf": 2.31,
+      "dd": 0.24,
+      "sharpe": 2.41,
+      "pnl": 315.63,
+      "n": 3,
+      "verdict": "FAIL"
+    },
+    "Short DTE (50% PT, 21 DTE)": {
+      "wr": 75.0,
+      "pf": 24.32,
+      "dd": 0.06,
+      "sharpe": 4.2,
+      "pnl": 714.47,
+      "n": 4,
+      "verdict": "PASS"
+    }
+  },
+  "LLY": {
+    "Standard (50% PT, 1.0x SL)": {
+      "wr": 66.67,
+      "pf": 2.18,
+      "dd": 2.2,
+      "sharpe": 2.25,
+      "pnl": 2591.14,
+      "n": 3,
+      "verdict": "FAIL"
+    },
+    "Aggressive (70% PT, 1.0x SL)": {
+      "wr": 66.67,
+      "pf": 2.18,
+      "dd": 2.2,
+      "sharpe": 2.25,
+      "pnl": 2591.14,
+      "n": 3,
+      "verdict": "FAIL"
+    },
+    "Wide Wing (50% PT, 1.0x SL, 7%)": {
+      "wr": 66.67,
+      "pf": 2.18,
+      "dd": 2.2,
+      "sharpe": 2.25,
+      "pnl": 2591.14,
+      "n": 3,
+      "verdict": "FAIL"
+    },
+    "Short DTE (50% PT, 21 DTE)": {
+      "wr": 75.0,
+      "pf": 2.52,
+      "dd": 6.14,
+      "sharpe": 1.81,
+      "pnl": 4665.02,
+      "n": 4,
+      "verdict": "PASS"
+    }
+  },
+  "ABT": {
+    "Standard (50% PT, 1.0x SL)": {
+      "wr": 33.33,
+      "pf": 0.58,
+      "dd": 0.74,
+      "sharpe": -1.37,
+      "pnl": -175.09,
+      "n": 3,
+      "verdict": "FAIL"
+    },
+    "Aggressive (70% PT, 1.0x SL)": {
+      "wr": 33.33,
+      "pf": 0.58,
+      "dd": 0.74,
+      "sharpe": -1.21,
+      "pnl": -175.09,
+      "n": 3,
+      "verdict": "FAIL"
+    },
+    "Wide Wing (50% PT, 1.0x SL, 7%)": {
+      "wr": 33.33,
+      "pf": 0.58,
+      "dd": 0.74,
+      "sharpe": -1.37,
+      "pnl": -175.09,
+      "n": 3,
+      "verdict": "FAIL"
+    },
+    "Short DTE (50% PT, 21 DTE)": {
+      "wr": 50.0,
+      "pf": 0.74,
+      "dd": 0.77,
+      "sharpe": -1.45,
+      "pnl": -156.65,
+      "n": 4,
+      "verdict": "FAIL"
+    }
+  },
+  "BMY": {
+    "Standard (50% PT, 1.0x SL)": {
+      "wr": 100.0,
+      "pf": 99.99,
+      "dd": 0.0,
+      "sharpe": 4.51,
+      "pnl": 350.01,
+      "n": 3,
+      "verdict": "PASS"
+    },
+    "Aggressive (70% PT, 1.0x SL)": {
+      "wr": 100.0,
+      "pf": 99.99,
+      "dd": 0.0,
+      "sharpe": 4.56,
+      "pnl": 350.01,
+      "n": 3,
+      "verdict": "PASS"
+    },
+    "Wide Wing (50% PT, 1.0x SL, 7%)": {
+      "wr": 100.0,
+      "pf": 99.99,
+      "dd": 0.0,
+      "sharpe": 4.51,
+      "pnl": 350.01,
+      "n": 3,
+      "verdict": "PASS"
+    },
+    "Short DTE (50% PT, 21 DTE)": {
+      "wr": 75.0,
+      "pf": 4.22,
+      "dd": 0.18,
+      "sharpe": 2.63,
+      "pnl": 290.71,
+      "n": 4,
+      "verdict": "PASS"
+    }
+  },
+  "JPM": {
+    "Standard (50% PT, 1.0x SL)": {
+      "wr": 66.67,
+      "pf": 5.92,
+      "dd": 0.14,
+      "sharpe": 2.78,
+      "pnl": 697.3,
+      "n": 3,
+      "verdict": "FAIL"
+    },
+    "Aggressive (70% PT, 1.0x SL)": {
+      "wr": 66.67,
+      "pf": 5.92,
+      "dd": 0.14,
+      "sharpe": 2.78,
+      "pnl": 697.3,
+      "n": 3,
+      "verdict": "FAIL"
+    },
+    "Wide Wing (50% PT, 1.0x SL, 7%)": {
+      "wr": 66.67,
+      "pf": 5.92,
+      "dd": 0.14,
+      "sharpe": 2.78,
+      "pnl": 697.3,
+      "n": 3,
+      "verdict": "FAIL"
+    },
+    "Short DTE (50% PT, 21 DTE)": {
+      "wr": 75.0,
+      "pf": 2.97,
+      "dd": 0.39,
+      "sharpe": 3.01,
+      "pnl": 769.46,
+      "n": 4,
+      "verdict": "PASS"
+    }
+  },
+  "BAC": {
+    "Standard (50% PT, 1.0x SL)": {
+      "wr": 33.33,
+      "pf": 0.12,
+      "dd": 0.34,
+      "sharpe": -2.26,
+      "pnl": -218.59,
+      "n": 3,
+      "verdict": "FAIL"
+    },
+    "Aggressive (70% PT, 1.0x SL)": {
+      "wr": 33.33,
+      "pf": 0.12,
+      "dd": 0.34,
+      "sharpe": -2.26,
+      "pnl": -218.59,
+      "n": 3,
+      "verdict": "FAIL"
+    },
+    "Wide Wing (50% PT, 1.0x SL, 7%)": {
+      "wr": 33.33,
+      "pf": 0.12,
+      "dd": 0.34,
+      "sharpe": -2.26,
+      "pnl": -218.59,
+      "n": 3,
+      "verdict": "FAIL"
+    },
+    "Short DTE (50% PT, 21 DTE)": {
+      "wr": 50.0,
+      "pf": 0.96,
+      "dd": 0.26,
+      "sharpe": 0.73,
+      "pnl": -8.53,
+      "n": 4,
+      "verdict": "FAIL"
+    }
+  },
+  "GS": {
+    "Standard (50% PT, 1.0x SL)": {
+      "wr": 66.67,
+      "pf": 1.4,
+      "dd": 2.0,
+      "sharpe": 1.1,
+      "pnl": 720.01,
+      "n": 3,
+      "verdict": "FAIL"
+    },
+    "Aggressive (70% PT, 1.0x SL)": {
+      "wr": 66.67,
+      "pf": 1.4,
+      "dd": 2.0,
+      "sharpe": 1.27,
+      "pnl": 720.01,
+      "n": 3,
+      "verdict": "FAIL"
+    },
+    "Wide Wing (50% PT, 1.0x SL, 7%)": {
+      "wr": 66.67,
+      "pf": 1.4,
+      "dd": 2.0,
+      "sharpe": 1.1,
+      "pnl": 720.01,
+      "n": 3,
+      "verdict": "FAIL"
+    },
+    "Short DTE (50% PT, 21 DTE)": {
+      "wr": 50.0,
+      "pf": 1.12,
+      "dd": 6.04,
+      "sharpe": 1.02,
+      "pnl": 517.89,
+      "n": 4,
+      "verdict": "FAIL"
+    }
+  },
+  "MS": {
+    "Standard (50% PT, 1.0x SL)": {
+      "wr": 33.33,
+      "pf": 0.9,
+      "dd": 0.28,
+      "sharpe": 0.8,
+      "pnl": -42.11,
+      "n": 3,
+      "verdict": "FAIL"
+    },
+    "Aggressive (70% PT, 1.0x SL)": {
+      "wr": 33.33,
+      "pf": 0.9,
+      "dd": 0.28,
+      "sharpe": 1.0,
+      "pnl": -42.11,
+      "n": 3,
+      "verdict": "FAIL"
+    },
+    "Wide Wing (50% PT, 1.0x SL, 7%)": {
+      "wr": 33.33,
+      "pf": 0.9,
+      "dd": 0.28,
+      "sharpe": 0.8,
+      "pnl": -42.11,
+      "n": 3,
+      "verdict": "FAIL"
+    },
+    "Short DTE (50% PT, 21 DTE)": {
+      "wr": 50.0,
+      "pf": 0.78,
+      "dd": 1.07,
+      "sharpe": -0.11,
+      "pnl": -166.36,
+      "n": 4,
+      "verdict": "FAIL"
+    }
+  },
+  "BLK": {
+    "Standard (50% PT, 1.0x SL)": {
+      "wr": 66.67,
+      "pf": 3.9,
+      "dd": 2.67,
+      "sharpe": 1.6,
+      "pnl": 3406.79,
+      "n": 3,
+      "verdict": "FAIL"
+    },
+    "Aggressive (70% PT, 1.0x SL)": {
+      "wr": 66.67,
+      "pf": 3.9,
+      "dd": 2.67,
+      "sharpe": 1.6,
+      "pnl": 3406.79,
+      "n": 3,
+      "verdict": "FAIL"
+    },
+    "Wide Wing (50% PT, 1.0x SL, 7%)": {
+      "wr": 66.67,
+      "pf": 3.9,
+      "dd": 2.67,
+      "sharpe": 1.6,
+      "pnl": 3406.79,
+      "n": 3,
+      "verdict": "FAIL"
+    },
+    "Short DTE (50% PT, 21 DTE)": {
+      "wr": 75.0,
+      "pf": 2.25,
+      "dd": 5.97,
+      "sharpe": 1.98,
+      "pnl": 4073.82,
+      "n": 4,
+      "verdict": "PASS"
+    }
+  },
+  "C": {
+    "Standard (50% PT, 1.0x SL)": {
+      "wr": 33.33,
+      "pf": 0.6,
+      "dd": 0.31,
+      "sharpe": 0.6,
+      "pnl": -167.67,
+      "n": 3,
+      "verdict": "FAIL"
+    },
+    "Aggressive (70% PT, 1.0x SL)": {
+      "wr": 33.33,
+      "pf": 0.6,
+      "dd": 0.31,
+      "sharpe": 0.68,
+      "pnl": -167.67,
+      "n": 3,
+      "verdict": "FAIL"
+    },
+    "Wide Wing (50% PT, 1.0x SL, 7%)": {
+      "wr": 33.33,
+      "pf": 0.6,
+      "dd": 0.31,
+      "sharpe": 0.6,
+      "pnl": -167.67,
+      "n": 3,
+      "verdict": "FAIL"
+    },
+    "Short DTE (50% PT, 21 DTE)": {
+      "wr": 75.0,
+      "pf": 2.86,
+      "dd": 0.23,
+      "sharpe": 3.66,
+      "pnl": 435.84,
+      "n": 4,
+      "verdict": "PASS"
+    }
+  },
+  "WFC": {
+    "Standard (50% PT, 1.0x SL)": {
+      "wr": 33.33,
+      "pf": 0.08,
+      "dd": 0.57,
+      "sharpe": -2.16,
+      "pnl": -326.09,
+      "n": 3,
+      "verdict": "FAIL"
+    },
+    "Aggressive (70% PT, 1.0x SL)": {
+      "wr": 33.33,
+      "pf": 0.08,
+      "dd": 0.57,
+      "sharpe": -2.16,
+      "pnl": -326.09,
+      "n": 3,
+      "verdict": "FAIL"
+    },
+    "Wide Wing (50% PT, 1.0x SL, 7%)": {
+      "wr": 33.33,
+      "pf": 0.08,
+      "dd": 0.57,
+      "sharpe": -2.16,
+      "pnl": -326.09,
+      "n": 3,
+      "verdict": "FAIL"
+    },
+    "Short DTE (50% PT, 21 DTE)": {
+      "wr": 50.0,
+      "pf": 0.82,
+      "dd": 0.6,
+      "sharpe": 0.39,
+      "pnl": -75.2,
+      "n": 4,
+      "verdict": "FAIL"
+    }
+  },
+  "AXP": {
+    "Standard (50% PT, 1.0x SL)": {
+      "wr": 33.33,
+      "pf": 0.26,
+      "dd": 2.21,
+      "sharpe": -2.45,
+      "pnl": -1322.17,
+      "n": 3,
+      "verdict": "FAIL"
+    },
+    "Aggressive (70% PT, 1.0x SL)": {
+      "wr": 33.33,
+      "pf": 0.26,
+      "dd": 2.21,
+      "sharpe": -2.45,
+      "pnl": -1322.17,
+      "n": 3,
+      "verdict": "FAIL"
+    },
+    "Wide Wing (50% PT, 1.0x SL, 7%)": {
+      "wr": 33.33,
+      "pf": 0.26,
+      "dd": 2.21,
+      "sharpe": -2.45,
+      "pnl": -1322.17,
+      "n": 3,
+      "verdict": "FAIL"
+    },
+    "Short DTE (50% PT, 21 DTE)": {
+      "wr": 50.0,
+      "pf": 0.52,
+      "dd": 1.93,
+      "sharpe": -1.76,
+      "pnl": -526.47,
+      "n": 4,
+      "verdict": "FAIL"
+    }
+  },
+  "AMZN": {
+    "Standard (50% PT, 1.0x SL)": {
+      "wr": 33.33,
+      "pf": 0.3,
+      "dd": 0.79,
+      "sharpe": -1.03,
+      "pnl": -809.24,
+      "n": 3,
+      "verdict": "FAIL"
+    },
+    "Aggressive (70% PT, 1.0x SL)": {
+      "wr": 33.33,
+      "pf": 0.3,
+      "dd": 0.79,
+      "sharpe": -0.73,
+      "pnl": -809.24,
+      "n": 3,
+      "verdict": "FAIL"
+    },
+    "Wide Wing (50% PT, 1.0x SL, 7%)": {
+      "wr": 33.33,
+      "pf": 0.3,
+      "dd": 0.79,
+      "sharpe": -1.03,
+      "pnl": -809.24,
+      "n": 3,
+      "verdict": "FAIL"
+    },
+    "Short DTE (50% PT, 21 DTE)": {
+      "wr": 50.0,
+      "pf": 0.77,
+      "dd": 1.28,
+      "sharpe": -0.69,
+      "pnl": -258.49,
+      "n": 4,
+      "verdict": "FAIL"
+    }
+  },
+  "TSLA": {
+    "Standard (50% PT, 1.0x SL)": {
+      "wr": 33.33,
+      "pf": 2.95,
+      "dd": 0.52,
+      "sharpe": 2.51,
+      "pnl": 1015.42,
+      "n": 3,
+      "verdict": "FAIL"
+    },
+    "Aggressive (70% PT, 1.0x SL)": {
+      "wr": 33.33,
+      "pf": 2.95,
+      "dd": 0.52,
+      "sharpe": 2.51,
+      "pnl": 1015.42,
+      "n": 3,
+      "verdict": "FAIL"
+    },
+    "Wide Wing (50% PT, 1.0x SL, 7%)": {
+      "wr": 33.33,
+      "pf": 2.95,
+      "dd": 0.52,
+      "sharpe": 2.51,
+      "pnl": 1015.42,
+      "n": 3,
+      "verdict": "FAIL"
+    },
+    "Short DTE (50% PT, 21 DTE)": {
+      "wr": 50.0,
+      "pf": 3.72,
+      "dd": 1.43,
+      "sharpe": 2.96,
+      "pnl": 2197.8,
+      "n": 4,
+      "verdict": "FAIL"
+    }
+  },
+  "HD": {
+    "Standard (50% PT, 1.0x SL)": {
+      "wr": 33.33,
+      "pf": 0.28,
+      "dd": 2.61,
+      "sharpe": -2.63,
+      "pnl": -1376.02,
+      "n": 3,
+      "verdict": "FAIL"
+    },
+    "Aggressive (70% PT, 1.0x SL)": {
+      "wr": 33.33,
+      "pf": 0.28,
+      "dd": 2.61,
+      "sharpe": -2.63,
+      "pnl": -1376.02,
+      "n": 3,
+      "verdict": "FAIL"
+    },
+    "Wide Wing (50% PT, 1.0x SL, 7%)": {
+      "wr": 33.33,
+      "pf": 0.28,
+      "dd": 2.61,
+      "sharpe": -2.63,
+      "pnl": -1376.02,
+      "n": 3,
+      "verdict": "FAIL"
+    },
+    "Short DTE (50% PT, 21 DTE)": {
+      "wr": 50.0,
+      "pf": 1.01,
+      "dd": 2.03,
+      "sharpe": -0.17,
+      "pnl": 17.9,
+      "n": 4,
+      "verdict": "FAIL"
+    }
+  },
+  "MCD": {
+    "Standard (50% PT, 1.0x SL)": {
+      "wr": 66.67,
+      "pf": 1.36,
+      "dd": 0.67,
+      "sharpe": 1.49,
+      "pnl": 239.68,
+      "n": 3,
+      "verdict": "FAIL"
+    },
+    "Aggressive (70% PT, 1.0x SL)": {
+      "wr": 66.67,
+      "pf": 1.36,
+      "dd": 0.67,
+      "sharpe": 1.65,
+      "pnl": 239.69,
+      "n": 3,
+      "verdict": "FAIL"
+    },
+    "Wide Wing (50% PT, 1.0x SL, 7%)": {
+      "wr": 66.67,
+      "pf": 1.36,
+      "dd": 0.67,
+      "sharpe": 1.49,
+      "pnl": 239.69,
+      "n": 3,
+      "verdict": "FAIL"
+    },
+    "Short DTE (50% PT, 21 DTE)": {
+      "wr": 75.0,
+      "pf": 5.03,
+      "dd": 0.59,
+      "sharpe": 3.25,
+      "pnl": 1196.27,
+      "n": 4,
+      "verdict": "PASS"
+    }
+  },
+  "NKE": {
+    "Standard (50% PT, 1.0x SL)": {
+      "wr": 33.33,
+      "pf": 0.7,
+      "dd": 0.34,
+      "sharpe": -0.22,
+      "pnl": -92.76,
+      "n": 3,
+      "verdict": "FAIL"
+    },
+    "Aggressive (70% PT, 1.0x SL)": {
+      "wr": 33.33,
+      "pf": 0.7,
+      "dd": 0.34,
+      "sharpe": -0.22,
+      "pnl": -92.76,
+      "n": 3,
+      "verdict": "FAIL"
+    },
+    "Wide Wing (50% PT, 1.0x SL, 7%)": {
+      "wr": 33.33,
+      "pf": 0.7,
+      "dd": 0.34,
+      "sharpe": -0.22,
+      "pnl": -92.76,
+      "n": 3,
+      "verdict": "FAIL"
+    },
+    "Short DTE (50% PT, 21 DTE)": {
+      "wr": 50.0,
+      "pf": 1.68,
+      "dd": 0.36,
+      "sharpe": 2.08,
+      "pnl": 176.15,
+      "n": 4,
+      "verdict": "FAIL"
+    }
+  },
+  "SBUX": {
+    "Standard (50% PT, 1.0x SL)": {
+      "wr": 66.67,
+      "pf": 2.16,
+      "dd": 0.22,
+      "sharpe": 1.65,
+      "pnl": 256.21,
+      "n": 3,
+      "verdict": "FAIL"
+    },
+    "Aggressive (70% PT, 1.0x SL)": {
+      "wr": 66.67,
+      "pf": 2.16,
+      "dd": 0.22,
+      "sharpe": 1.65,
+      "pnl": 256.21,
+      "n": 3,
+      "verdict": "FAIL"
+    },
+    "Wide Wing (50% PT, 1.0x SL, 7%)": {
+      "wr": 66.67,
+      "pf": 2.16,
+      "dd": 0.22,
+      "sharpe": 1.65,
+      "pnl": 256.21,
+      "n": 3,
+      "verdict": "FAIL"
+    },
+    "Short DTE (50% PT, 21 DTE)": {
+      "wr": 100.0,
+      "pf": 99.99,
+      "dd": 0.0,
+      "sharpe": 5.27,
+      "pnl": 534.67,
+      "n": 4,
+      "verdict": "PASS"
+    }
+  },
+  "TGT": {
+    "Standard (50% PT, 1.0x SL)": {
+      "wr": 66.67,
+      "pf": 2.82,
+      "dd": 0.21,
+      "sharpe": 2.69,
+      "pnl": 378.49,
+      "n": 3,
+      "verdict": "FAIL"
+    },
+    "Aggressive (70% PT, 1.0x SL)": {
+      "wr": 66.67,
+      "pf": 2.82,
+      "dd": 0.21,
+      "sharpe": 2.52,
+      "pnl": 378.49,
+      "n": 3,
+      "verdict": "FAIL"
+    },
+    "Wide Wing (50% PT, 1.0x SL, 7%)": {
+      "wr": 66.67,
+      "pf": 2.82,
+      "dd": 0.21,
+      "sharpe": 2.69,
+      "pnl": 378.49,
+      "n": 3,
+      "verdict": "FAIL"
+    },
+    "Short DTE (50% PT, 21 DTE)": {
+      "wr": 100.0,
+      "pf": 99.99,
+      "dd": 0.0,
+      "sharpe": 4.6,
+      "pnl": 683.71,
+      "n": 4,
+      "verdict": "PASS"
+    }
+  },
+  "LOW": {
+    "Standard (50% PT, 1.0x SL)": {
+      "wr": 33.33,
+      "pf": 0.33,
+      "dd": 2.31,
+      "sharpe": -2.77,
+      "pnl": -958.21,
+      "n": 3,
+      "verdict": "FAIL"
+    },
+    "Aggressive (70% PT, 1.0x SL)": {
+      "wr": 33.33,
+      "pf": 0.33,
+      "dd": 2.31,
+      "sharpe": -2.77,
+      "pnl": -958.21,
+      "n": 3,
+      "verdict": "FAIL"
+    },
+    "Wide Wing (50% PT, 1.0x SL, 7%)": {
+      "wr": 33.33,
+      "pf": 0.33,
+      "dd": 2.31,
+      "sharpe": -2.77,
+      "pnl": -958.21,
+      "n": 3,
+      "verdict": "FAIL"
+    },
+    "Short DTE (50% PT, 21 DTE)": {
+      "wr": 50.0,
+      "pf": 0.97,
+      "dd": 1.54,
+      "sharpe": -0.48,
+      "pnl": -38.39,
+      "n": 4,
+      "verdict": "FAIL"
+    }
+  },
+  "META": {
+    "Standard (50% PT, 1.0x SL)": {
+      "wr": 100.0,
+      "pf": 99.99,
+      "dd": 0.19,
+      "sharpe": 3.74,
+      "pnl": 4086.98,
+      "n": 3,
+      "verdict": "PASS"
+    },
+    "Aggressive (70% PT, 1.0x SL)": {
+      "wr": 100.0,
+      "pf": 99.99,
+      "dd": 0.19,
+      "sharpe": 3.78,
+      "pnl": 4086.98,
+      "n": 3,
+      "verdict": "PASS"
+    },
+    "Wide Wing (50% PT, 1.0x SL, 7%)": {
+      "wr": 100.0,
+      "pf": 99.99,
+      "dd": 0.19,
+      "sharpe": 3.74,
+      "pnl": 4086.98,
+      "n": 3,
+      "verdict": "PASS"
+    },
+    "Short DTE (50% PT, 21 DTE)": {
+      "wr": 50.0,
+      "pf": 0.52,
+      "dd": 6.88,
+      "sharpe": -2.5,
+      "pnl": -1673.55,
+      "n": 4,
+      "verdict": "FAIL"
+    }
+  },
+  "GOOGL": {
+    "Standard (50% PT, 1.0x SL)": {
+      "wr": 66.67,
+      "pf": 3.57,
+      "dd": 0.49,
+      "sharpe": 2.7,
+      "pnl": 1260.25,
+      "n": 3,
+      "verdict": "FAIL"
+    },
+    "Aggressive (70% PT, 1.0x SL)": {
+      "wr": 66.67,
+      "pf": 3.57,
+      "dd": 0.49,
+      "sharpe": 2.75,
+      "pnl": 1260.25,
+      "n": 3,
+      "verdict": "FAIL"
+    },
+    "Wide Wing (50% PT, 1.0x SL, 7%)": {
+      "wr": 66.67,
+      "pf": 3.57,
+      "dd": 0.49,
+      "sharpe": 2.7,
+      "pnl": 1260.25,
+      "n": 3,
+      "verdict": "FAIL"
+    },
+    "Short DTE (50% PT, 21 DTE)": {
+      "wr": 50.0,
+      "pf": 1.57,
+      "dd": 0.76,
+      "sharpe": 1.66,
+      "pnl": 515.04,
+      "n": 4,
+      "verdict": "FAIL"
+    }
+  },
+  "NFLX": {
+    "Standard (50% PT, 1.0x SL)": {
+      "wr": 0.0,
+      "pf": 0.0,
+      "dd": 0.79,
+      "sharpe": -3.79,
+      "pnl": -617.1,
+      "n": 3,
+      "verdict": "FAIL"
+    },
+    "Aggressive (70% PT, 1.0x SL)": {
+      "wr": 0.0,
+      "pf": 0.0,
+      "dd": 0.79,
+      "sharpe": -3.79,
+      "pnl": -617.1,
+      "n": 3,
+      "verdict": "FAIL"
+    },
+    "Wide Wing (50% PT, 1.0x SL, 7%)": {
+      "wr": 0.0,
+      "pf": 0.0,
+      "dd": 0.79,
+      "sharpe": -3.79,
+      "pnl": -617.1,
+      "n": 3,
+      "verdict": "FAIL"
+    },
+    "Short DTE (50% PT, 21 DTE)": {
+      "wr": 50.0,
+      "pf": 0.68,
+      "dd": 0.56,
+      "sharpe": -0.12,
+      "pnl": -126.07,
+      "n": 4,
+      "verdict": "FAIL"
+    }
+  },
+  "DIS": {
+    "Standard (50% PT, 1.0x SL)": {
+      "wr": 66.67,
+      "pf": 0.59,
+      "dd": 0.25,
+      "sharpe": 0.75,
+      "pnl": -103.26,
+      "n": 3,
+      "verdict": "FAIL"
+    },
+    "Aggressive (70% PT, 1.0x SL)": {
+      "wr": 66.67,
+      "pf": 0.59,
+      "dd": 0.25,
+      "sharpe": 0.85,
+      "pnl": -103.26,
+      "n": 3,
+      "verdict": "FAIL"
+    },
+    "Wide Wing (50% PT, 1.0x SL, 7%)": {
+      "wr": 66.67,
+      "pf": 0.59,
+      "dd": 0.25,
+      "sharpe": 0.75,
+      "pnl": -103.26,
+      "n": 3,
+      "verdict": "FAIL"
+    },
+    "Short DTE (50% PT, 21 DTE)": {
+      "wr": 100.0,
+      "pf": 99.99,
+      "dd": 0.0,
+      "sharpe": 4.96,
+      "pnl": 604.18,
+      "n": 4,
+      "verdict": "PASS"
+    }
+  },
+  "CMCSA": {
+    "Standard (50% PT, 1.0x SL)": {
+      "wr": 33.33,
+      "pf": 0.67,
+      "dd": 0.05,
+      "sharpe": 0.35,
+      "pnl": -28.35,
+      "n": 3,
+      "verdict": "FAIL"
+    },
+    "Aggressive (70% PT, 1.0x SL)": {
+      "wr": 33.33,
+      "pf": 0.67,
+      "dd": 0.05,
+      "sharpe": 0.35,
+      "pnl": -28.35,
+      "n": 3,
+      "verdict": "FAIL"
+    },
+    "Wide Wing (50% PT, 1.0x SL, 7%)": {
+      "wr": 33.33,
+      "pf": 0.67,
+      "dd": 0.05,
+      "sharpe": 0.35,
+      "pnl": -28.35,
+      "n": 3,
+      "verdict": "FAIL"
+    },
+    "Short DTE (50% PT, 21 DTE)": {
+      "wr": 100.0,
+      "pf": 99.99,
+      "dd": 0.0,
+      "sharpe": 4.47,
+      "pnl": 157.85,
+      "n": 4,
+      "verdict": "PASS"
+    }
+  },
+  "T": {
+    "Standard (50% PT, 1.0x SL)": {
+      "wr": 33.33,
+      "pf": 0.25,
+      "dd": 0.08,
+      "sharpe": -1.36,
+      "pnl": -85.79,
+      "n": 3,
+      "verdict": "FAIL"
+    },
+    "Aggressive (70% PT, 1.0x SL)": {
+      "wr": 33.33,
+      "pf": 0.25,
+      "dd": 0.13,
+      "sharpe": -2.51,
+      "pnl": -85.79,
+      "n": 3,
+      "verdict": "FAIL"
+    },
+    "Wide Wing (50% PT, 1.0x SL, 7%)": {
+      "wr": 33.33,
+      "pf": 0.25,
+      "dd": 0.08,
+      "sharpe": -1.36,
+      "pnl": -85.79,
+      "n": 3,
+      "verdict": "FAIL"
+    },
+    "Short DTE (50% PT, 21 DTE)": {
+      "wr": 25.0,
+      "pf": 0.27,
+      "dd": 0.15,
+      "sharpe": -2.26,
+      "pnl": -77.0,
+      "n": 4,
+      "verdict": "FAIL"
+    }
+  },
+  "VZ": {
+    "Standard (50% PT, 1.0x SL)": {
+      "wr": 33.33,
+      "pf": 0.28,
+      "dd": 0.15,
+      "sharpe": -1.14,
+      "pnl": -199.91,
+      "n": 3,
+      "verdict": "FAIL"
+    },
+    "Aggressive (70% PT, 1.0x SL)": {
+      "wr": 33.33,
+      "pf": 0.28,
+      "dd": 0.15,
+      "sharpe": -0.93,
+      "pnl": -199.91,
+      "n": 3,
+      "verdict": "FAIL"
+    },
+    "Wide Wing (50% PT, 1.0x SL, 7%)": {
+      "wr": 33.33,
+      "pf": 0.28,
+      "dd": 0.15,
+      "sharpe": -1.14,
+      "pnl": -199.91,
+      "n": 3,
+      "verdict": "FAIL"
+    },
+    "Short DTE (50% PT, 21 DTE)": {
+      "wr": 25.0,
+      "pf": 0.21,
+      "dd": 0.35,
+      "sharpe": -2.29,
+      "pnl": -238.28,
+      "n": 4,
+      "verdict": "FAIL"
+    }
+  },
+  "WBD": {
+    "Standard (50% PT, 1.0x SL)": {
+      "wr": 100.0,
+      "pf": 99.99,
+      "dd": 0.0,
+      "sharpe": 4.08,
+      "pnl": 258.77,
+      "n": 3,
+      "verdict": "PASS"
+    },
+    "Aggressive (70% PT, 1.0x SL)": {
+      "wr": 100.0,
+      "pf": 99.99,
+      "dd": 0.0,
+      "sharpe": 4.08,
+      "pnl": 258.77,
+      "n": 3,
+      "verdict": "PASS"
+    },
+    "Wide Wing (50% PT, 1.0x SL, 7%)": {
+      "wr": 100.0,
+      "pf": 99.99,
+      "dd": 0.0,
+      "sharpe": 4.08,
+      "pnl": 258.77,
+      "n": 3,
+      "verdict": "PASS"
+    },
+    "Short DTE (50% PT, 21 DTE)": {
+      "wr": 100.0,
+      "pf": 99.99,
+      "dd": 0.0,
+      "sharpe": 5.44,
+      "pnl": 267.25,
+      "n": 4,
+      "verdict": "PASS"
+    }
+  },
+  "XOM": {
+    "Standard (50% PT, 1.0x SL)": {
+      "wr": 0.0,
+      "pf": 0.0,
+      "dd": 0.69,
+      "sharpe": -2.88,
+      "pnl": -657.94,
+      "n": 3,
+      "verdict": "FAIL"
+    },
+    "Aggressive (70% PT, 1.0x SL)": {
+      "wr": 0.0,
+      "pf": 0.0,
+      "dd": 0.65,
+      "sharpe": -2.63,
+      "pnl": -657.94,
+      "n": 3,
+      "verdict": "FAIL"
+    },
+    "Wide Wing (50% PT, 1.0x SL, 7%)": {
+      "wr": 0.0,
+      "pf": 0.0,
+      "dd": 0.69,
+      "sharpe": -2.88,
+      "pnl": -657.94,
+      "n": 3,
+      "verdict": "FAIL"
+    },
+    "Short DTE (50% PT, 21 DTE)": {
+      "wr": 25.0,
+      "pf": 0.3,
+      "dd": 1.04,
+      "sharpe": -3.85,
+      "pnl": -366.13,
+      "n": 4,
+      "verdict": "FAIL"
+    }
+  },
+  "CVX": {
+    "Standard (50% PT, 1.0x SL)": {
+      "wr": 0.0,
+      "pf": 0.0,
+      "dd": 1.0,
+      "sharpe": -2.88,
+      "pnl": -1054.49,
+      "n": 3,
+      "verdict": "FAIL"
+    },
+    "Aggressive (70% PT, 1.0x SL)": {
+      "wr": 0.0,
+      "pf": 0.0,
+      "dd": 1.09,
+      "sharpe": -3.3,
+      "pnl": -1054.49,
+      "n": 3,
+      "verdict": "FAIL"
+    },
+    "Wide Wing (50% PT, 1.0x SL, 7%)": {
+      "wr": 0.0,
+      "pf": 0.0,
+      "dd": 1.0,
+      "sharpe": -2.88,
+      "pnl": -1054.49,
+      "n": 3,
+      "verdict": "FAIL"
+    },
+    "Short DTE (50% PT, 21 DTE)": {
+      "wr": 25.0,
+      "pf": 0.12,
+      "dd": 1.76,
+      "sharpe": -3.64,
+      "pnl": -1176.27,
+      "n": 4,
+      "verdict": "FAIL"
+    }
+  },
+  "COP": {
+    "Standard (50% PT, 1.0x SL)": {
+      "wr": 33.33,
+      "pf": 0.3,
+      "dd": 0.37,
+      "sharpe": -1.01,
+      "pnl": -318.83,
+      "n": 3,
+      "verdict": "FAIL"
+    },
+    "Aggressive (70% PT, 1.0x SL)": {
+      "wr": 33.33,
+      "pf": 0.3,
+      "dd": 0.37,
+      "sharpe": -1.01,
+      "pnl": -318.83,
+      "n": 3,
+      "verdict": "FAIL"
+    },
+    "Wide Wing (50% PT, 1.0x SL, 7%)": {
+      "wr": 33.33,
+      "pf": 0.3,
+      "dd": 0.37,
+      "sharpe": -1.01,
+      "pnl": -318.83,
+      "n": 3,
+      "verdict": "FAIL"
+    },
+    "Short DTE (50% PT, 21 DTE)": {
+      "wr": 25.0,
+      "pf": 0.27,
+      "dd": 1.22,
+      "sharpe": -3.62,
+      "pnl": -474.14,
+      "n": 4,
+      "verdict": "FAIL"
+    }
+  },
+  "SLB": {
+    "Standard (50% PT, 1.0x SL)": {
+      "wr": 66.67,
+      "pf": 4.62,
+      "dd": 0.08,
+      "sharpe": 2.33,
+      "pnl": 229.36,
+      "n": 3,
+      "verdict": "FAIL"
+    },
+    "Aggressive (70% PT, 1.0x SL)": {
+      "wr": 66.67,
+      "pf": 4.62,
+      "dd": 0.08,
+      "sharpe": 2.33,
+      "pnl": 229.36,
+      "n": 3,
+      "verdict": "FAIL"
+    },
+    "Wide Wing (50% PT, 1.0x SL, 7%)": {
+      "wr": 66.67,
+      "pf": 4.62,
+      "dd": 0.08,
+      "sharpe": 2.33,
+      "pnl": 229.36,
+      "n": 3,
+      "verdict": "FAIL"
+    },
+    "Short DTE (50% PT, 21 DTE)": {
+      "wr": 25.0,
+      "pf": 0.7,
+      "dd": 0.3,
+      "sharpe": -2.13,
+      "pnl": -45.57,
+      "n": 4,
+      "verdict": "FAIL"
+    }
+  },
+  "EOG": {
+    "Standard (50% PT, 1.0x SL)": {
+      "wr": 33.33,
+      "pf": 0.35,
+      "dd": 0.56,
+      "sharpe": -1.51,
+      "pnl": -321.17,
+      "n": 3,
+      "verdict": "FAIL"
+    },
+    "Aggressive (70% PT, 1.0x SL)": {
+      "wr": 33.33,
+      "pf": 0.35,
+      "dd": 0.56,
+      "sharpe": -1.51,
+      "pnl": -321.17,
+      "n": 3,
+      "verdict": "FAIL"
+    },
+    "Wide Wing (50% PT, 1.0x SL, 7%)": {
+      "wr": 33.33,
+      "pf": 0.35,
+      "dd": 0.56,
+      "sharpe": -1.51,
+      "pnl": -321.17,
+      "n": 3,
+      "verdict": "FAIL"
+    },
+    "Short DTE (50% PT, 21 DTE)": {
+      "wr": 25.0,
+      "pf": 0.23,
+      "dd": 1.52,
+      "sharpe": -4.07,
+      "pnl": -634.34,
+      "n": 4,
+      "verdict": "FAIL"
+    }
+  },
+  "MPC": {
+    "Standard (50% PT, 1.0x SL)": {
+      "wr": 0.0,
+      "pf": 0.0,
+      "dd": 1.41,
+      "sharpe": -2.83,
+      "pnl": -1257.52,
+      "n": 3,
+      "verdict": "FAIL"
+    },
+    "Aggressive (70% PT, 1.0x SL)": {
+      "wr": 0.0,
+      "pf": 0.0,
+      "dd": 1.41,
+      "sharpe": -2.83,
+      "pnl": -1257.52,
+      "n": 3,
+      "verdict": "FAIL"
+    },
+    "Wide Wing (50% PT, 1.0x SL, 7%)": {
+      "wr": 0.0,
+      "pf": 0.0,
+      "dd": 1.41,
+      "sharpe": -2.83,
+      "pnl": -1257.52,
+      "n": 3,
+      "verdict": "FAIL"
+    },
+    "Short DTE (50% PT, 21 DTE)": {
+      "wr": 50.0,
+      "pf": 0.92,
+      "dd": 1.89,
+      "sharpe": -0.59,
+      "pnl": -84.14,
+      "n": 4,
+      "verdict": "FAIL"
+    }
+  },
+  "PSX": {
+    "Standard (50% PT, 1.0x SL)": {
+      "wr": 0.0,
+      "pf": 0.0,
+      "dd": 0.86,
+      "sharpe": -1.97,
+      "pnl": -976.16,
+      "n": 3,
+      "verdict": "FAIL"
+    },
+    "Aggressive (70% PT, 1.0x SL)": {
+      "wr": 0.0,
+      "pf": 0.0,
+      "dd": 0.86,
+      "sharpe": -1.97,
+      "pnl": -976.16,
+      "n": 3,
+      "verdict": "FAIL"
+    },
+    "Wide Wing (50% PT, 1.0x SL, 7%)": {
+      "wr": 0.0,
+      "pf": 0.0,
+      "dd": 0.86,
+      "sharpe": -1.97,
+      "pnl": -976.16,
+      "n": 3,
+      "verdict": "FAIL"
+    },
+    "Short DTE (50% PT, 21 DTE)": {
+      "wr": 50.0,
+      "pf": 0.47,
+      "dd": 1.34,
+      "sharpe": -0.78,
+      "pnl": -539.08,
+      "n": 4,
+      "verdict": "FAIL"
+    }
+  },
+  "VLO": {
+    "Standard (50% PT, 1.0x SL)": {
+      "wr": 66.67,
+      "pf": 1.91,
+      "dd": 0.57,
+      "sharpe": 1.09,
+      "pnl": 332.56,
+      "n": 3,
+      "verdict": "FAIL"
+    },
+    "Aggressive (70% PT, 1.0x SL)": {
+      "wr": 66.67,
+      "pf": 1.91,
+      "dd": 0.57,
+      "sharpe": 1.09,
+      "pnl": 332.56,
+      "n": 3,
+      "verdict": "FAIL"
+    },
+    "Wide Wing (50% PT, 1.0x SL, 7%)": {
+      "wr": 66.67,
+      "pf": 1.91,
+      "dd": 0.57,
+      "sharpe": 1.09,
+      "pnl": 332.56,
+      "n": 3,
+      "verdict": "FAIL"
+    },
+    "Short DTE (50% PT, 21 DTE)": {
+      "wr": 50.0,
+      "pf": 1.49,
+      "dd": 1.59,
+      "sharpe": 0.31,
+      "pnl": 388.43,
+      "n": 4,
+      "verdict": "FAIL"
+    }
+  },
+  "CAT": {
+    "Standard (50% PT, 1.0x SL)": {
+      "wr": 0.0,
+      "pf": 0.0,
+      "dd": 3.88,
+      "sharpe": -3.71,
+      "pnl": -3377.72,
+      "n": 3,
+      "verdict": "FAIL"
+    },
+    "Aggressive (70% PT, 1.0x SL)": {
+      "wr": 0.0,
+      "pf": 0.0,
+      "dd": 3.88,
+      "sharpe": -3.71,
+      "pnl": -3377.72,
+      "n": 3,
+      "verdict": "FAIL"
+    },
+    "Wide Wing (50% PT, 1.0x SL, 7%)": {
+      "wr": 0.0,
+      "pf": 0.0,
+      "dd": 3.88,
+      "sharpe": -3.71,
+      "pnl": -3377.72,
+      "n": 3,
+      "verdict": "FAIL"
+    },
+    "Short DTE (50% PT, 21 DTE)": {
+      "wr": 0.0,
+      "pf": 0.0,
+      "dd": 9.94,
+      "sharpe": -5.25,
+      "pnl": -6121.78,
+      "n": 4,
+      "verdict": "FAIL"
+    }
+  },
+  "HON": {
+    "Standard (50% PT, 1.0x SL)": {
+      "wr": 33.33,
+      "pf": 0.2,
+      "dd": 1.12,
+      "sharpe": -1.82,
+      "pnl": -526.55,
+      "n": 3,
+      "verdict": "FAIL"
+    },
+    "Aggressive (70% PT, 1.0x SL)": {
+      "wr": 33.33,
+      "pf": 0.2,
+      "dd": 1.12,
+      "sharpe": -1.53,
+      "pnl": -526.55,
+      "n": 3,
+      "verdict": "FAIL"
+    },
+    "Wide Wing (50% PT, 1.0x SL, 7%)": {
+      "wr": 33.33,
+      "pf": 0.2,
+      "dd": 1.12,
+      "sharpe": -1.82,
+      "pnl": -526.54,
+      "n": 3,
+      "verdict": "FAIL"
+    },
+    "Short DTE (50% PT, 21 DTE)": {
+      "wr": 50.0,
+      "pf": 0.43,
+      "dd": 1.34,
+      "sharpe": -2.4,
+      "pnl": -475.99,
+      "n": 4,
+      "verdict": "FAIL"
+    }
+  },
+  "RTX": {
+    "Standard (50% PT, 1.0x SL)": {
+      "wr": 66.67,
+      "pf": 3.65,
+      "dd": 0.3,
+      "sharpe": 2.04,
+      "pnl": 516.91,
+      "n": 3,
+      "verdict": "FAIL"
+    },
+    "Aggressive (70% PT, 1.0x SL)": {
+      "wr": 66.67,
+      "pf": 3.65,
+      "dd": 0.3,
+      "sharpe": 2.04,
+      "pnl": 516.91,
+      "n": 3,
+      "verdict": "FAIL"
+    },
+    "Wide Wing (50% PT, 1.0x SL, 7%)": {
+      "wr": 66.67,
+      "pf": 3.65,
+      "dd": 0.3,
+      "sharpe": 2.04,
+      "pnl": 516.91,
+      "n": 3,
+      "verdict": "FAIL"
+    },
+    "Short DTE (50% PT, 21 DTE)": {
+      "wr": 75.0,
+      "pf": 5.96,
+      "dd": 0.35,
+      "sharpe": 3.09,
+      "pnl": 864.65,
+      "n": 4,
+      "verdict": "PASS"
+    }
+  },
+  "BA": {
+    "Standard (50% PT, 1.0x SL)": {
+      "wr": 33.33,
+      "pf": 0.99,
+      "dd": 0.88,
+      "sharpe": 0.51,
+      "pnl": -8.17,
+      "n": 3,
+      "verdict": "FAIL"
+    },
+    "Aggressive (70% PT, 1.0x SL)": {
+      "wr": 33.33,
+      "pf": 0.99,
+      "dd": 0.88,
+      "sharpe": 0.51,
+      "pnl": -8.17,
+      "n": 3,
+      "verdict": "FAIL"
+    },
+    "Wide Wing (50% PT, 1.0x SL, 7%)": {
+      "wr": 33.33,
+      "pf": 0.99,
+      "dd": 0.88,
+      "sharpe": 0.51,
+      "pnl": -8.17,
+      "n": 3,
+      "verdict": "FAIL"
+    },
+    "Short DTE (50% PT, 21 DTE)": {
+      "wr": 50.0,
+      "pf": 1.16,
+      "dd": 1.95,
+      "sharpe": 1.1,
+      "pnl": 209.51,
+      "n": 4,
+      "verdict": "FAIL"
+    }
+  },
+  "GE": {
+    "Standard (50% PT, 1.0x SL)": {
+      "wr": 100.0,
+      "pf": 99.99,
+      "dd": 0.0,
+      "sharpe": 3.68,
+      "pnl": 1185.18,
+      "n": 3,
+      "verdict": "PASS"
+    },
+    "Aggressive (70% PT, 1.0x SL)": {
+      "wr": 100.0,
+      "pf": 99.99,
+      "dd": 0.0,
+      "sharpe": 3.68,
+      "pnl": 1185.18,
+      "n": 3,
+      "verdict": "PASS"
+    },
+    "Wide Wing (50% PT, 1.0x SL, 7%)": {
+      "wr": 100.0,
+      "pf": 99.99,
+      "dd": 0.0,
+      "sharpe": 3.68,
+      "pnl": 1185.18,
+      "n": 3,
+      "verdict": "PASS"
+    },
+    "Short DTE (50% PT, 21 DTE)": {
+      "wr": 50.0,
+      "pf": 0.64,
+      "dd": 3.09,
+      "sharpe": -1.1,
+      "pnl": -613.27,
+      "n": 4,
+      "verdict": "FAIL"
+    }
+  },
+  "DE": {
+    "Standard (50% PT, 1.0x SL)": {
+      "wr": 66.67,
+      "pf": 2.76,
+      "dd": 1.39,
+      "sharpe": 1.86,
+      "pnl": 1723.46,
+      "n": 3,
+      "verdict": "FAIL"
+    },
+    "Aggressive (70% PT, 1.0x SL)": {
+      "wr": 66.67,
+      "pf": 2.76,
+      "dd": 1.39,
+      "sharpe": 1.94,
+      "pnl": 1723.46,
+      "n": 3,
+      "verdict": "FAIL"
+    },
+    "Wide Wing (50% PT, 1.0x SL, 7%)": {
+      "wr": 66.67,
+      "pf": 2.76,
+      "dd": 1.39,
+      "sharpe": 1.86,
+      "pnl": 1723.46,
+      "n": 3,
+      "verdict": "FAIL"
+    },
+    "Short DTE (50% PT, 21 DTE)": {
+      "wr": 25.0,
+      "pf": 0.1,
+      "dd": 7.35,
+      "sharpe": -4.44,
+      "pnl": -3790.63,
+      "n": 4,
+      "verdict": "FAIL"
+    }
+  },
+  "UPS": {
+    "Standard (50% PT, 1.0x SL)": {
+      "wr": 33.33,
+      "pf": 0.48,
+      "dd": 0.88,
+      "sharpe": -1.51,
+      "pnl": -306.12,
+      "n": 3,
+      "verdict": "FAIL"
+    },
+    "Aggressive (70% PT, 1.0x SL)": {
+      "wr": 33.33,
+      "pf": 0.48,
+      "dd": 0.88,
+      "sharpe": -1.7,
+      "pnl": -306.12,
+      "n": 3,
+      "verdict": "FAIL"
+    },
+    "Wide Wing (50% PT, 1.0x SL, 7%)": {
+      "wr": 33.33,
+      "pf": 0.48,
+      "dd": 0.88,
+      "sharpe": -1.51,
+      "pnl": -306.12,
+      "n": 3,
+      "verdict": "FAIL"
+    },
+    "Short DTE (50% PT, 21 DTE)": {
+      "wr": 75.0,
+      "pf": 1.77,
+      "dd": 0.65,
+      "sharpe": 1.32,
+      "pnl": 315.19,
+      "n": 4,
+      "verdict": "PASS"
+    }
+  },
+  "FDX": {
+    "Standard (50% PT, 1.0x SL)": {
+      "wr": 66.67,
+      "pf": 1.71,
+      "dd": 1.3,
+      "sharpe": 0.91,
+      "pnl": 666.12,
+      "n": 3,
+      "verdict": "FAIL"
+    },
+    "Aggressive (70% PT, 1.0x SL)": {
+      "wr": 66.67,
+      "pf": 1.71,
+      "dd": 1.3,
+      "sharpe": 1.0,
+      "pnl": 666.12,
+      "n": 3,
+      "verdict": "FAIL"
+    },
+    "Wide Wing (50% PT, 1.0x SL, 7%)": {
+      "wr": 66.67,
+      "pf": 1.71,
+      "dd": 1.3,
+      "sharpe": 0.91,
+      "pnl": 666.12,
+      "n": 3,
+      "verdict": "FAIL"
+    },
+    "Short DTE (50% PT, 21 DTE)": {
+      "wr": 50.0,
+      "pf": 1.51,
+      "dd": 1.62,
+      "sharpe": 0.55,
+      "pnl": 481.57,
+      "n": 4,
+      "verdict": "FAIL"
+    }
+  },
+  "PG": {
+    "Standard (50% PT, 1.0x SL)": {
+      "wr": 33.33,
+      "pf": 0.19,
+      "dd": 1.03,
+      "sharpe": -2.29,
+      "pnl": -730.28,
+      "n": 3,
+      "verdict": "FAIL"
+    },
+    "Aggressive (70% PT, 1.0x SL)": {
+      "wr": 33.33,
+      "pf": 0.19,
+      "dd": 1.04,
+      "sharpe": -2.32,
+      "pnl": -730.28,
+      "n": 3,
+      "verdict": "FAIL"
+    },
+    "Wide Wing (50% PT, 1.0x SL, 7%)": {
+      "wr": 33.33,
+      "pf": 0.19,
+      "dd": 1.03,
+      "sharpe": -2.29,
+      "pnl": -730.28,
+      "n": 3,
+      "verdict": "FAIL"
+    },
+    "Short DTE (50% PT, 21 DTE)": {
+      "wr": 50.0,
+      "pf": 0.23,
+      "dd": 1.7,
+      "sharpe": -3.04,
+      "pnl": -881.61,
+      "n": 4,
+      "verdict": "FAIL"
+    }
+  },
+  "KO": {
+    "Standard (50% PT, 1.0x SL)": {
+      "wr": 66.67,
+      "pf": 0.61,
+      "dd": 0.42,
+      "sharpe": -1.05,
+      "pnl": -116.13,
+      "n": 3,
+      "verdict": "FAIL"
+    },
+    "Aggressive (70% PT, 1.0x SL)": {
+      "wr": 66.67,
+      "pf": 0.61,
+      "dd": 0.42,
+      "sharpe": -0.94,
+      "pnl": -116.13,
+      "n": 3,
+      "verdict": "FAIL"
+    },
+    "Wide Wing (50% PT, 1.0x SL, 7%)": {
+      "wr": 66.67,
+      "pf": 0.61,
+      "dd": 0.42,
+      "sharpe": -1.05,
+      "pnl": -116.13,
+      "n": 3,
+      "verdict": "FAIL"
+    },
+    "Short DTE (50% PT, 21 DTE)": {
+      "wr": 25.0,
+      "pf": 0.19,
+      "dd": 0.55,
+      "sharpe": -2.82,
+      "pnl": -293.44,
+      "n": 4,
+      "verdict": "FAIL"
+    }
+  },
+  "PEP": {
+    "Standard (50% PT, 1.0x SL)": {
+      "wr": 33.33,
+      "pf": 0.54,
+      "dd": 0.81,
+      "sharpe": -1.35,
+      "pnl": -295.92,
+      "n": 3,
+      "verdict": "FAIL"
+    },
+    "Aggressive (70% PT, 1.0x SL)": {
+      "wr": 33.33,
+      "pf": 0.54,
+      "dd": 0.76,
+      "sharpe": -1.19,
+      "pnl": -295.92,
+      "n": 3,
+      "verdict": "FAIL"
+    },
+    "Wide Wing (50% PT, 1.0x SL, 7%)": {
+      "wr": 33.33,
+      "pf": 0.54,
+      "dd": 0.81,
+      "sharpe": -1.35,
+      "pnl": -295.92,
+      "n": 3,
+      "verdict": "FAIL"
+    },
+    "Short DTE (50% PT, 21 DTE)": {
+      "wr": 25.0,
+      "pf": 0.31,
+      "dd": 2.22,
+      "sharpe": -3.89,
+      "pnl": -765.32,
+      "n": 4,
+      "verdict": "FAIL"
+    }
+  },
+  "WMT": {
+    "Standard (50% PT, 1.0x SL)": {
+      "wr": 33.33,
+      "pf": 0.23,
+      "dd": 0.94,
+      "sharpe": -2.84,
+      "pnl": -531.67,
+      "n": 3,
+      "verdict": "FAIL"
+    },
+    "Aggressive (70% PT, 1.0x SL)": {
+      "wr": 33.33,
+      "pf": 0.23,
+      "dd": 0.94,
+      "sharpe": -2.84,
+      "pnl": -531.67,
+      "n": 3,
+      "verdict": "FAIL"
+    },
+    "Wide Wing (50% PT, 1.0x SL, 7%)": {
+      "wr": 33.33,
+      "pf": 0.23,
+      "dd": 0.94,
+      "sharpe": -2.84,
+      "pnl": -531.67,
+      "n": 3,
+      "verdict": "FAIL"
+    },
+    "Short DTE (50% PT, 21 DTE)": {
+      "wr": 100.0,
+      "pf": 99.99,
+      "dd": 0.0,
+      "sharpe": 5.32,
+      "pnl": 728.29,
+      "n": 4,
+      "verdict": "PASS"
+    }
+  },
+  "COST": {
+    "Standard (50% PT, 1.0x SL)": {
+      "wr": 66.67,
+      "pf": 1.11,
+      "dd": 3.99,
+      "sharpe": 0.09,
+      "pnl": 292.54,
+      "n": 3,
+      "verdict": "FAIL"
+    },
+    "Aggressive (70% PT, 1.0x SL)": {
+      "wr": 66.67,
+      "pf": 1.11,
+      "dd": 3.99,
+      "sharpe": 0.26,
+      "pnl": 292.54,
+      "n": 3,
+      "verdict": "FAIL"
+    },
+    "Wide Wing (50% PT, 1.0x SL, 7%)": {
+      "wr": 66.67,
+      "pf": 1.11,
+      "dd": 3.99,
+      "sharpe": 0.09,
+      "pnl": 292.54,
+      "n": 3,
+      "verdict": "FAIL"
+    },
+    "Short DTE (50% PT, 21 DTE)": {
+      "wr": 75.0,
+      "pf": 2.87,
+      "dd": 1.11,
+      "sharpe": 2.9,
+      "pnl": 2073.4,
+      "n": 4,
+      "verdict": "PASS"
+    }
+  },
+  "MDLZ": {
+    "Standard (50% PT, 1.0x SL)": {
+      "wr": 33.33,
+      "pf": 0.33,
+      "dd": 0.51,
+      "sharpe": -2.94,
+      "pnl": -198.18,
+      "n": 3,
+      "verdict": "FAIL"
+    },
+    "Aggressive (70% PT, 1.0x SL)": {
+      "wr": 33.33,
+      "pf": 0.33,
+      "dd": 0.51,
+      "sharpe": -2.94,
+      "pnl": -198.18,
+      "n": 3,
+      "verdict": "FAIL"
+    },
+    "Wide Wing (50% PT, 1.0x SL, 7%)": {
+      "wr": 33.33,
+      "pf": 0.33,
+      "dd": 0.51,
+      "sharpe": -2.94,
+      "pnl": -198.18,
+      "n": 3,
+      "verdict": "FAIL"
+    },
+    "Short DTE (50% PT, 21 DTE)": {
+      "wr": 75.0,
+      "pf": 2.15,
+      "dd": 0.21,
+      "sharpe": 1.33,
+      "pnl": 142.78,
+      "n": 4,
+      "verdict": "PASS"
+    }
+  },
+  "CL": {
+    "Standard (50% PT, 1.0x SL)": {
+      "wr": 33.33,
+      "pf": 0.16,
+      "dd": 0.82,
+      "sharpe": -3.16,
+      "pnl": -481.07,
+      "n": 3,
+      "verdict": "FAIL"
+    },
+    "Aggressive (70% PT, 1.0x SL)": {
+      "wr": 33.33,
+      "pf": 0.16,
+      "dd": 0.82,
+      "sharpe": -3.16,
+      "pnl": -481.07,
+      "n": 3,
+      "verdict": "FAIL"
+    },
+    "Wide Wing (50% PT, 1.0x SL, 7%)": {
+      "wr": 33.33,
+      "pf": 0.16,
+      "dd": 0.82,
+      "sharpe": -3.16,
+      "pnl": -481.07,
+      "n": 3,
+      "verdict": "FAIL"
+    },
+    "Short DTE (50% PT, 21 DTE)": {
+      "wr": 50.0,
+      "pf": 0.37,
+      "dd": 0.77,
+      "sharpe": -2.38,
+      "pnl": -378.59,
+      "n": 4,
+      "verdict": "FAIL"
+    }
+  },
+  "GIS": {
+    "Standard (50% PT, 1.0x SL)": {
+      "wr": 33.33,
+      "pf": 0.09,
+      "dd": 0.31,
+      "sharpe": -3.1,
+      "pnl": -186.84,
+      "n": 3,
+      "verdict": "FAIL"
+    },
+    "Aggressive (70% PT, 1.0x SL)": {
+      "wr": 33.33,
+      "pf": 0.19,
+      "dd": 0.31,
+      "sharpe": -2.83,
+      "pnl": -166.64,
+      "n": 3,
+      "verdict": "FAIL"
+    },
+    "Wide Wing (50% PT, 1.0x SL, 7%)": {
+      "wr": 33.33,
+      "pf": 0.09,
+      "dd": 0.31,
+      "sharpe": -3.1,
+      "pnl": -186.84,
+      "n": 3,
+      "verdict": "FAIL"
+    },
+    "Short DTE (50% PT, 21 DTE)": {
+      "wr": 50.0,
+      "pf": 1.08,
+      "dd": 0.2,
+      "sharpe": -0.71,
+      "pnl": 10.85,
+      "n": 4,
+      "verdict": "FAIL"
+    }
+  },
+  "NEE": {
+    "Standard (50% PT, 1.0x SL)": {
+      "wr": 66.67,
+      "pf": 1.58,
+      "dd": 0.36,
+      "sharpe": 0.68,
+      "pnl": 141.93,
+      "n": 3,
+      "verdict": "FAIL"
+    },
+    "Aggressive (70% PT, 1.0x SL)": {
+      "wr": 66.67,
+      "pf": 1.58,
+      "dd": 0.36,
+      "sharpe": 0.79,
+      "pnl": 141.93,
+      "n": 3,
+      "verdict": "FAIL"
+    },
+    "Wide Wing (50% PT, 1.0x SL, 7%)": {
+      "wr": 66.67,
+      "pf": 1.58,
+      "dd": 0.36,
+      "sharpe": 0.68,
+      "pnl": 141.93,
+      "n": 3,
+      "verdict": "FAIL"
+    },
+    "Short DTE (50% PT, 21 DTE)": {
+      "wr": 50.0,
+      "pf": 0.85,
+      "dd": 0.97,
+      "sharpe": -1.48,
+      "pnl": -73.06,
+      "n": 4,
+      "verdict": "FAIL"
+    }
+  },
+  "DUK": {
+    "Standard (50% PT, 1.0x SL)": {
+      "wr": 66.67,
+      "pf": 1.26,
+      "dd": 0.25,
+      "sharpe": 1.55,
+      "pnl": 62.87,
+      "n": 3,
+      "verdict": "FAIL"
+    },
+    "Aggressive (70% PT, 1.0x SL)": {
+      "wr": 66.67,
+      "pf": 1.26,
+      "dd": 0.25,
+      "sharpe": 1.66,
+      "pnl": 62.87,
+      "n": 3,
+      "verdict": "FAIL"
+    },
+    "Wide Wing (50% PT, 1.0x SL, 7%)": {
+      "wr": 66.67,
+      "pf": 1.26,
+      "dd": 0.25,
+      "sharpe": 1.55,
+      "pnl": 62.87,
+      "n": 3,
+      "verdict": "FAIL"
+    },
+    "Short DTE (50% PT, 21 DTE)": {
+      "wr": 75.0,
+      "pf": 1.24,
+      "dd": 0.61,
+      "sharpe": -0.05,
+      "pnl": 74.36,
+      "n": 4,
+      "verdict": "PASS"
+    }
+  },
+  "SO": {
+    "Standard (50% PT, 1.0x SL)": {
+      "wr": 66.67,
+      "pf": 3.68,
+      "dd": 0.06,
+      "sharpe": 3.08,
+      "pnl": 150.45,
+      "n": 3,
+      "verdict": "FAIL"
+    },
+    "Aggressive (70% PT, 1.0x SL)": {
+      "wr": 66.67,
+      "pf": 3.68,
+      "dd": 0.06,
+      "sharpe": 3.23,
+      "pnl": 150.45,
+      "n": 3,
+      "verdict": "FAIL"
+    },
+    "Wide Wing (50% PT, 1.0x SL, 7%)": {
+      "wr": 66.67,
+      "pf": 3.68,
+      "dd": 0.06,
+      "sharpe": 3.08,
+      "pnl": 150.45,
+      "n": 3,
+      "verdict": "FAIL"
+    },
+    "Short DTE (50% PT, 21 DTE)": {
+      "wr": 75.0,
+      "pf": 1.13,
+      "dd": 0.52,
+      "sharpe": -0.57,
+      "pnl": 32.86,
+      "n": 4,
+      "verdict": "FAIL"
+    }
+  },
+  "D": {
+    "Standard (50% PT, 1.0x SL)": {
+      "wr": 0.0,
+      "pf": 0.0,
+      "dd": 0.34,
+      "sharpe": -2.56,
+      "pnl": -360.11,
+      "n": 3,
+      "verdict": "FAIL"
+    },
+    "Aggressive (70% PT, 1.0x SL)": {
+      "wr": 0.0,
+      "pf": 0.0,
+      "dd": 0.34,
+      "sharpe": -2.56,
+      "pnl": -360.11,
+      "n": 3,
+      "verdict": "FAIL"
+    },
+    "Wide Wing (50% PT, 1.0x SL, 7%)": {
+      "wr": 0.0,
+      "pf": 0.0,
+      "dd": 0.34,
+      "sharpe": -2.56,
+      "pnl": -360.11,
+      "n": 3,
+      "verdict": "FAIL"
+    },
+    "Short DTE (50% PT, 21 DTE)": {
+      "wr": 75.0,
+      "pf": 3.43,
+      "dd": 0.05,
+      "sharpe": 3.75,
+      "pnl": 113.06,
+      "n": 4,
+      "verdict": "PASS"
+    }
+  },
+  "AEP": {
+    "Standard (50% PT, 1.0x SL)": {
+      "wr": 66.67,
+      "pf": 0.53,
+      "dd": 0.43,
+      "sharpe": -0.2,
+      "pnl": -204.52,
+      "n": 3,
+      "verdict": "FAIL"
+    },
+    "Aggressive (70% PT, 1.0x SL)": {
+      "wr": 66.67,
+      "pf": 0.53,
+      "dd": 0.43,
+      "sharpe": -0.06,
+      "pnl": -204.51,
+      "n": 3,
+      "verdict": "FAIL"
+    },
+    "Wide Wing (50% PT, 1.0x SL, 7%)": {
+      "wr": 66.67,
+      "pf": 0.53,
+      "dd": 0.43,
+      "sharpe": -0.2,
+      "pnl": -204.52,
+      "n": 3,
+      "verdict": "FAIL"
+    },
+    "Short DTE (50% PT, 21 DTE)": {
+      "wr": 50.0,
+      "pf": 0.43,
+      "dd": 0.66,
+      "sharpe": -1.38,
+      "pnl": -262.55,
+      "n": 4,
+      "verdict": "FAIL"
+    }
+  },
+  "SRE": {
+    "Standard (50% PT, 1.0x SL)": {
+      "wr": 66.67,
+      "pf": 5.89,
+      "dd": 0.05,
+      "sharpe": 3.4,
+      "pnl": 245.23,
+      "n": 3,
+      "verdict": "FAIL"
+    },
+    "Aggressive (70% PT, 1.0x SL)": {
+      "wr": 66.67,
+      "pf": 5.89,
+      "dd": 0.05,
+      "sharpe": 3.52,
+      "pnl": 245.23,
+      "n": 3,
+      "verdict": "FAIL"
+    },
+    "Wide Wing (50% PT, 1.0x SL, 7%)": {
+      "wr": 66.67,
+      "pf": 5.89,
+      "dd": 0.05,
+      "sharpe": 3.4,
+      "pnl": 245.23,
+      "n": 3,
+      "verdict": "FAIL"
+    },
+    "Short DTE (50% PT, 21 DTE)": {
+      "wr": 75.0,
+      "pf": 1.57,
+      "dd": 0.44,
+      "sharpe": 0.33,
+      "pnl": 124.92,
+      "n": 4,
+      "verdict": "PASS"
+    }
+  },
+  "EXC": {
+    "Standard (50% PT, 1.0x SL)": {
+      "wr": 66.67,
+      "pf": 1.16,
+      "dd": 0.14,
+      "sharpe": 1.27,
+      "pnl": 22.31,
+      "n": 3,
+      "verdict": "FAIL"
+    },
+    "Aggressive (70% PT, 1.0x SL)": {
+      "wr": 66.67,
+      "pf": 1.16,
+      "dd": 0.14,
+      "sharpe": 1.44,
+      "pnl": 22.31,
+      "n": 3,
+      "verdict": "FAIL"
+    },
+    "Wide Wing (50% PT, 1.0x SL, 7%)": {
+      "wr": 66.67,
+      "pf": 1.16,
+      "dd": 0.14,
+      "sharpe": 1.27,
+      "pnl": 22.31,
+      "n": 3,
+      "verdict": "FAIL"
+    },
+    "Short DTE (50% PT, 21 DTE)": {
+      "wr": 75.0,
+      "pf": 1.18,
+      "dd": 0.21,
+      "sharpe": 0.36,
+      "pnl": 24.8,
+      "n": 4,
+      "verdict": "FAIL"
+    }
+  },
+  "XEL": {
+    "Standard (50% PT, 1.0x SL)": {
+      "wr": 66.67,
+      "pf": 2.02,
+      "dd": 0.09,
+      "sharpe": 2.53,
+      "pnl": 95.99,
+      "n": 3,
+      "verdict": "FAIL"
+    },
+    "Aggressive (70% PT, 1.0x SL)": {
+      "wr": 66.67,
+      "pf": 2.02,
+      "dd": 0.09,
+      "sharpe": 2.67,
+      "pnl": 95.99,
+      "n": 3,
+      "verdict": "FAIL"
+    },
+    "Wide Wing (50% PT, 1.0x SL, 7%)": {
+      "wr": 66.67,
+      "pf": 2.02,
+      "dd": 0.09,
+      "sharpe": 2.53,
+      "pnl": 95.99,
+      "n": 3,
+      "verdict": "FAIL"
+    },
+    "Short DTE (50% PT, 21 DTE)": {
+      "wr": 25.0,
+      "pf": 0.34,
+      "dd": 0.67,
+      "sharpe": -2.04,
+      "pnl": -276.96,
+      "n": 4,
+      "verdict": "FAIL"
+    }
+  },
+  "LIN": {
+    "Standard (50% PT, 1.0x SL)": {
+      "wr": 66.67,
+      "pf": 1.39,
+      "dd": 0.91,
+      "sharpe": 1.28,
+      "pnl": 351.18,
+      "n": 3,
+      "verdict": "FAIL"
+    },
+    "Aggressive (70% PT, 1.0x SL)": {
+      "wr": 66.67,
+      "pf": 1.39,
+      "dd": 0.91,
+      "sharpe": 1.42,
+      "pnl": 351.18,
+      "n": 3,
+      "verdict": "FAIL"
+    },
+    "Wide Wing (50% PT, 1.0x SL, 7%)": {
+      "wr": 66.67,
+      "pf": 1.39,
+      "dd": 0.91,
+      "sharpe": 1.28,
+      "pnl": 351.18,
+      "n": 3,
+      "verdict": "FAIL"
+    },
+    "Short DTE (50% PT, 21 DTE)": {
+      "wr": 50.0,
+      "pf": 0.6,
+      "dd": 2.71,
+      "sharpe": -1.05,
+      "pnl": -720.21,
+      "n": 4,
+      "verdict": "FAIL"
+    }
+  },
+  "APD": {
+    "Standard (50% PT, 1.0x SL)": {
+      "wr": 66.67,
+      "pf": 2.76,
+      "dd": 0.46,
+      "sharpe": 2.68,
+      "pnl": 809.77,
+      "n": 3,
+      "verdict": "FAIL"
+    },
+    "Aggressive (70% PT, 1.0x SL)": {
+      "wr": 66.67,
+      "pf": 2.76,
+      "dd": 0.46,
+      "sharpe": 2.68,
+      "pnl": 809.77,
+      "n": 3,
+      "verdict": "FAIL"
+    },
+    "Wide Wing (50% PT, 1.0x SL, 7%)": {
+      "wr": 66.67,
+      "pf": 2.76,
+      "dd": 0.46,
+      "sharpe": 2.68,
+      "pnl": 809.77,
+      "n": 3,
+      "verdict": "FAIL"
+    },
+    "Short DTE (50% PT, 21 DTE)": {
+      "wr": 75.0,
+      "pf": 5.1,
+      "dd": 0.4,
+      "sharpe": 4.15,
+      "pnl": 1657.49,
+      "n": 4,
+      "verdict": "PASS"
+    }
+  },
+  "SHW": {
+    "Standard (50% PT, 1.0x SL)": {
+      "wr": 0.0,
+      "pf": 0.0,
+      "dd": 3.53,
+      "sharpe": -3.94,
+      "pnl": -2545.55,
+      "n": 3,
+      "verdict": "FAIL"
+    },
+    "Aggressive (70% PT, 1.0x SL)": {
+      "wr": 0.0,
+      "pf": 0.0,
+      "dd": 3.53,
+      "sharpe": -3.94,
+      "pnl": -2545.55,
+      "n": 3,
+      "verdict": "FAIL"
+    },
+    "Wide Wing (50% PT, 1.0x SL, 7%)": {
+      "wr": 0.0,
+      "pf": 0.0,
+      "dd": 3.53,
+      "sharpe": -3.94,
+      "pnl": -2545.55,
+      "n": 3,
+      "verdict": "FAIL"
+    },
+    "Short DTE (50% PT, 21 DTE)": {
+      "wr": 25.0,
+      "pf": 0.49,
+      "dd": 1.99,
+      "sharpe": -1.49,
+      "pnl": -703.08,
+      "n": 4,
+      "verdict": "FAIL"
+    }
+  },
+  "FCX": {
+    "Standard (50% PT, 1.0x SL)": {
+      "wr": 0.0,
+      "pf": 0.0,
+      "dd": 0.29,
+      "sharpe": -2.52,
+      "pnl": -372.48,
+      "n": 3,
+      "verdict": "FAIL"
+    },
+    "Aggressive (70% PT, 1.0x SL)": {
+      "wr": 0.0,
+      "pf": 0.0,
+      "dd": 0.29,
+      "sharpe": -2.43,
+      "pnl": -372.48,
+      "n": 3,
+      "verdict": "FAIL"
+    },
+    "Wide Wing (50% PT, 1.0x SL, 7%)": {
+      "wr": 0.0,
+      "pf": 0.0,
+      "dd": 0.29,
+      "sharpe": -2.52,
+      "pnl": -372.48,
+      "n": 3,
+      "verdict": "FAIL"
+    },
+    "Short DTE (50% PT, 21 DTE)": {
+      "wr": 0.0,
+      "pf": 0.0,
+      "dd": 0.69,
+      "sharpe": -5.04,
+      "pnl": -380.85,
+      "n": 4,
+      "verdict": "FAIL"
+    }
+  },
+  "DOW": {
+    "Standard (50% PT, 1.0x SL)": {
+      "wr": 33.33,
+      "pf": 3.45,
+      "dd": 0.07,
+      "sharpe": 1.53,
+      "pnl": 101.54,
+      "n": 3,
+      "verdict": "FAIL"
+    },
+    "Aggressive (70% PT, 1.0x SL)": {
+      "wr": 33.33,
+      "pf": 3.45,
+      "dd": 0.07,
+      "sharpe": 1.53,
+      "pnl": 101.54,
+      "n": 3,
+      "verdict": "FAIL"
+    },
+    "Wide Wing (50% PT, 1.0x SL, 7%)": {
+      "wr": 33.33,
+      "pf": 3.45,
+      "dd": 0.07,
+      "sharpe": 1.53,
+      "pnl": 101.54,
+      "n": 3,
+      "verdict": "FAIL"
+    },
+    "Short DTE (50% PT, 21 DTE)": {
+      "wr": 50.0,
+      "pf": 0.75,
+      "dd": 0.19,
+      "sharpe": -1.21,
+      "pnl": -35.05,
+      "n": 4,
+      "verdict": "FAIL"
+    }
+  },
+  "PPG": {
+    "Standard (50% PT, 1.0x SL)": {
+      "wr": 33.33,
+      "pf": 0.06,
+      "dd": 1.37,
+      "sharpe": -3.79,
+      "pnl": -763.26,
+      "n": 3,
+      "verdict": "FAIL"
+    },
+    "Aggressive (70% PT, 1.0x SL)": {
+      "wr": 33.33,
+      "pf": 0.06,
+      "dd": 1.37,
+      "sharpe": -3.79,
+      "pnl": -763.26,
+      "n": 3,
+      "verdict": "FAIL"
+    },
+    "Wide Wing (50% PT, 1.0x SL, 7%)": {
+      "wr": 33.33,
+      "pf": 0.06,
+      "dd": 1.37,
+      "sharpe": -3.79,
+      "pnl": -763.26,
+      "n": 3,
+      "verdict": "FAIL"
+    },
+    "Short DTE (50% PT, 21 DTE)": {
+      "wr": 25.0,
+      "pf": 0.07,
+      "dd": 1.53,
+      "sharpe": -4.51,
+      "pnl": -867.28,
+      "n": 4,
+      "verdict": "FAIL"
+    }
+  },
+  "NEM": {
+    "Standard (50% PT, 1.0x SL)": {
+      "wr": 0.0,
+      "pf": 0.0,
+      "dd": 0.44,
+      "sharpe": -1.79,
+      "pnl": -531.86,
+      "n": 3,
+      "verdict": "FAIL"
+    },
+    "Aggressive (70% PT, 1.0x SL)": {
+      "wr": 0.0,
+      "pf": 0.0,
+      "dd": 0.44,
+      "sharpe": -1.79,
+      "pnl": -531.86,
+      "n": 3,
+      "verdict": "FAIL"
+    },
+    "Wide Wing (50% PT, 1.0x SL, 7%)": {
+      "wr": 0.0,
+      "pf": 0.0,
+      "dd": 0.44,
+      "sharpe": -1.79,
+      "pnl": -531.86,
+      "n": 3,
+      "verdict": "FAIL"
+    },
+    "Short DTE (50% PT, 21 DTE)": {
+      "wr": 25.0,
+      "pf": 0.5,
+      "dd": 1.26,
+      "sharpe": -1.29,
+      "pnl": -372.33,
+      "n": 4,
+      "verdict": "FAIL"
+    }
+  },
+  "SPY": {
+    "Standard (50% PT, 1.0x SL)": {
+      "wr": 66.67,
+      "pf": 2.08,
+      "dd": 0.6,
+      "sharpe": 2.25,
+      "pnl": 641.55,
+      "n": 3,
+      "verdict": "FAIL"
+    },
+    "Aggressive (70% PT, 1.0x SL)": {
+      "wr": 66.67,
+      "pf": 2.08,
+      "dd": 0.6,
+      "sharpe": 2.49,
+      "pnl": 641.55,
+      "n": 3,
+      "verdict": "FAIL"
+    },
+    "Wide Wing (50% PT, 1.0x SL, 7%)": {
+      "wr": 66.67,
+      "pf": 2.08,
+      "dd": 0.6,
+      "sharpe": 2.25,
+      "pnl": 641.55,
+      "n": 3,
+      "verdict": "FAIL"
+    },
+    "Short DTE (50% PT, 21 DTE)": {
+      "wr": 100.0,
+      "pf": 99.99,
+      "dd": 0.53,
+      "sharpe": 3.47,
+      "pnl": 2030.13,
+      "n": 4,
+      "verdict": "PASS"
+    }
+  },
+  "QQQ": {
+    "Standard (50% PT, 1.0x SL)": {
+      "wr": 100.0,
+      "pf": 99.99,
+      "dd": 0.0,
+      "sharpe": 4.31,
+      "pnl": 2182.57,
+      "n": 3,
+      "verdict": "PASS"
+    },
+    "Aggressive (70% PT, 1.0x SL)": {
+      "wr": 100.0,
+      "pf": 99.99,
+      "dd": 0.0,
+      "sharpe": 4.46,
+      "pnl": 2182.57,
+      "n": 3,
+      "verdict": "PASS"
+    },
+    "Wide Wing (50% PT, 1.0x SL, 7%)": {
+      "wr": 100.0,
+      "pf": 99.99,
+      "dd": 0.0,
+      "sharpe": 4.31,
+      "pnl": 2182.58,
+      "n": 3,
+      "verdict": "PASS"
+    },
+    "Short DTE (50% PT, 21 DTE)": {
+      "wr": 100.0,
+      "pf": 99.99,
+      "dd": 0.0,
+      "sharpe": 4.96,
+      "pnl": 2588.29,
+      "n": 4,
+      "verdict": "PASS"
+    }
+  },
+  "IWM": {
+    "Standard (50% PT, 1.0x SL)": {
+      "wr": 100.0,
+      "pf": 99.99,
+      "dd": 0.0,
+      "sharpe": 4.49,
+      "pnl": 979.83,
+      "n": 3,
+      "verdict": "PASS"
+    },
+    "Aggressive (70% PT, 1.0x SL)": {
+      "wr": 100.0,
+      "pf": 99.99,
+      "dd": 0.0,
+      "sharpe": 4.49,
+      "pnl": 979.84,
+      "n": 3,
+      "verdict": "PASS"
+    },
+    "Wide Wing (50% PT, 1.0x SL, 7%)": {
+      "wr": 100.0,
+      "pf": 99.99,
+      "dd": 0.0,
+      "sharpe": 4.49,
+      "pnl": 979.83,
+      "n": 3,
+      "verdict": "PASS"
+    },
+    "Short DTE (50% PT, 21 DTE)": {
+      "wr": 75.0,
+      "pf": 1.6,
+      "dd": 1.3,
+      "sharpe": 0.63,
+      "pnl": 391.56,
+      "n": 4,
+      "verdict": "PASS"
+    }
+  },
+  "DIA": {
+    "Standard (50% PT, 1.0x SL)": {
+      "wr": 33.33,
+      "pf": 1.02,
+      "dd": 1.25,
+      "sharpe": -0.9,
+      "pnl": 11.46,
+      "n": 3,
+      "verdict": "FAIL"
+    },
+    "Aggressive (70% PT, 1.0x SL)": {
+      "wr": 33.33,
+      "pf": 1.02,
+      "dd": 1.25,
+      "sharpe": -0.67,
+      "pnl": 11.46,
+      "n": 3,
+      "verdict": "FAIL"
+    },
+    "Wide Wing (50% PT, 1.0x SL, 7%)": {
+      "wr": 33.33,
+      "pf": 1.02,
+      "dd": 1.25,
+      "sharpe": -0.9,
+      "pnl": 11.46,
+      "n": 3,
+      "verdict": "FAIL"
+    },
+    "Short DTE (50% PT, 21 DTE)": {
+      "wr": 50.0,
+      "pf": 0.85,
+      "dd": 1.61,
+      "sharpe": 0.01,
+      "pnl": -181.14,
+      "n": 4,
+      "verdict": "FAIL"
+    }
+  }
+}

@@ -1,0 +1,89 @@
+{
+  "generated_utc": "2026-04-12T12:07:06.193123+00:00",
+  "quick": true,
+  "universe": "35_tickers_7_sectors",
+  "days": 252,
+  "num_contracts": 5,
+  "rows": [
+    {
+      "params": {
+        "profit_take_pct": 0.45,
+        "stop_loss_mult": 1.0,
+        "volatility_ratio": 1.3,
+        "min_credit_pct_of_risk": 0.1
+      },
+      "working": 3,
+      "marginal": 10,
+      "failing": 22,
+      "no_data": 0,
+      "total_pnl": 5216.53,
+      "mean_max_drawdown_pct": 4.96,
+      "mean_sharpe": 0.129,
+      "sort_key": [
+        3,
+        10,
+        5217
+      ]
+    },
+    {
+      "params": {
+        "profit_take_pct": 0.55,
+        "stop_loss_mult": 1.0,
+        "volatility_ratio": 1.3,
+        "min_credit_pct_of_risk": 0.1
+      },
+      "working": 3,
+      "marginal": 10,
+      "failing": 22,
+      "no_data": 0,
+      "total_pnl": 5216.53,
+      "mean_max_drawdown_pct": 4.96,
+      "mean_sharpe": 0.166,
+      "sort_key": [
+        3,
+        10,
+        5217
+      ]
+    },
+    {
+      "params": {
+        "profit_take_pct": 0.45,
+        "stop_loss_mult": 1.0,
+        "volatility_ratio": 1.5,
+        "min_credit_pct_of_risk": 0.1
+      },
+      "working": 3,
+      "marginal": 13,
+      "failing": 19,
+      "no_data": 0,
+      "total_pnl": 40492.1,
+      "mean_max_drawdown_pct": 4.19,
+      "mean_sharpe": 0.526,
+      "sort_key": [
+        3,
+        13,
+        40492
+      ]
+    },
+    {
+      "params": {
+        "profit_take_pct": 0.55,
+        "stop_loss_mult": 1.0,
+        "volatility_ratio": 1.5,
+        "min_credit_pct_of_risk": 0.1
+      },
+      "working": 3,
+      "marginal": 14,
+      "failing": 18,
+      "no_data": 0,
+      "total_pnl": 41830.02,
+      "mean_max_drawdown_pct": 4.18,
+      "mean_sharpe": 0.583,
+      "sort_key": [
+        3,
+        14,
+        41830
+      ]
+    }
+  ]
+}

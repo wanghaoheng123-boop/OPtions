@@ -1,0 +1,150 @@
+{
+  "Technology": {
+    "tickers_tested": 5,
+    "working": 2,
+    "marginal": 3,
+    "failing": 0,
+    "no_data": 0,
+    "avg_win_rate": 80.0,
+    "avg_profit_factor": 43.03,
+    "total_pnl_sector": 39662.59,
+    "working_tickers": [
+      "AAPL",
+      "META"
+    ],
+    "marginal_tickers": [
+      "MSFT",
+      "NVDA",
+      "GOOGL"
+    ],
+    "failing_tickers": [],
+    "no_data_tickers": []
+  },
+  "Financials": {
+    "tickers_tested": 5,
+    "working": 0,
+    "marginal": 3,
+    "failing": 2,
+    "no_data": 0,
+    "avg_win_rate": 53.33,
+    "avg_profit_factor": 2.69,
+    "total_pnl_sector": 12191.1,
+    "working_tickers": [],
+    "marginal_tickers": [
+      "JPM",
+      "GS",
+      "V"
+    ],
+    "failing_tickers": [
+      "BAC",
+      "MS"
+    ],
+    "no_data_tickers": []
+  },
+  "Healthcare": {
+    "tickers_tested": 5,
+    "working": 0,
+    "marginal": 4,
+    "failing": 1,
+    "no_data": 0,
+    "avg_win_rate": 60.0,
+    "avg_profit_factor": 1.71,
+    "total_pnl_sector": 15432.71,
+    "working_tickers": [],
+    "marginal_tickers": [
+      "JNJ",
+      "LLY",
+      "ABBV",
+      "MRK"
+    ],
+    "failing_tickers": [
+      "UNH"
+    ],
+    "no_data_tickers": []
+  },
+  "Consumer_Discretionary": {
+    "tickers_tested": 5,
+    "working": 0,
+    "marginal": 1,
+    "failing": 4,
+    "no_data": 0,
+    "avg_win_rate": 40.0,
+    "avg_profit_factor": 1.33,
+    "total_pnl_sector": -2465.32,
+    "working_tickers": [],
+    "marginal_tickers": [
+      "MCD"
+    ],
+    "failing_tickers": [
+      "AMZN",
+      "TSLA",
+      "HD",
+      "NKE"
+    ],
+    "no_data_tickers": []
+  },
+  "Consumer_Staples": {
+    "tickers_tested": 5,
+    "working": 0,
+    "marginal": 1,
+    "failing": 4,
+    "no_data": 0,
+    "avg_win_rate": 46.67,
+    "avg_profit_factor": 0.61,
+    "total_pnl_sector": -4020.13,
+    "working_tickers": [],
+    "marginal_tickers": [
+      "COST"
+    ],
+    "failing_tickers": [
+      "WMT",
+      "KO",
+      "PEP",
+      "PG"
+    ],
+    "no_data_tickers": []
+  },
+  "Energy": {
+    "tickers_tested": 5,
+    "working": 0,
+    "marginal": 1,
+    "failing": 4,
+    "no_data": 0,
+    "avg_win_rate": 26.67,
+    "avg_profit_factor": 1.18,
+    "total_pnl_sector": -10700.68,
+    "working_tickers": [],
+    "marginal_tickers": [
+      "SLB"
+    ],
+    "failing_tickers": [
+      "XOM",
+      "CVX",
+      "COP",
+      "EOG"
+    ],
+    "no_data_tickers": []
+  },
+  "Industrials": {
+    "tickers_tested": 5,
+    "working": 1,
+    "marginal": 1,
+    "failing": 3,
+    "no_data": 0,
+    "avg_win_rate": 46.67,
+    "avg_profit_factor": 21.16,
+    "total_pnl_sector": -8270.23,
+    "working_tickers": [
+      "GE"
+    ],
+    "marginal_tickers": [
+      "RTX"
+    ],
+    "failing_tickers": [
+      "BA",
+      "CAT",
+      "UPS"
+    ],
+    "no_data_tickers": []
+  }
+}

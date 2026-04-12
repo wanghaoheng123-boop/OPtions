@@ -1,0 +1,83 @@
+{
+  "institutional_thresholds": {
+    "win_rate_min_pct": 75,
+    "profit_factor_min": 1.2,
+    "max_drawdown_max_pct": 20
+  },
+  "marginal_thresholds": {
+    "win_rate_min_pct": 60,
+    "profit_factor_min": 0.8,
+    "note": "MARGINAL when WR and PF meet these and not FAILING (DD<=20%, WR>=60, PF>=0.8)."
+  },
+  "failing_rules": {
+    "any_of": [
+      "win_rate_percent < 60",
+      "profit_factor < 0.8",
+      "max_drawdown_percent > 20"
+    ]
+  },
+  "backtest_config": {
+    "strategy": "iron_condor_audited",
+    "days": 252,
+    "use_adaptive": true,
+    "earnings_filter": true,
+    "profit_take_pct": 0.55,
+    "stop_loss_mult": 1.0,
+    "num_contracts": 5,
+    "volatility_ratio": 1.5,
+    "min_credit_pct_of_risk": 0.1,
+    "recommended_params_loaded": true
+  },
+  "counts": {
+    "working": 3,
+    "marginal": 14,
+    "failing": 18,
+    "no_data": 0
+  },
+  "working_list": [
+    {
+      "ticker": "AAPL",
+      "sector": "Technology"
+    },
+    {
+      "ticker": "META",
+      "sector": "Technology"
+    },
+    {
+      "ticker": "GE",
+      "sector": "Industrials"
+    }
+  ],
+  "tickers_wr_gt_80_pf_gt_2": [
+    {
+      "ticker": "AAPL",
+      "sector": "Technology",
+      "wr": 100.0,
+      "pf": 99.99
+    },
+    {
+      "ticker": "META",
+      "sector": "Technology",
+      "wr": 100.0,
+      "pf": 99.99
+    },
+    {
+      "ticker": "GE",
+      "sector": "Industrials",
+      "wr": 100.0,
+      "pf": 99.99
+    }
+  ],
+  "interpretation": {
+    "when_works_best": [
+      "Large-cap liquid names with moderate realized vol and IV Rank above adaptive floor",
+      "Fewer gap-driven single-name events than high-beta discretionary",
+      "Sufficient credit vs wing width (passes min credit filter)"
+    ],
+    "when_fails": [
+      "High-beta names with frequent large daily moves vs wing width",
+      "Max drawdown > 20% fails deployment even if win rate is high",
+      "Binary event risk not fully removed by coarse earnings calendar"
+    ]
+  }
+}
