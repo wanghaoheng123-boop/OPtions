@@ -7,3 +7,7 @@ numpy
 scipy
 openai
 python-dotenv
+statsmodels
+hmmlearn
+scikit-learn
+fredapi

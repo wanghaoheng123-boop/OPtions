@@ -1245,6 +1245,489 @@
             },
             "critic_review": "DISAPPROVED: Strategy failed strict 80% Win Rate and >1.2 Profit Factor metrics out-of-sample constraint.",
             "status": "REJECTED"
+        },
+        {
+            "timestamp": "2026-04-12T14:57:48.480069",
+            "ticker": "SPY",
+            "market_data": {
+                "spot_price": 679.4600219726562,
+                "call_wall_strike": 685.0,
+                "call_wall_gex": 115285867.34737377,
+                "put_wall_strike": 660.0,
+                "put_wall_gex": -32564803.866071966,
+                "total_net_gex": 148789305.05903703,
+                "dealer_position_tilt": "Long Gamma"
+            },
+            "trader_insight": "Deploying Iron Condor (Net Volatility Seller) framework due to systemic IV overstatement verified by QUANT_KNOWLEDGE_BASE.",
+            "backtest_result": {
+                "strategy_tested": "iron_condor",
+                "days_tested": 180,
+                "in_sample_days": 85,
+                "out_of_sample_days": 37,
+                "num_trades": 32,
+                "win_rate_percent": 0.0,
+                "profit_factor": 0.0,
+                "total_pnl_proxy": -38.4,
+                "max_drawdown": 37.2,
+                "sharpe_ratio": 0.0,
+                "sortino_ratio": 0.0,
+                "calmar_ratio": -8.13,
+                "barrier_hits": {
+                    "pt": 0,
+                    "sl": 32,
+                    "time": 0
+                },
+                "trained_volatility": 0.008212,
+                "annualized_vol": 0.1178,
+                "out_of_sample_verified": true,
+                "walk_forward_optimized": false,
+                "verdict": "FAIL"
+            },
+            "critic_review": "DISAPPROVED: Strategy failed strict 80% Win Rate and >1.2 Profit Factor metrics out-of-sample constraint.",
+            "status": "REJECTED"
+        },
+        {
+            "timestamp": "2026-04-12T14:58:20.055620",
+            "ticker": "SPY",
+            "market_data": {
+                "spot_price": 679.4600219726562,
+                "call_wall_strike": 685.0,
+                "call_wall_gex": 115285867.34737377,
+                "put_wall_strike": 660.0,
+                "put_wall_gex": -32564803.866071966,
+                "total_net_gex": 148789305.05903703,
+                "dealer_position_tilt": "Long Gamma"
+            },
+            "trader_insight": "Deploying Iron Condor (Net Volatility Seller) framework due to systemic IV overstatement verified by QUANT_KNOWLEDGE_BASE.",
+            "backtest_result": {
+                "strategy_tested": "iron_condor",
+                "days_tested": 180,
+                "in_sample_days": 85,
+                "out_of_sample_days": 37,
+                "num_trades": 32,
+                "win_rate_percent": 0.0,
+                "profit_factor": 0.0,
+                "total_pnl_proxy": -38.4,
+                "max_drawdown": 37.2,
+                "sharpe_ratio": 0.0,
+                "sortino_ratio": 0.0,
+                "calmar_ratio": -8.13,
+                "barrier_hits": {
+                    "pt": 0,
+                    "sl": 32,
+                    "time": 0
+                },
+                "trained_volatility": 0.008212,
+                "annualized_vol": 0.1178,
+                "out_of_sample_verified": true,
+                "walk_forward_optimized": false,
+                "verdict": "FAIL"
+            },
+            "critic_review": "DISAPPROVED: Strategy failed strict 80% Win Rate and >1.2 Profit Factor metrics out-of-sample constraint.",
+            "status": "REJECTED"
+        },
+        {
+            "timestamp": "2026-04-12T16:27:07.552738",
+            "ticker": "SPY",
+            "market_data": {
+                "spot_price": 679.4600219726562,
+                "call_wall_strike": 685.0,
+                "call_wall_gex": 115285867.34737377,
+                "put_wall_strike": 660.0,
+                "put_wall_gex": -32564803.866071966,
+                "total_net_gex": 148789305.05903703,
+                "dealer_position_tilt": "Long Gamma",
+                "volatility_skew": {
+                    "volatility_skew_index": 4.69,
+                    "sentiment": "Bearish Protection (Moderate Skew)",
+                    "otm_put_iv": 29.3,
+                    "otm_call_iv": 24.61,
+                    "spot_price": 679.4600219726562,
+                    "iv_current": 26.95,
+                    "iv_rank": null,
+                    "iv_percentile": null
+                },
+                "iv_rank": {
+                    "ticker": "SPY",
+                    "iv_current": 15.11,
+                    "iv_rank": 46.4,
+                    "iv_low": 6.94,
+                    "iv_high": 24.55,
+                    "lookback_days": 252,
+                    "verdict": "NEUTRAL",
+                    "timestamp": "2026-04-12T16:27:05.571189"
+                },
+                "iv_percentile": {
+                    "ticker": "SPY",
+                    "iv_current": 15.11,
+                    "iv_percentile": 53.6,
+                    "days_above_current": 71,
+                    "total_days": 153,
+                    "lookback_days": 252,
+                    "verdict": "SELL_PREMIUM",
+                    "timestamp": "2026-04-12T16:27:06.151956"
+                },
+                "full_volatility_analysis": {
+                    "ticker": "SPY",
+                    "spot_price": 679.4600219726562,
+                    "volatility_skew": {
+                        "volatility_skew_index": 4.69,
+                        "sentiment": "Bearish Protection (Moderate Skew)",
+                        "otm_put_iv": 29.3,
+                        "otm_call_iv": 24.61,
+                        "spot_price": 679.4600219726562,
+                        "iv_current": 26.95,
+                        "iv_rank": null,
+                        "iv_percentile": null
+                    },
+                    "iv_rank": {
+                        "ticker": "SPY",
+                        "iv_current": 15.11,
+                        "iv_rank": 46.4,
+                        "iv_low": 6.94,
+                        "iv_high": 24.55,
+                        "lookback_days": 252,
+                        "verdict": "NEUTRAL",
+                        "timestamp": "2026-04-12T16:27:06.770352"
+                    },
+                    "iv_percentile": {
+                        "ticker": "SPY",
+                        "iv_current": 15.11,
+                        "iv_percentile": 53.6,
+                        "days_above_current": 71,
+                        "total_days": 153,
+                        "lookback_days": 252,
+                        "verdict": "SELL_PREMIUM",
+                        "timestamp": "2026-04-12T16:27:07.418632"
+                    },
+                    "aggregate_verdict": "SELL_PREMIUM",
+                    "recommendation": "SELL premium (elevated IV). Bearish protection skew \u2014 cash-secured puts"
+                }
+            },
+            "trader_insight": "SPY at 679.46. Neutral skew (Bearish Protection (Moderate Skew)). Call Wall $685, Put Wall $660. Deploying Iron Condor \u2014 net volatility seller framework. Algo: SpotGamma-Approximation \u2014 IV overstatement creates premium edge.",
+            "backtest_result": {
+                "error": "Insufficient data after OOS split for reliable backtesting."
+            },
+            "critic_review": "REJECTED",
+            "status": "REJECTED"
+        },
+        {
+            "timestamp": "2026-04-12T16:29:30.736585",
+            "ticker": "SPY",
+            "market_data": {
+                "spot_price": 679.4600219726562,
+                "call_wall_strike": 685.0,
+                "call_wall_gex": 115285867.34737377,
+                "put_wall_strike": 660.0,
+                "put_wall_gex": -32564803.866071966,
+                "total_net_gex": 148789305.05903703,
+                "dealer_position_tilt": "Long Gamma",
+                "volatility_skew": {
+                    "volatility_skew_index": 4.69,
+                    "sentiment": "Bearish Protection (Moderate Skew)",
+                    "otm_put_iv": 29.3,
+                    "otm_call_iv": 24.61,
+                    "spot_price": 679.4600219726562,
+                    "iv_current": 26.95,
+                    "iv_rank": null,
+                    "iv_percentile": null
+                },
+                "iv_rank": {
+                    "ticker": "SPY",
+                    "iv_current": 15.11,
+                    "iv_rank": 46.4,
+                    "iv_low": 6.94,
+                    "iv_high": 24.55,
+                    "lookback_days": 252,
+                    "verdict": "NEUTRAL",
+                    "timestamp": "2026-04-12T16:29:28.582602"
+                },
+                "iv_percentile": {
+                    "ticker": "SPY",
+                    "iv_current": 15.11,
+                    "iv_percentile": 53.6,
+                    "days_above_current": 71,
+                    "total_days": 153,
+                    "lookback_days": 252,
+                    "verdict": "SELL_PREMIUM",
+                    "timestamp": "2026-04-12T16:29:29.194693"
+                },
+                "full_volatility_analysis": {
+                    "ticker": "SPY",
+                    "spot_price": 679.4600219726562,
+                    "volatility_skew": {
+                        "volatility_skew_index": 4.69,
+                        "sentiment": "Bearish Protection (Moderate Skew)",
+                        "otm_put_iv": 29.3,
+                        "otm_call_iv": 24.61,
+                        "spot_price": 679.4600219726562,
+                        "iv_current": 26.95,
+                        "iv_rank": null,
+                        "iv_percentile": null
+                    },
+                    "iv_rank": {
+                        "ticker": "SPY",
+                        "iv_current": 15.11,
+                        "iv_rank": 46.4,
+                        "iv_low": 6.94,
+                        "iv_high": 24.55,
+                        "lookback_days": 252,
+                        "verdict": "NEUTRAL",
+                        "timestamp": "2026-04-12T16:29:29.869374"
+                    },
+                    "iv_percentile": {
+                        "ticker": "SPY",
+                        "iv_current": 15.11,
+                        "iv_percentile": 53.6,
+                        "days_above_current": 71,
+                        "total_days": 153,
+                        "lookback_days": 252,
+                        "verdict": "SELL_PREMIUM",
+                        "timestamp": "2026-04-12T16:29:30.500682"
+                    },
+                    "aggregate_verdict": "SELL_PREMIUM",
+                    "recommendation": "SELL premium (elevated IV). Bearish protection skew \u2014 cash-secured puts"
+                }
+            },
+            "trader_insight": "SPY at 679.46. Neutral skew (Bearish Protection (Moderate Skew)). Call Wall $685, Put Wall $660. Deploying Iron Condor \u2014 net volatility seller framework. Algo: SpotGamma-Approximation \u2014 IV overstatement creates premium edge.",
+            "backtest_result": {
+                "strategy_tested": "iron_condor",
+                "days_tested": 252,
+                "in_sample_days": 120,
+                "out_of_sample_days": 52,
+                "num_trades": 47,
+                "win_rate_percent": 4.26,
+                "profit_factor": 0.0,
+                "total_pnl_proxy": -53.99,
+                "max_drawdown": 54.0,
+                "sharpe_ratio": -74.97,
+                "sortino_ratio": -4.10625124697611e+16,
+                "calmar_ratio": -5.36,
+                "barrier_hits": {
+                    "pt": 0,
+                    "sl": 45,
+                    "time": 2
+                },
+                "trained_volatility": 0.007464,
+                "annualized_vol": 0.1107,
+                "out_of_sample_verified": true,
+                "walk_forward_optimized": false,
+                "verdict": "FAIL"
+            },
+            "critic_review": "REJECTED",
+            "status": "REJECTED"
+        },
+        {
+            "timestamp": "2026-04-12T16:32:34.312137",
+            "ticker": "SPY",
+            "market_data": {
+                "spot_price": 679.4600219726562,
+                "call_wall_strike": 685.0,
+                "call_wall_gex": 115285867.34737377,
+                "put_wall_strike": 660.0,
+                "put_wall_gex": -32564803.866071966,
+                "total_net_gex": 148789305.05903703,
+                "dealer_position_tilt": "Long Gamma",
+                "volatility_skew": {
+                    "volatility_skew_index": 4.69,
+                    "sentiment": "Bearish Protection (Moderate Skew)",
+                    "otm_put_iv": 29.3,
+                    "otm_call_iv": 24.61,
+                    "spot_price": 679.4600219726562,
+                    "iv_current": 26.95,
+                    "iv_rank": null,
+                    "iv_percentile": null
+                },
+                "iv_rank": {
+                    "ticker": "SPY",
+                    "iv_current": 15.11,
+                    "iv_rank": 46.4,
+                    "iv_low": 6.94,
+                    "iv_high": 24.55,
+                    "lookback_days": 252,
+                    "verdict": "NEUTRAL",
+                    "timestamp": "2026-04-12T16:32:32.152561"
+                },
+                "iv_percentile": {
+                    "ticker": "SPY",
+                    "iv_current": 15.11,
+                    "iv_percentile": 53.6,
+                    "days_above_current": 71,
+                    "total_days": 153,
+                    "lookback_days": 252,
+                    "verdict": "SELL_PREMIUM",
+                    "timestamp": "2026-04-12T16:32:32.789423"
+                },
+                "full_volatility_analysis": {
+                    "ticker": "SPY",
+                    "spot_price": 679.4600219726562,
+                    "volatility_skew": {
+                        "volatility_skew_index": 4.69,
+                        "sentiment": "Bearish Protection (Moderate Skew)",
+                        "otm_put_iv": 29.3,
+                        "otm_call_iv": 24.61,
+                        "spot_price": 679.4600219726562,
+                        "iv_current": 26.95,
+                        "iv_rank": null,
+                        "iv_percentile": null
+                    },
+                    "iv_rank": {
+                        "ticker": "SPY",
+                        "iv_current": 15.11,
+                        "iv_rank": 46.4,
+                        "iv_low": 6.94,
+                        "iv_high": 24.55,
+                        "lookback_days": 252,
+                        "verdict": "NEUTRAL",
+                        "timestamp": "2026-04-12T16:32:33.396281"
+                    },
+                    "iv_percentile": {
+                        "ticker": "SPY",
+                        "iv_current": 15.11,
+                        "iv_percentile": 53.6,
+                        "days_above_current": 71,
+                        "total_days": 153,
+                        "lookback_days": 252,
+                        "verdict": "SELL_PREMIUM",
+                        "timestamp": "2026-04-12T16:32:34.049467"
+                    },
+                    "aggregate_verdict": "SELL_PREMIUM",
+                    "recommendation": "SELL premium (elevated IV). Bearish protection skew \u2014 cash-secured puts"
+                }
+            },
+            "trader_insight": "SPY at 679.46. Neutral skew (Bearish Protection (Moderate Skew)). Call Wall $685, Put Wall $660. Deploying Iron Condor \u2014 net volatility seller framework. Algo: SpotGamma-Approximation \u2014 IV overstatement creates premium edge.",
+            "backtest_result": {
+                "strategy_tested": "iron_condor",
+                "days_tested": 252,
+                "in_sample_days": 120,
+                "out_of_sample_days": 52,
+                "num_trades": 47,
+                "win_rate_percent": 4.26,
+                "profit_factor": 0.0,
+                "total_pnl_proxy": -53.99,
+                "max_drawdown": 54.0,
+                "sharpe_ratio": -74.97,
+                "sortino_ratio": -4.10625124697611e+16,
+                "calmar_ratio": -5.36,
+                "barrier_hits": {
+                    "pt": 0,
+                    "sl": 45,
+                    "time": 2
+                },
+                "trained_volatility": 0.007464,
+                "annualized_vol": 0.1107,
+                "out_of_sample_verified": true,
+                "walk_forward_optimized": false,
+                "verdict": "FAIL"
+            },
+            "critic_review": "REJECTED",
+            "status": "REJECTED"
+        },
+        {
+            "timestamp": "2026-04-12T16:41:49.683389",
+            "ticker": "QQQ",
+            "market_data": {
+                "spot_price": 611.0700073242188,
+                "call_wall_strike": 610.0,
+                "call_wall_gex": 5038745.889306379,
+                "put_wall_strike": 573.0,
+                "put_wall_gex": -20413799.99071784,
+                "total_net_gex": -35812967.287286535,
+                "dealer_position_tilt": "Short Gamma",
+                "volatility_skew": {
+                    "volatility_skew_index": 16.6,
+                    "sentiment": "Extreme Fear (High Skew)",
+                    "otm_put_iv": 39.26,
+                    "otm_call_iv": 22.66,
+                    "spot_price": 611.0700073242188,
+                    "iv_current": 30.96,
+                    "iv_rank": null,
+                    "iv_percentile": null
+                },
+                "iv_rank": {
+                    "ticker": "QQQ",
+                    "iv_current": 21.18,
+                    "iv_rank": 61.4,
+                    "iv_low": 8.15,
+                    "iv_high": 29.38,
+                    "lookback_days": 252,
+                    "verdict": "SELL_PREMIUM",
+                    "timestamp": "2026-04-12T16:41:48.100680"
+                },
+                "iv_percentile": {
+                    "ticker": "QQQ",
+                    "iv_current": 21.18,
+                    "iv_percentile": 60.1,
+                    "days_above_current": 61,
+                    "total_days": 153,
+                    "lookback_days": 252,
+                    "verdict": "SELL_PREMIUM",
+                    "timestamp": "2026-04-12T16:41:48.664708"
+                },
+                "full_volatility_analysis": {
+                    "ticker": "QQQ",
+                    "spot_price": 611.0700073242188,
+                    "volatility_skew": {
+                        "volatility_skew_index": 16.6,
+                        "sentiment": "Extreme Fear (High Skew)",
+                        "otm_put_iv": 39.26,
+                        "otm_call_iv": 22.66,
+                        "spot_price": 611.0700073242188,
+                        "iv_current": 30.96,
+                        "iv_rank": null,
+                        "iv_percentile": null
+                    },
+                    "iv_rank": {
+                        "ticker": "QQQ",
+                        "iv_current": 21.18,
+                        "iv_rank": 61.4,
+                        "iv_low": 8.15,
+                        "iv_high": 29.38,
+                        "lookback_days": 252,
+                        "verdict": "SELL_PREMIUM",
+                        "timestamp": "2026-04-12T16:41:48.826245"
+                    },
+                    "iv_percentile": {
+                        "ticker": "QQQ",
+                        "iv_current": 21.18,
+                        "iv_percentile": 60.1,
+                        "days_above_current": 61,
+                        "total_days": 153,
+                        "lookback_days": 252,
+                        "verdict": "SELL_PREMIUM",
+                        "timestamp": "2026-04-12T16:41:49.449175"
+                    },
+                    "aggregate_verdict": "SELL_PREMIUM",
+                    "recommendation": "SELL premium (elevated IV). Extreme Fear sentiment \u2014 wheel/covered call preferred"
+                }
+            },
+            "trader_insight": "SPY at 611.07. Negative GEX (-35.8M). Extreme Fear skew detected. Implementing Cash-Secured Puts near $573 strike. Algo: SpotGamma-Approximation \u2014 dealers sell into panic, collect premium.",
+            "backtest_result": {
+                "strategy_tested": "wheel",
+                "days_tested": 252,
+                "in_sample_days": 120,
+                "out_of_sample_days": 52,
+                "num_trades": 47,
+                "win_rate_percent": 53.19,
+                "profit_factor": 0.36,
+                "total_pnl_proxy": -20.99,
+                "max_drawdown": 23.49,
+                "sharpe_ratio": -7.16,
+                "sortino_ratio": 0.0,
+                "calmar_ratio": -4.79,
+                "barrier_hits": {
+                    "pt": 24,
+                    "sl": 22,
+                    "time": 1
+                },
+                "trained_volatility": 0.009001,
+                "annualized_vol": 0.1518,
+                "out_of_sample_verified": true,
+                "walk_forward_optimized": false,
+                "verdict": "FAIL"
+            },
+            "critic_review": "REJECTED",
+            "status": "REJECTED"
         }
     ],
     "verified_algorithms": []

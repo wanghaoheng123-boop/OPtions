@@ -32,21 +32,14 @@ class OptionsPricing:
 
 class IronCondorBacktester:
     """
-    INSTITUTIONAL IRON CONDOR BACKTESTER — Loop 2 Enhanced Version.
-
-    Key Improvements (Loop 2):
-    1. Adaptive wing width based on IV (high vol = wider wings)
-    2. Adaptive DTE based on IV (high vol = shorter DTE)
-    3. Earnings calendar filter (skip near earnings)
-    4. Vol-adaptive IV Rank threshold
+    Institutional Iron Condor Backtester with proper options pricing.
 
     Entry Rules (enforced):
-    - IV Rank > threshold (adaptive based on vol)
-    - Credit >= 15% of max risk
-    - Not within 5 days of earnings (for known tickers)
+    - IV Rank > threshold (we use 50 by default — only sell elevated premium)
 
     Pricing:
-    - Black-Scholes with IV = realized_vol × VOLATILITY_PREMIUM (2.5x)
+    - Black-Scholes with IV from realized vol as proxy
+    - Strikes: 30-delta approximation (~7% OTM for 30 DTE)
 
     Triple Barrier (applied to OPTION CREDIT, not underlying):
     - PT: Take profit when X% of credit captured
@@ -54,34 +47,14 @@ class IronCondorBacktester:
     - Time: Exit when DTE < 5 days
     """
 
-    # Global constants
-    VOLATILITY_PREMIUM = 2.5
-    MIN_CREDIT_PCT_OF_RISK = 0.15
-
-    # Earnings calendar (month numbers when earnings occur)
-    # Format: ticker -> list of earnings months
-    EARNINGS_CALENDAR = {
-        'MSFT': [2, 5, 8, 11],   # Feb, May, Aug, Nov
-        'NFLX': [1, 4, 7, 10],   # Jan, Apr, Jul, Oct
-        'AAPL': [1, 4, 7, 10],   # Jan, Apr, Jul, Oct
-        'GOOGL': [1, 4, 7, 10],  # Jan, Apr, Jul, Oct
-        'AMZN': [1, 4, 7, 10],   # Jan, Apr, Jul, Oct
-        'META': [1, 4, 7, 10],   # Jan, Apr, Jul, Oct
-        'TSLA': [1, 4, 7, 10],   # Jan, Apr, Jul, Oct (approx)
-        'AMD': [1, 4, 7, 10],    # Jan, Apr, Jul, Oct (approx)
-        'NVDA': [1, 4, 7, 10],   # Jan, Apr, Jul, Oct (approx)
-    }
-
     def __init__(self,
                  iv_rank_min: float = 50.0,
-                 dte_entry: int = 45,
-                 max_hold_days: int = 40,
-                 profit_take_pct: float = 0.70,
+                 dte_entry: int = 30,
+                 max_hold_days: int = 25,
+                 profit_take_pct: float = 0.50,
                  stop_loss_mult: float = 2.0,
-                 wing_pct: float = 0.10,
-                 num_contracts: int = 1,
-                 use_adaptive: bool = True,  # NEW: use vol-adaptive parameters
-                 earnings_filter: bool = True):  # NEW: skip earnings-prone periods
+                 wing_pct: float = 0.07,
+                 num_contracts: int = 1):
         self.iv_rank_min = iv_rank_min
         self.dte_entry = dte_entry
         self.max_hold_days = max_hold_days
@@ -89,86 +62,14 @@ class IronCondorBacktester:
         self.stop_loss_mult = stop_loss_mult
         self.wing_pct = wing_pct
         self.num_contracts = num_contracts
-        self.use_adaptive = use_adaptive
-        self.earnings_filter = earnings_filter
         self.tcm = TransactionCostModel("IBKR")
 
-    @staticmethod
-    def adaptive_wing(iv: float) -> float:
-        """
-        Wing width as % of spot — scales with IV.
-        Higher IV = wider wings to collect more premium and avoid breach.
-
-        Formula: wing_pct = max(0.05, min(0.20, iv / 4))
-        - IV=20% → 5% wing
-        - IV=40% → 10% wing
-        - IV=60% → 15% wing
-        - IV=80%+ → 20% wing (capped)
-        """
-        return max(0.05, min(0.20, iv / 400))
-
-    @staticmethod
-    def adaptive_dte(iv: float) -> int:
-        """
-        DTE scales inversely with IV.
-        Higher IV = shorter DTE to reduce vol exposure.
-
-        Formula: dte = max(21, min(45, 60 - iv * 100))
-        - IV=15% → DTE=45
-        - IV=30% → DTE=30
-        - IV=50% → DTE=21
-        """
-        dte = 60 - iv * 100
-        return max(21, min(45, dte))
-
-    @staticmethod
-    def adaptive_iv_rank_min(iv: float) -> float:
-        """
-        IV Rank threshold scales with IV.
-        Higher IV = higher threshold needed to enter.
-
-        Formula: iv_rank_min = max(30, 70 - iv * 100)
-        - IV=15% → threshold=55
-        - IV=30% → threshold=40
-        - IV=50% → threshold=30
-        """
-        threshold = 70 - iv * 100
-        return max(30, min(55, threshold))
-
-    def earnings_filter_active(self, ticker: str) -> bool:
-        """
-        Check if we're within 5 days of earnings month start.
-        If True, skip trading this ticker this week.
-        """
-        if not self.earnings_filter:
-            return False
-        if ticker not in self.EARNINGS_CALENDAR:
-            return False  # No earnings data — allow
-
-        earnings_months = self.EARNINGS_CALENDAR[ticker]
-        now = datetime.now()
-        current_month = now.month
-        current_day = now.day
-
-        # Check if current month is an earnings month
-        if current_month in earnings_months:
-            # Within 5 days of month start = earnings risk
-            if current_day <= 5:
-                return True
-
-        # Also check next month (in case we're near end of earnings month)
-        next_month = (current_month % 12) + 1
-        if next_month in earnings_months and current_day >= 25:
-            return True
-
-        return False
-
-    def _get_strikes(self, S: float, wing_pct: float) -> dict:
-        """Delta-based strike selection: ~30 delta = ~wing_pct OTM."""
-        short_put = round(S * (1 - wing_pct))
-        long_put = round(S * (1 - wing_pct * 2))
-        short_call = round(S * (1 + wing_pct))
-        long_call = round(S * (1 + wing_pct * 2))
+    def _get_strikes(self, S: float) -> dict:
+        """Delta-based strike selection: ~30 delta = ~7% OTM for 30 DTE."""
+        short_put = round(S * (1 - self.wing_pct))
+        long_put = round(S * (1 - self.wing_pct * 2))
+        short_call = round(S * (1 + self.wing_pct))
+        long_call = round(S * (1 + self.wing_pct * 2))
         wing_width = short_put - long_put
         return {
             'short_put': short_put, 'long_put': long_put,
@@ -185,10 +86,10 @@ class IronCondorBacktester:
         credit = (sp - lp) + (sc - lc)
         return max(credit, 0.0)
 
-    def _simulate_trade(self, price_path: np.ndarray, iv: float, dte: int,
+    def _simulate_trade(self, price_path: np.ndarray, iv: float,
                          strikes: dict, entry_credit: float) -> dict:
         """Simulate trade along price path. Returns net P&L in dollars."""
-        T_start = dte / 365.0
+        T_start = self.dte_entry / 365.0
         dt = 1 / 365.0
         profit_target = entry_credit * self.profit_take_pct
         stop_loss = entry_credit * self.stop_loss_mult
@@ -203,9 +104,7 @@ class IronCondorBacktester:
         )
         tc_cost = tc['total_cost']
 
-        max_hold = min(self.max_hold_days, len(price_path) - 1)
-
-        for day in range(max_hold):
+        for day in range(min(self.max_hold_days, len(price_path) - 1)):
             T = max(0, T_start - day * dt)
             S = price_path[day]
 
@@ -230,6 +129,7 @@ class IronCondorBacktester:
                 return {'pnl': round(pnl - tc_cost, 2), 'barrier': 'time', 'exit_day': day}
 
         # Expiration: all options expired
+        # If price unchanged, we keep full credit
         final_credit = max(
             OptionsPricing.bs_put(price_path[-1], strikes['short_put'], 0, r, iv) -
             OptionsPricing.bs_put(price_path[-1], strikes['long_put'], 0, r, iv) +
@@ -238,10 +138,10 @@ class IronCondorBacktester:
             0.0
         )
         pnl = (entry_credit - final_credit) * self.num_contracts * 100
-        return {'pnl': round(pnl - tc_cost, 2), 'barrier': 'exp', 'exit_day': max_hold}
+        return {'pnl': round(pnl - tc_cost, 2), 'barrier': 'exp', 'exit_day': self.max_hold_days}
 
     def run(self, ticker: str, days: int = 252) -> dict:
-        """Run backtest on ticker with adaptive parameters."""
+        """Run backtest on ticker."""
         end = datetime.now()
         start = end - timedelta(days=days + 60)
 
@@ -287,56 +187,35 @@ class IronCondorBacktester:
         for i in range(len(price_arr)):
             S = float(price_arr.iloc[i])
 
-            # Current raw IV estimate
+            # Current IV estimate
             if i >= 30:
-                raw_iv = float(rv_arr.iloc[i]) if not pd.isna(rv_arr.iloc[i]) else trained_iv
+                iv = float(rv_arr.iloc[i]) if not pd.isna(rv_arr.iloc[i]) else trained_iv
             else:
-                raw_iv = trained_iv
+                iv = trained_iv
 
-            # Apply volatility premium (2.5x)
-            iv = raw_iv * self.VOLATILITY_PREMIUM
-
-            # IV Rank (based on raw IV for market comparison)
+            # IV Rank
             if i >= 252:
                 hist_iv = rv_arr.iloc[max(0, i-252):i].dropna()
                 if len(hist_iv) > 20:
-                    iv_rank = float(((hist_iv < raw_iv).sum() / len(hist_iv)) * 100)
+                    iv_rank = float(((hist_iv < iv).sum() / len(hist_iv)) * 100)
                 else:
                     iv_rank = 50.0
             else:
                 iv_rank = 50.0
 
             if not trade_open:
-                # Earnings filter check
-                if self.earnings_filter_active(ticker):
+                # Entry: IV Rank must be above threshold
+                if iv_rank < self.iv_rank_min:
                     equity_curve.append(equity)
                     dates.append(oos_prices.index[i])
                     continue
 
-                # Adaptive parameter calculation
-                if self.use_adaptive:
-                    adaptive_wing_pct = self.adaptive_wing(iv)
-                    adaptive_dte = self.adaptive_dte(iv)
-                    adaptive_iv_rank_min = self.adaptive_iv_rank_min(iv)
-                else:
-                    adaptive_wing_pct = self.wing_pct
-                    adaptive_dte = self.dte_entry
-                    adaptive_iv_rank_min = self.iv_rank_min
-
-                # Entry: IV Rank must be above adaptive threshold
-                if iv_rank < adaptive_iv_rank_min:
-                    equity_curve.append(equity)
-                    dates.append(oos_prices.index[i])
-                    continue
-
-                # Calculate entry with adaptive parameters
-                strikes = self._get_strikes(S, adaptive_wing_pct)
-                T = adaptive_dte / 365.0
+                # Calculate entry
+                strikes = self._get_strikes(S)
+                T = self.dte_entry / 365.0
                 credit = self._calc_credit(S, T, r, iv, strikes)
 
-                # Minimum credit threshold: must be >= 15% of wing width
-                min_credit = strikes['wing_width'] * self.MIN_CREDIT_PCT_OF_RISK
-                if credit < min_credit:
+                if credit < 0.05:  # Minimum credit threshold
                     equity_curve.append(equity)
                     dates.append(oos_prices.index[i])
                     continue
@@ -346,7 +225,7 @@ class IronCondorBacktester:
                 price_path = price_arr.iloc[i:path_end].values
 
                 # Simulate trade
-                result = self._simulate_trade(price_path, iv, adaptive_dte, strikes, credit)
+                result = self._simulate_trade(price_path, iv, strikes, credit)
                 equity += result['pnl']
                 equity_curve.append(equity)
                 dates.append(oos_prices.index[i])
@@ -356,9 +235,6 @@ class IronCondorBacktester:
                 result['iv_rank'] = round(iv_rank, 1)
                 result['iv_used'] = round(iv, 4)
                 result['strikes'] = strikes
-                result['wing_pct'] = round(adaptive_wing_pct, 4)
-                result['dte'] = adaptive_dte
-                result['iv_rank_min'] = round(adaptive_iv_rank_min, 1)
                 trades.append(result)
             else:
                 equity_curve.append(equity)
@@ -366,11 +242,10 @@ class IronCondorBacktester:
 
         if not trades:
             return {
-                'error': f'No trades — check IV Rank threshold or earnings filter',
-                'ticker': ticker,
-                'use_adaptive': self.use_adaptive,
-                'earnings_filter': self.earnings_filter,
-                'trained_iv': round(trained_iv, 4)
+                'error': f'No trades — IV Rank {self.iv_rank_min}% threshold too high',
+                'iv_rank_min': self.iv_rank_min,
+                'trained_iv': round(trained_iv, 4),
+                'oos_days': len(oos_prices)
             }
 
         # Calculate metrics
@@ -387,7 +262,7 @@ class IronCondorBacktester:
         avg_win = float(np.mean(wins)) if len(wins) > 0 else 0
         avg_loss = abs(float(np.mean(losses))) if len(losses) > 0 else 1
 
-        pf = float(np.sum(wins) / abs(np.sum(losses))) if len(losses) > 0 and np.sum(losses) != 0 else 99.99
+        pf = float(np.sum(wins) / np.sum(losses)) if len(losses) > 0 and np.sum(losses) != 0 else 99.99
 
         # Equity curve metrics
         eq = np.array(equity_curve, dtype=float)
@@ -433,10 +308,9 @@ class IronCondorBacktester:
             'sortino_ratio': round(sortino, 2),
             'calmar_ratio': round(calmar, 2),
             'trained_iv': round(trained_iv, 4),
+            'iv_rank_min': self.iv_rank_min,
             'barrier_hits': barriers,
             'num_contracts': self.num_contracts,
-            'adaptive': self.use_adaptive,
-            'earnings_filter': self.earnings_filter,
             'verdict': 'PASS' if win_rate >= 75 and pf >= 1.2 and max_dd_pct < 20 else 'FAIL',
             'trade_sample': trades[:3]
         }
@@ -447,13 +321,11 @@ def run_backtest(ticker: str, strategy: str = 'iron_condor',
     """Convenience function matching the old interface."""
     bt = IronCondorBacktester(
         iv_rank_min=kwargs.get('iv_rank_min', 50.0),
-        dte_entry=kwargs.get('dte_entry', 45),
-        max_hold_days=kwargs.get('max_hold_days', 40),
-        profit_take_pct=kwargs.get('profit_take_pct', 0.70),
+        dte_entry=kwargs.get('dte_entry', 30),
+        max_hold_days=kwargs.get('max_hold_days', 25),
+        profit_take_pct=kwargs.get('profit_take_pct', 0.50),
         stop_loss_mult=kwargs.get('stop_loss_mult', 2.0),
-        wing_pct=kwargs.get('wing_pct', 0.10),
-        num_contracts=kwargs.get('num_contracts', 1),
-        use_adaptive=kwargs.get('use_adaptive', True),
-        earnings_filter=kwargs.get('earnings_filter', True)
+        wing_pct=kwargs.get('wing_pct', 0.07),
+        num_contracts=kwargs.get('num_contracts', 1)
     )
     return bt.run(ticker, days)

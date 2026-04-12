@@ -1,0 +1,8 @@
+INFO:     Started server process [15272]
+INFO:     Waiting for application startup.
+INFO:     Application startup complete.
+INFO:     Uvicorn running on http://0.0.0.0:8000 (Press CTRL+C to quit)
+Even though the 'startprob_' attribute is set, it will be overwritten during initialization because 'init_params' contains 's'
+Even though the 'transmat_' attribute is set, it will be overwritten during initialization because 'init_params' contains 't'
+Even though the 'means_' attribute is set, it will be overwritten during initialization because 'init_params' contains 'm'
+Even though the 'covars_' attribute is set, it will be overwritten during initialization because 'init_params' contains 'c'
