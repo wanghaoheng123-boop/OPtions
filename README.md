@@ -61,7 +61,7 @@ With Alpaca keys unset, `skills/brokers.py` uses **stubs** for paper-style flows
 
 - **Discovery:** `GET /api/screener` → ticker list; choosing a symbol loads the terminal.
 - **Terminal analyze:** `POST /api/analyze` runs the full agentic pipeline (options chain, GEX/skew, `MarketExpertTeam`, paper trade) and returns data for the mosaic (HMM, meta-model, backtest, critic, etc. in one payload).
-- **Other panels:** dedicated REST calls, for example `GET /api/statarb`, `GET /api/heatmap`, `GET /api/macro*`, `GET /api/portfolio`, `POST /api/portfolio/execute`, `POST /api/broker/*`, `GET /api/hmm/{ticker}`, `GET /api/meta/{ticker}`.
+- **Other panels:** dedicated REST calls, for example `GET /api/statarb`, `GET /api/heatmap`, `GET /api/macro*`, `GET /api/portfolio`, `GET /api/methodology/{panel}`, `POST /api/portfolio/execute`, `POST /api/broker/*`, `GET /api/hmm/{ticker}`, `GET /api/meta/{ticker}`.
 - **Live GEX tile:** in **development**, the mosaic can use a **WebSocket** mock feed (`/ws/gex` on the Python port). In **production** (e.g. Vite `build`), the UI **polls** [`GET /api/gex/live/{ticker}`](backend/main.py) for chain-backed gamma (serverless-friendly). Optional duplicate WS route: `/api/ws/gex`.
 
 ### 5. Performance validation (Phase 6B)
@@ -83,7 +83,7 @@ Additional checks:
 
 ```bash
 python scripts/validate_regression.py --tickers SPY,QQQ --days 400
-python -m pytest tests/ -m "not network"   # fast: health + meta labels
+python -m pytest tests/ -m "not network"   # fast: health, methodology, structure (no yfinance)
 python -m pytest tests/ -m network         # needs yfinance + options data
 ```
 
@@ -97,6 +97,19 @@ Results are **research-grade simulations**, not guaranteed future performance:
 - **Meta-labeling** prefers labels from **`trade_log`** (per-trade win/loss on entry dates); if too few trades exist, it falls back to a **next-day return** proxy (see [`skills/meta_model.py`](skills/meta_model.py)).
 
 Use the scripts above for **regression** (structure + gates), not for proving live edge.
+
+### 5c. Regression matrix, strict mode, and ablations
+
+| Check | Command | Notes |
+|--------|---------|--------|
+| Fast API smoke | `python -m pytest tests/ -m "not network"` | Health, methodology index/detail, structure without yfinance |
+| Live data / chart | `python -m pytest tests/ -m network` | Includes `GET /api/chart/SPY` OHLC contract and optional chain-backed GEX |
+| Multi-ticker structure | `python scripts/validate_regression.py --tickers SPY,QQQ,IWM --days 400` | Widen the ticker list for a larger matrix; yfinance may rate-limit |
+| Batch gates | `python scripts/validate_batch_backtest.py --basket --days 400` | Add `--strict` so every symbol must pass gates (release-style) |
+
+**Ablations:** toggles such as alternate EWMA spans or event filters should be recorded with the flag set and date in `progress.md` so comparisons stay attributable.
+
+**Optional external validation:** OpenAlex/CrossRef or GitHub search can sanity-check formulas and UI patterns; treat hits as **design references**, not proof of live edge.
 
 ### 6. Setup the React Frontend
 The frontend houses the Vite compilation and the Mosaic UI terminal.
@@ -123,7 +136,23 @@ Open a second terminal inside the `/frontend` directory:
 npm run dev
 ```
 
-Navigate your browser to: `http://localhost:5173/` and prepare for proactive institutional discovery.
+Navigate your browser to: `http://localhost:5173/`.
+
+### Local API wiring and quick checks
+
+The Vite dev server proxies browser requests from **`/api/*`** to **`http://127.0.0.1:8005`** (see [`frontend/vite.config.ts`](frontend/vite.config.ts)). If the UI shows empty charts or repeated errors, confirm the backend is listening on the **same port** as the proxy (default **8005**).
+
+**Sanity checks (PowerShell or bash):**
+
+```bash
+curl -s http://127.0.0.1:8005/api/health
+curl -s http://127.0.0.1:8005/api/chart/SPY | head -c 400
+curl -s -X POST http://127.0.0.1:8005/api/analyze -H "Content-Type: application/json" -d "{\"ticker\":\"SPY\",\"days\":126}"
+```
+
+If these fail from the host but the SPA is open on port **5173**, the problem is backend/port/proxy—not the chart library.
+
+**Vercel / split deployments:** a static frontend build that calls **`/api/...`** only works when the **same origin** serves FastAPI (e.g. Vercel experimental services per [`vercel.json`](vercel.json)). Hosting the SPA on one URL and the API on another requires configuring the frontend base URL (not enabled in this repo by default).
 
 ## Vercel (Services: Vite + FastAPI)
 

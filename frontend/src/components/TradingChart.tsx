@@ -1,19 +1,33 @@
 // @ts-nocheck
 import { useEffect, useRef } from 'react';
-import { createChart, ColorType } from 'lightweight-charts';
+import {
+  createChart,
+  ColorType,
+  CandlestickSeries,
+} from 'lightweight-charts';
 
 interface TradingChartProps {
   data: any[];
   callWall?: number;
   putWall?: number;
+  onChartError?: (msg: string) => void;
 }
 
-export default function TradingChart({ data, callWall, putWall }: TradingChartProps) {
+/**
+ * lightweight-charts v5: use chart.addSeries(CandlestickSeries, options).
+ * Data: { time: 'YYYY-MM-DD', open, high, low, close }[]
+ */
+export default function TradingChart({ data, callWall, putWall, onChartError }: TradingChartProps) {
   const chartContainerRef = useRef<HTMLDivElement>(null);
   const chartRef = useRef<any>(null);
+  const onChartErrorRef = useRef(onChartError);
+  onChartErrorRef.current = onChartError;
 
   useEffect(() => {
     if (!chartContainerRef.current) return;
+    if (!data || !Array.isArray(data) || data.length === 0) {
+      return;
+    }
 
     const chart = createChart(chartContainerRef.current, {
       layout: {
@@ -33,40 +47,54 @@ export default function TradingChart({ data, callWall, putWall }: TradingChartPr
     });
 
     try {
-        const candlestickSeries = chart.addCandlestickSeries ? chart.addCandlestickSeries({
-            upColor: '#10b981',
-            downColor: '#ef4444',
-            borderVisible: false,
-            wickUpColor: '#10b981',
-            wickDownColor: '#ef4444',
-        }) : chart.addLineSeries({ color: '#10b981' });
+      const candleOptions = {
+        upColor: '#10b981',
+        downColor: '#ef4444',
+        borderVisible: false,
+        wickUpColor: '#10b981',
+        wickDownColor: '#ef4444',
+      };
 
-        candlestickSeries.setData(data);
+      const candlestickSeries =
+        typeof chart.addSeries === 'function'
+          ? chart.addSeries(CandlestickSeries, candleOptions)
+          : chart.addCandlestickSeries?.(candleOptions) ||
+            chart.addLineSeries({ color: '#10b981' });
 
-        // Overlay Gamma Walls if they exist
-        if (callWall && candlestickSeries.createPriceLine) {
-            candlestickSeries.createPriceLine({
-                price: callWall,
-                color: '#10b981',
-                lineWidth: 2,
-                lineStyle: 2, // Dashed
-                axisLabelVisible: true,
-                title: 'Call Wall',
-            });
-        }
+      const normalized = data.map((bar: any) => ({
+        time: bar.time,
+        open: Number(bar.open),
+        high: Number(bar.high),
+        low: Number(bar.low),
+        close: Number(bar.close),
+      }));
 
-        if (putWall && candlestickSeries.createPriceLine) {
-            candlestickSeries.createPriceLine({
-                price: putWall,
-                color: '#ef4444',
-                lineWidth: 2,
-                lineStyle: 2, // Dashed
-                axisLabelVisible: true,
-                title: 'Put Wall',
-            });
-        }
-    } catch(err) {
-        console.error("TradingView Chart API Error:", err);
+      candlestickSeries.setData(normalized);
+
+      if (callWall && candlestickSeries.createPriceLine) {
+        candlestickSeries.createPriceLine({
+          price: callWall,
+          color: '#10b981',
+          lineWidth: 2,
+          lineStyle: 2,
+          axisLabelVisible: true,
+          title: 'Call Wall',
+        });
+      }
+
+      if (putWall && candlestickSeries.createPriceLine) {
+        candlestickSeries.createPriceLine({
+          price: putWall,
+          color: '#ef4444',
+          lineWidth: 2,
+          lineStyle: 2,
+          axisLabelVisible: true,
+          title: 'Put Wall',
+        });
+      }
+    } catch (err: any) {
+      console.error('TradingChart error:', err);
+      onChartErrorRef.current?.(err?.message || String(err));
     }
 
     chartRef.current = chart;
@@ -74,8 +102,8 @@ export default function TradingChart({ data, callWall, putWall }: TradingChartPr
     const handleResize = () => {
       if (chartContainerRef.current && chartRef.current) {
         chartRef.current.applyOptions({
-           width: chartContainerRef.current.clientWidth,
-           height: chartContainerRef.current.clientHeight
+          width: chartContainerRef.current.clientWidth,
+          height: chartContainerRef.current.clientHeight,
         });
       }
     };

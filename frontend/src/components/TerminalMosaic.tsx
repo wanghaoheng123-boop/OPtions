@@ -10,15 +10,29 @@ import TradingChart from './TradingChart';
 import StatArbHeatmap from './StatArbHeatmap';
 import SectorHeatmap from './SectorHeatmap';
 import LiveGammaExposure from './LiveGammaExposure';
+import MethodologyDrawer from './MethodologyDrawer';
 
 interface TerminalMosaicProps {
   data: any;
   chartData: any[];
   portfolio: any;
+  analyzeError?: string | null;
+  portfolioError?: string | null;
+  chartError?: string | null;
+  onChartRenderError?: (msg: string) => void;
   onBackToScanner: () => void;
 }
 
-export default function TerminalMosaic({ data, chartData, portfolio, onBackToScanner }: TerminalMosaicProps) {
+export default function TerminalMosaic({
+  data,
+  chartData,
+  portfolio,
+  analyzeError,
+  portfolioError,
+  chartError,
+  onChartRenderError,
+  onBackToScanner,
+}: TerminalMosaicProps) {
   const [windowWidth, setWindowWidth] = useState(1200);
 
   useEffect(() => {
@@ -65,7 +79,28 @@ export default function TerminalMosaic({ data, chartData, portfolio, onBackToSca
   };
 
   return (
-    <div style={{ width: '100%', overflowX: 'hidden' }}>
+    <div className="terminal-mosaic-root">
+      <div className="terminal-zone-legend" aria-hidden="true">
+        <span className="terminal-zone-legend__label">Research</span>
+        <span className="text-secondary">macro · stat-arb · sector</span>
+        <span className="terminal-zone-legend__sep">|</span>
+        <span className="terminal-zone-legend__label">Market</span>
+        <span className="text-secondary">chart · GEX</span>
+        <span className="terminal-zone-legend__sep">|</span>
+        <span className="terminal-zone-legend__label">Risk / models</span>
+        <span className="text-secondary">portfolio · HMM · meta · agents</span>
+      </div>
+      {analyzeError && (
+        <div className="terminal-analyze-strip" role="status">
+          <strong>Analyze pipeline:</strong> {analyzeError} — other panels (e.g. OHLC chart) may still load
+          independently.
+        </div>
+      )}
+      {portfolioError && (
+        <div className="terminal-portfolio-strip" role="status">
+          <strong>Paper portfolio:</strong> {portfolioError}
+        </div>
+      )}
       <ResponsiveGridLayout
         className="layout"
         width={windowWidth}
@@ -79,9 +114,19 @@ export default function TerminalMosaic({ data, chartData, portfolio, onBackToSca
 
         {/* MACRO DATABASE */}
         <div key="macro" className="terminal-panel" style={{ display: 'flex', flexDirection: 'column' }}>
-          <div className="panel-header panel-drag-handle" style={{ cursor: 'grab', display: 'flex', justifyContent: 'space-between' }}>
-             <span><Activity size={14}/> FED Macro DB</span>
-             <span className="text-xs text-accent" style={{ cursor: 'pointer' }} onClick={onBackToScanner}>← SCANNER</span>
+          <div
+            className="panel-header panel-drag-handle panel-header--split"
+            style={{ cursor: 'grab' }}
+          >
+            <span>
+              <Activity size={14} /> FED Macro DB
+            </span>
+            <span className="panel-header__actions">
+              <MethodologyDrawer panelId="macro" />
+              <span className="text-xs text-accent panel-header__link" onClick={onBackToScanner}>
+                ← SCANNER
+              </span>
+            </span>
           </div>
           <div style={{ flex: 1, overflow: 'hidden' }}>
              <MacroSearchTerminal />
@@ -90,8 +135,11 @@ export default function TerminalMosaic({ data, chartData, portfolio, onBackToSca
 
         {/* AI PAPER PORTFOLIO */}
         <div key="portfolio" className="terminal-panel" style={{ display: 'flex', flexDirection: 'column' }}>
-           <div className="panel-header panel-drag-handle" style={{ cursor: 'grab' }}>
-              <LineChart size={14}/> AI Paper Portfolio
+           <div className="panel-header panel-drag-handle panel-header--split" style={{ cursor: 'grab' }}>
+              <span>
+                <LineChart size={14} /> AI Paper Portfolio
+              </span>
+              <MethodologyDrawer panelId="portfolio" />
            </div>
            <div className="portfolio-container" style={{ flex: 1, overflowY: 'auto' }}>
                {portfolio && (
@@ -129,8 +177,9 @@ export default function TerminalMosaic({ data, chartData, portfolio, onBackToSca
 
         {/* TRADING CHART */}
         <div key="chart" className="terminal-panel" style={{ display: 'flex', flexDirection: 'column' }}>
-           <div className="panel-header panel-drag-handle" style={{ cursor: 'grab' }}>
-               Live Chart — {data?.ticker || 'SPY'}
+           <div className="panel-header panel-drag-handle panel-header--split" style={{ cursor: 'grab' }}>
+               <span>Live Chart — {data?.ticker || '—'}</span>
+               <MethodologyDrawer panelId="chart" />
            </div>
            <div className="chart-container" style={{ flex: 1 }}>
              {chartData.length > 0 ? (
@@ -138,17 +187,31 @@ export default function TerminalMosaic({ data, chartData, portfolio, onBackToSca
                    data={chartData}
                    callWall={marketStructure?.call_wall_strike}
                    putWall={marketStructure?.put_wall_strike}
+                   onChartError={onChartRenderError}
                 />
+             ) : chartError || (analyzeError && !chartData.length) ? (
+                <div className="terminal-empty-state terminal-empty-state--error">
+                  <p className="terminal-empty-state__title">Chart unavailable</p>
+                  <p className="terminal-empty-state__body">
+                    {chartError || analyzeError}
+                  </p>
+                </div>
              ) : (
-                <div className="terminal-loading">Loading Chart Data...</div>
+                <div className="terminal-empty-state">
+                  <p className="terminal-empty-state__title">No chart series yet</p>
+                  <p className="terminal-empty-state__body">Run a ticker search to load daily OHLC from the chart API.</p>
+                </div>
              )}
            </div>
         </div>
 
         {/* HMM REGIME DETECTION */}
         <div key="hmm" className="terminal-panel panel-drag-handle" style={{ cursor: 'grab', overflowY: 'auto' }}>
-           <div className="panel-header">
-             <TrendingUp size={14} className="text-accent"/> HMM Regime
+           <div className="panel-header panel-header--split">
+             <span>
+               <TrendingUp size={14} className="text-accent" /> HMM Regime
+             </span>
+             <MethodologyDrawer panelId="hmm_regime" />
            </div>
            {data?.agent_insights?.hmm_regime ? (
              <>
@@ -185,8 +248,11 @@ export default function TerminalMosaic({ data, chartData, portfolio, onBackToSca
 
         {/* META-MODEL VERDICT */}
         <div key="meta" className="terminal-panel panel-drag-handle" style={{ cursor: 'grab', overflowY: 'auto' }}>
-           <div className="panel-header">
-             <Brain size={14} className="text-accent"/> Meta-Model ML
+           <div className="panel-header panel-header--split">
+             <span>
+               <Brain size={14} className="text-accent" /> Meta-Model ML
+             </span>
+             <MethodologyDrawer panelId="analyze" />
            </div>
            {metaModel && Object.keys(metaModel).length > 0 ? (
              <>

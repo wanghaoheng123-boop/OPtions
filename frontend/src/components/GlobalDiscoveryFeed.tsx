@@ -31,7 +31,7 @@ export default function GlobalDiscoveryFeed({ onSelectTicker }: GlobalDiscoveryF
       <div style={{ display: 'flex', alignItems: 'center', marginBottom: '24px', borderBottom: '1px solid rgba(255,255,255,0.1)', paddingBottom: '16px' }}>
          <Zap size={24} color="#ff9f0a" style={{ marginRight: '10px' }} />
          <div>
-            <h2 style={{ fontSize: '24px', margin: 0, fontWeight: 800 }}>Institutional Discovery Feed</h2>
+            <h2 style={{ fontSize: '24px', margin: 0, fontWeight: 800 }}>Ticker discovery</h2>
             <p style={{ color: '#a0a0ab', fontSize: '13px', margin: '4px 0 0 0' }}>AI autonomously screening Equities, Commodities, and Bonds for mathematically actionable edges.</p>
          </div>
       </div>

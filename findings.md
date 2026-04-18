@@ -1,6 +1,6 @@
 # Findings: Institutional Agentic Options Terminal
 
-> Last Updated: 2026-04-12
+> Last Updated: 2026-04-18
 
 ---
 
@@ -191,6 +191,23 @@
 - Root cause: numpy.bool_, numpy.integer, numpy.floating not JSON serializable
 - Fix: `_sanitize()` function converts all numpy types to native Python before jsonable_encoder
 - Applied to all 23 endpoints and WebSocket feed
+
+## Skill and data audit (rolling — 2026-04-18)
+
+High-level map for due diligence: each row is a **proxy** with known blind spots; extend when modules change.
+
+| Module / skill | Primary data | Known limits | Tests / gates |
+|----------------|--------------|--------------|----------------|
+| `market_data_api` | yfinance OHLCV | Not live tape; gaps/revisions | `test_chart_spy_contract` (network) |
+| `options_chain_fetcher` | Chain vendor / yfinance | Empty chain on illiquid names | `/api/analyze` contract (network) |
+| `gamma_exposure` | OI × model Greeks | OI timing; model vs market IV | GEX live test (network, may skip) |
+| `volatility_skew` | Chain IV / history | Proxy IV, lookback quality | Indirect via analyze |
+| `backtester` | yfinance bars + BS proxy | Not tick fills; parameter risk | `validate_regression.py`, `test_backtest_spy` |
+| `paper_trader` | Simulated execution | Not broker accounting | Manual / API integration |
+| `regime_hmm` | Return features | Label instability short samples | HMM panel + analyze payload |
+| `meta_model` | Trade / return labels | Fallback label path documented README | pytest where trained |
+
+**Ablation discipline:** when comparing runs (flags, spans, filters), log ticker set, flags, and outcome date in [`progress.md`](progress.md) per README §5c.
 
 ### TerminalMosaic Updates (9 panels)
 - HMM Regime panel: shows state label, recommended strategy, confidence, vol regime, VIX proxy

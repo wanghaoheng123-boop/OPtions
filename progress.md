@@ -1,7 +1,7 @@
 # Progress: Institutional Agentic Options Terminal
 
-> Last Updated: 2026-04-12
-> Overall: 0% complete (Setup phase)
+> Last Updated: 2026-04-18
+> Overall: Execution (orchestration terminal overhaul)
 
 ---
 
@@ -193,3 +193,18 @@ SHARPE/SORTINO/CALMAR: ADDED - Now in backtester output
 | Agent-2 | 2026-04-12 | Phase 1B, 2B completed | STANDBY |
 | Agent-3 | 2026-04-12 | Phase 1C, 2C completed | STANDBY |
 | Orchestrator | 2026-04-12 02:30 | Phase 2 complete | DONE |
+
+### 2026-04-18 (later) — Terminal reliability roadmap
+
+- [x] `Promise.allSettled` in `App.tsx` so chart/portfolio can succeed when `/api/analyze` fails; split error banners.
+- [x] README: local API wiring, curl checks, Vercel same-origin note.
+- [x] Pytest `test_analyze_spy_contract` (network); CI workflow `.github/workflows/ci.yml` for `pytest -m "not network"`.
+- [x] Command palette (Ctrl/⌘+K), zone legend on mosaic, copy audit (nav + discovery titles).
+- [x] Skill audit table in `findings.md`.
+
+### 2026-04-18 — Memory Bank genesis + orchestration overhaul (planned execution)
+
+- [x] Memory Bank files: `projectbrief.md`, `productContext.md`, `systemPatterns.md`, `techContext.md`, `activeContext.md`, `AGENTS.md`, `CLAUDE.md` (pointer).
+- [x] Chart/API reliability: lightweight-charts v5 candlestick API; user-visible fetch errors; OHLC float sanitization; pytest for `/api/chart`.
+- [x] `GET /api/methodology` + UI methodology drawer (`skills/methodology_catalog.py`, mosaic Method button).
+- [x] UI tokens / empty states; README §5c regression matrix; expanded adversarial checklist in `AGENTS.md`.

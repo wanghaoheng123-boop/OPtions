@@ -49,6 +49,7 @@ from skills.volatility_skew import VolatilitySkewAnalyzer
 from core_agents.orchestrator import MarketExpertTeam
 from skills.macro_fetcher import macro_client
 from skills.market_data_api import MarketDataAPI
+from skills.methodology_catalog import get_panel as get_methodology_panel, list_panel_ids as list_methodology_panel_ids
 from skills.paper_trader import paper_broker
 from skills.statarb_scanner import StatArbScanner
 from skills.global_screener import GlobalScreener
@@ -304,6 +305,19 @@ async def get_institutional_statarb():
 # ============================================================
 # ORIGINAL ENDPOINTS (Preserved)
 # ============================================================
+
+@app.get("/api/methodology")
+def methodology_index():
+    return sanitized_response({"panels": list_methodology_panel_ids()})
+
+
+@app.get("/api/methodology/{panel_id}")
+def methodology_detail(panel_id: str):
+    doc = get_methodology_panel(panel_id)
+    if not doc:
+        raise HTTPException(status_code=404, detail="Unknown methodology panel.")
+    return sanitized_response(doc)
+
 
 @app.get("/api/chart/{ticker}")
 def get_chart_data(ticker: str):

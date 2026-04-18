@@ -33,15 +33,22 @@ class MarketDataAPI:
             # Normalize column names in case yfinance changes index names
             date_col = 'Date' if 'Date' in df.columns else 'Datetime'
             
+            def _f(x):
+                try:
+                    v = float(x)
+                    return v if v == v else 0.0  # NaN -> 0
+                except (TypeError, ValueError):
+                    return 0.0
+
             formatted_data = []
             for _, row in df.iterrows():
                 formatted_data.append({
                     "time": row[date_col].strftime('%Y-%m-%d'),
-                    "open": row["Open"],
-                    "high": row["High"],
-                    "low": row["Low"],
-                    "close": row["Close"],
-                    "value": row["Volume"] # For volume overlay
+                    "open": _f(row["Open"]),
+                    "high": _f(row["High"]),
+                    "low": _f(row["Low"]),
+                    "close": _f(row["Close"]),
+                    "value": _f(row["Volume"]),
                 })
             return formatted_data
         except Exception as e:
