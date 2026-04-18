@@ -1,5 +1,6 @@
 import json
 import os
+import tempfile
 from datetime import datetime
 from typing import Dict, List, Optional
 import numpy as np
@@ -25,16 +26,39 @@ class PaperTrader:
         "slippage_bps": 5,             # 5 basis points slippage
     }
 
-    def __init__(self, db_path: str = "memory/paper_portfolio.json", config: dict = None):
+    @staticmethod
+    def _resolved_db_path(explicit: Optional[str]) -> str:
+        """Writable path: env override, serverless /tmp, or repo memory/."""
+        if explicit:
+            return explicit if os.path.isabs(explicit) else os.path.join(
+                os.path.dirname(os.path.dirname(os.path.abspath(__file__))), explicit
+            )
+        env_path = os.environ.get("PAPER_PORTFOLIO_PATH")
+        if env_path:
+            return env_path
+        if os.environ.get("VERCEL") or os.environ.get("VERCEL_ENV"):
+            return os.path.join(tempfile.gettempdir(), "paper_portfolio.json")
         base_dir = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
-        self.db_path = os.path.join(base_dir, db_path)
+        return os.path.join(base_dir, "memory", "paper_portfolio.json")
+
+    def __init__(self, db_path: Optional[str] = None, config: dict = None):
+        self.db_path = self._resolved_db_path(db_path)
         self.config = {**self.DEFAULT_CONFIG, **(config or {})}
         self._ensure_db()
 
     def _ensure_db(self):
-        if not os.path.exists(self.db_path):
-            os.makedirs(os.path.dirname(self.db_path), exist_ok=True)
+        if os.path.exists(self.db_path):
+            return
+        try:
+            parent = os.path.dirname(self.db_path)
+            if parent:
+                os.makedirs(parent, exist_ok=True)
             self._init_portfolio()
+        except OSError:
+            # Read-only bundle (e.g. serverless) — fall back to /tmp
+            self.db_path = os.path.join(tempfile.gettempdir(), "paper_portfolio.json")
+            if not os.path.exists(self.db_path):
+                self._init_portfolio()
 
     def _init_portfolio(self):
         portfolio = {
@@ -59,11 +83,16 @@ class PaperTrader:
         with open(self.db_path, "r") as f:
             old_portfolio = json.load(f)
 
+        old_portfolio.setdefault("positions", [])
+        old_portfolio.setdefault("closed_trades", [])
+        old_portfolio.setdefault("daily_pnl", [])
+        old_portfolio.setdefault("cash_balance", self.config["initial_balance"])
+
         # Migrate old format (without new fields) to new format
         if "starting_balance" not in old_portfolio:
             old_portfolio["starting_balance"] = old_portfolio.get("cash_balance", self.config["initial_balance"])
-            old_portfolio["closed_trades"] = []
-            old_portfolio["daily_pnl"] = []
+            old_portfolio["closed_trades"] = old_portfolio.get("closed_trades", [])
+            old_portfolio["daily_pnl"] = old_portfolio.get("daily_pnl", [])
             old_portfolio["stats"] = {
                 "total_trades": 0,
                 "winning_trades": 0,
@@ -71,6 +100,17 @@ class PaperTrader:
                 "total_wins": 0.0,
                 "total_losses": 0.0,
             }
+
+        stats = old_portfolio.get("stats") or {}
+        for key, default in (
+            ("total_trades", 0),
+            ("winning_trades", 0),
+            ("losing_trades", 0),
+            ("total_wins", 0.0),
+            ("total_losses", 0.0),
+        ):
+            stats.setdefault(key, default)
+        old_portfolio["stats"] = stats
 
         return old_portfolio
 
@@ -309,37 +349,53 @@ class PaperTrader:
         """Return full portfolio state with calculated metrics."""
         portfolio = self._load_portfolio()
 
+        sb = float(portfolio.get("starting_balance") or portfolio.get("cash_balance") or self.config["initial_balance"])
+        if sb <= 0:
+            sb = float(self.config["initial_balance"])
+
         # Calculate current metrics
-        total_equity = portfolio["cash_balance"] + sum(
-            p.get("capital_allocated", 0) + p.get("pnl_unrealized", 0)
+        total_equity = float(portfolio["cash_balance"]) + sum(
+            float(p.get("capital_allocated", 0)) + float(p.get("pnl_unrealized", 0))
             for p in portfolio["positions"] if p.get("status") == "OPEN"
         )
 
-        # Win rate from closed trades
+        # Win rate from closed trades (fraction 0–1 for UI that multiplies by 100)
         closed = portfolio.get("closed_trades", [])
         if closed:
             wins = sum(1 for p in closed if p.get("pnl_realized", 0) > 0)
-            win_rate = wins / len(closed) * 100
+            win_rate_fraction = wins / len(closed)
             avg_win = portfolio["stats"]["total_wins"] / max(1, portfolio["stats"]["winning_trades"])
             avg_loss = portfolio["stats"]["total_losses"] / max(1, portfolio["stats"]["losing_trades"])
         else:
-            win_rate = 0
-            avg_win = 0
-            avg_loss = 0
+            win_rate_fraction = 0.0
+            avg_win = 0.0
+            avg_loss = 0.0
+
+        total_return_fraction = (total_equity - sb) / sb
+
+        open_rows = [p for p in portfolio["positions"] if p.get("status") == "OPEN"]
+        kelly_vals = [
+            float(p.get("kelly_percentage", p.get("kelly_pct", 0.1))) for p in open_rows
+        ]
+        # Stored Kelly may be allocation fraction (0–0.2) or legacy 0–1 scale; cap for display
+        avg_kelly = sum(kelly_vals) / len(kelly_vals) if kelly_vals else 0.1
+        avg_kelly = max(0.0, min(float(avg_kelly), 1.0))
 
         return {
-            "cash_balance": round(portfolio["cash_balance"], 2),
+            "cash_balance": round(float(portfolio["cash_balance"]), 2),
             "total_equity": round(total_equity, 2),
-            "starting_balance": portfolio["starting_balance"],
-            "total_return_pct": round((total_equity - portfolio["starting_balance"]) / portfolio["starting_balance"] * 100, 2),
-            "open_positions": len([p for p in portfolio["positions"] if p.get("status") == "OPEN"]),
+            "starting_balance": sb,
+            "total_return_pct": round(total_return_fraction * 100, 2),
+            "total_return": round(total_return_fraction, 6),
+            "open_positions": len(open_rows),
             "closed_trades_count": len(closed),
-            "win_rate": round(win_rate, 2),
+            "win_rate": round(win_rate_fraction, 6),
+            "average_kelly_sizing": round(avg_kelly, 6),
             "avg_win": round(avg_win, 2),
             "avg_loss": round(avg_loss, 2),
             "stats": portfolio["stats"],
             "positions": portfolio["positions"],
-            "recent_trades": closed[-10:] if closed else []
+            "recent_trades": closed[-10:] if closed else [],
         }
 
     def force_close_position(self, ticker: str, reason: str = "manual") -> dict:

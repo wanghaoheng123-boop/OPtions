@@ -37,9 +37,15 @@ Optional cross-checks (not merge blockers): OpenAlex/CrossRef for formula citati
 
 Use workspace skills when relevant: `free-web-search`, `verify-claims`, `pinescript-quant-analysis` (only if Pine-related), Vercel skills for deploy.
 
+## Peer review program
+
+Issue templates: [`.github/ISSUE_TEMPLATE/`](.github/ISSUE_TEMPLATE/). Charter, UI/API checklist, triage playbook, and offline log: [`findings.md`](findings.md) (sections **Peer review charter**, **UI/API review matrix**, **Root-cause triage playbook**, **Peer review log**).
+
 ## CLI / API tools
 
 - **CI**: GitHub Actions workflow [`.github/workflows/ci.yml`](.github/workflows/ci.yml) runs `pytest -m "not network"` on push/PR.
 - **Tests**: `python -m pytest tests/ -m "not network"` (fast), `python -m pytest tests/ -m network` (yfinance).
+- **Browser E2E**: `cd frontend && npm run test:e2e` (Playwright; see [`README.md`](README.md) §6b).
+- **Baseline commands**: `python scripts/baseline_metrics.py` (optional `--quick`).
 - **Batch gates**: `python scripts/validate_batch_backtest.py --tickers SPY --days 400`
 - **Structure regression**: `python scripts/validate_regression.py --tickers SPY,QQQ --days 400`

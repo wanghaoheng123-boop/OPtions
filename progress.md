@@ -194,6 +194,28 @@ SHARPE/SORTINO/CALMAR: ADDED - Now in backtester output
 | Agent-3 | 2026-04-12 | Phase 1C, 2C completed | STANDBY |
 | Orchestrator | 2026-04-12 02:30 | Phase 2 complete | DONE |
 
+### 2026-04-18 — Browser QA, optimization loop, external research (deliverable)
+
+- [x] Playwright E2E: [`frontend/e2e/`](frontend/e2e/), `npm run test:e2e`, CI job `playwright` in [`.github/workflows/ci.yml`](.github/workflows/ci.yml).
+- [x] Optimization loop metrics + [`scripts/baseline_metrics.py`](scripts/baseline_metrics.py); table in [`findings.md`](findings.md).
+- [x] External OSS landscape + selected literature (DOI) + research backlog in [`findings.md`](findings.md).
+- [x] README §6b E2E; `VITE_API_URL` guidance to avoid `/api/api` doubling.
+
+### 2026-04-18 — Peer review and quant triage campaign (automated pass)
+
+Environment: Windows, Python 3.10.11, repo root `OPTION TRADING APP`.
+
+| Command | Result |
+|---------|--------|
+| `python -m pytest tests/ -m "not network" -v` | 4 passed |
+| `python -m pytest tests/ -m network -v` | 4 passed |
+| `python scripts/validate_regression.py --tickers SPY,QQQ,IWM --days 400` | REGRESSION OK (SPY/QQQ/IWM) |
+| `python scripts/validate_batch_backtest.py --basket --days 400` | VALIDATION OK, institutional_pass 3/3 |
+
+**Manual UI/API matrix:** checklist lives in [`findings.md`](findings.md) (UI/API review matrix). Human reviewers tick boxes and attach evidence to GitHub Issues using [`.github/ISSUE_TEMPLATE/`](.github/ISSUE_TEMPLATE/).
+
+**Triage:** no failing items in this automated batch; future failures use the playbook in `findings.md` (classify data vs contract vs logic).
+
 ### 2026-04-18 (later) — Terminal reliability roadmap
 
 - [x] `Promise.allSettled` in `App.tsx` so chart/portfolio can succeed when `/api/analyze` fails; split error banners.

@@ -49,6 +49,8 @@ pip install -r backend/requirements.txt
 |----------|----------|---------|
 | `FRED_API_KEY` | No (macro falls back to mock series) | [FRED](https://fred.stlouisfed.org/) macro indicators and search in `/api/macro*` |
 | `GITHUB_TOKEN` | No | Enables live GitHub lookup in `GitHubResearcher`; without it, a static verified-algorithm registry is used |
+| `VITE_API_URL` | No | Axios base URL for production split-host deploys; use **origin only** (no trailing `/api`) so `/api/...` paths resolve correctly (see §6b) |
+| `PAPER_PORTFOLIO_PATH` | No | Absolute path for paper portfolio JSON; on **Vercel** the app defaults to `/tmp/paper_portfolio.json` (writable). Set explicitly if you need a durable volume |
 | `VITE_WS_URL` | No | Base URL for the **Live GEX** WebSocket in local dev (path `/ws/gex` or `/api/ws/gex`). Production builds **poll** `GET /api/gex/live/{ticker}` instead |
 | `VITE_GEX_POLL` | No | Set to `1` to force REST polling in dev (same as production behavior) |
 | `ALPACA_API_KEY` / `ALPACA_API_SECRET` | No | When both are set (non-`PAPER`), [`get_broker("ALPACA")`](skills/brokers.py) uses **Alpaca REST** for account metrics and `/v2/options/contracts`; multi-leg order submission is not automated |
@@ -117,6 +119,20 @@ The frontend houses the Vite compilation and the Mosaic UI terminal.
 cd frontend
 npm install
 ```
+
+### 6b. Browser E2E (Playwright)
+
+Headless smoke tests mock `/api` so they run **without** the Python server (CI-friendly).
+
+```bash
+cd frontend
+npx playwright install chromium   # once per machine
+npm run test:e2e                  # build + vite preview on :4173 + run e2e/
+```
+
+Optional: `npm run test:e2e:ui` for the Playwright UI debugger. See [`frontend/playwright.config.ts`](frontend/playwright.config.ts).
+
+**`VITE_API_URL` (production):** set to the **API origin only** (e.g. `https://your-deployment.example.com`), **without** a trailing `/api`, because the app already requests paths like `/api/health`. A value ending in `/api` can produce double `/api/api/...` URLs depending on how paths are joined.
 
 ---
 

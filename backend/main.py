@@ -98,71 +98,82 @@ def analyze_ticker(request: AnalysisRequest):
     ticker = request.ticker.upper()
     days = request.days or 252
 
-    current_price = OptionsFetcher.get_current_price(ticker)
-    if current_price == 0.0:
-        raise HTTPException(status_code=404, detail="Ticker not found or failed to fetch.")
+    try:
+        current_price = OptionsFetcher.get_current_price(ticker)
+        if current_price == 0.0:
+            raise HTTPException(status_code=404, detail="Ticker not found or failed to fetch.")
 
-    expirations = OptionsFetcher.get_options_expiration_dates(ticker)
-    if not expirations:
-        raise HTTPException(status_code=404, detail="No options data available for this ticker.")
+        expirations = OptionsFetcher.get_options_expiration_dates(ticker)
+        if not expirations:
+            raise HTTPException(status_code=404, detail="No options data available for this ticker.")
 
-    target_expiry = expirations[0]
+        target_expiry = expirations[0]
 
-    data = OptionsFetcher.get_options_chain(ticker, target_expiry)
-    if not data:
-        raise HTTPException(status_code=500, detail="Failed to load options chain.")
+        data = OptionsFetcher.get_options_chain(ticker, target_expiry)
+        if not data:
+            raise HTTPException(
+                status_code=503,
+                detail="Failed to load options chain (upstream empty, rate limit, or vendor error).",
+            )
 
-    calls = data["calls"]
-    puts = data["puts"]
-    r_rf = 0.045
-    T = 7.0 / 365.0
+        calls = data["calls"]
+        puts = data["puts"]
+        r_rf = 0.045
+        T = 7.0 / 365.0
 
-    calls_greeks = GreeksCalculator.attach_greeks_to_chain(calls, current_price, r_rf, T, 'call')
-    puts_greeks = GreeksCalculator.attach_greeks_to_chain(puts, current_price, r_rf, T, 'put')
+        calls_greeks = GreeksCalculator.attach_greeks_to_chain(calls, current_price, r_rf, T, 'call')
+        puts_greeks = GreeksCalculator.attach_greeks_to_chain(puts, current_price, r_rf, T, 'put')
 
-    market_structure = MarketStructureAnalyzer.calculate_gamma_exposure(calls_greeks, puts_greeks, current_price)
-    volatility_skew = VolatilitySkewAnalyzer.calculate_skew(calls_greeks, puts_greeks, current_price)
-    market_structure["volatility_skew"] = volatility_skew
+        market_structure = MarketStructureAnalyzer.calculate_gamma_exposure(calls_greeks, puts_greeks, current_price)
+        volatility_skew = VolatilitySkewAnalyzer.calculate_skew(calls_greeks, puts_greeks, current_price)
+        market_structure["volatility_skew"] = volatility_skew
 
-    iv_rank_data = VolatilitySkewAnalyzer.get_iv_rank(ticker, lookback_days=252)
-    market_structure["iv_rank"] = iv_rank_data
+        iv_rank_data = VolatilitySkewAnalyzer.get_iv_rank(ticker, lookback_days=252)
+        market_structure["iv_rank"] = iv_rank_data
 
-    iv_pct_data = VolatilitySkewAnalyzer.get_iv_percentile(ticker, lookback_days=252)
-    market_structure["iv_percentile"] = iv_pct_data
+        iv_pct_data = VolatilitySkewAnalyzer.get_iv_percentile(ticker, lookback_days=252)
+        market_structure["iv_percentile"] = iv_pct_data
 
-    full_vol = VolatilitySkewAnalyzer.full_volatility_analysis(calls_greeks, puts_greeks, current_price, ticker)
-    market_structure["full_volatility_analysis"] = full_vol
+        full_vol = VolatilitySkewAnalyzer.full_volatility_analysis(calls_greeks, puts_greeks, current_price, ticker)
+        market_structure["full_volatility_analysis"] = full_vol
 
-    agent_result = MarketExpertTeam.run_agentic_loop(
-        ticker=ticker,
-        market_data=market_structure,
-        days=days,
-        use_meta_model=True,
-        use_optimization=True
-    )
+        agent_result = MarketExpertTeam.run_agentic_loop(
+            ticker=ticker,
+            market_data=market_structure,
+            days=days,
+            use_meta_model=True,
+            use_optimization=True,
+        )
 
-    critic_verdict = agent_result.get("critic_review", {}).get("verdict", "REJECTED")
-    is_approved = critic_verdict == "APPROVED"
-    strategy = agent_result.get("strategy_proposed", "unknown")
-    backtest_stats = agent_result.get("backtest", {})
+        critic_verdict = agent_result.get("critic_review", {}).get("verdict", "REJECTED")
+        is_approved = critic_verdict == "APPROVED"
+        strategy = agent_result.get("strategy_proposed", "unknown")
+        backtest_stats = agent_result.get("backtest", {})
 
-    trade_executed = paper_broker.execute_trade(
-        ticker=ticker,
-        spot_price=current_price,
-        strategy=strategy,
-        critic_approved=is_approved,
-        backtest_stats=backtest_stats
-    )
+        trade_executed = paper_broker.execute_trade(
+            ticker=ticker,
+            spot_price=current_price,
+            strategy=strategy,
+            critic_approved=is_approved,
+            backtest_stats=backtest_stats,
+        )
 
-    response = {
-        "ticker": ticker,
-        "current_price": round(current_price, 2),
-        "target_expiry": target_expiry,
-        "market_structure": market_structure,
-        **agent_result,
-        "paper_trade_status": trade_executed
-    }
-    return sanitized_response(response)
+        response = {
+            "ticker": ticker,
+            "current_price": round(current_price, 2),
+            "target_expiry": target_expiry,
+            "market_structure": market_structure,
+            **agent_result,
+            "paper_trade_status": trade_executed,
+        }
+        return sanitized_response(response)
+    except HTTPException:
+        raise
+    except Exception as e:
+        raise HTTPException(
+            status_code=500,
+            detail=f"Analyze pipeline error ({type(e).__name__}): {e}",
+        ) from e
 
 # ============================================================
 # BACKTESTING ENDPOINTS
@@ -321,10 +332,18 @@ def methodology_detail(panel_id: str):
 
 @app.get("/api/chart/{ticker}")
 def get_chart_data(ticker: str):
-    data = MarketDataAPI.get_ohlcv(ticker.upper())
-    if not data:
-        raise HTTPException(status_code=404, detail="Chart data not found.")
-    return sanitized_response({"data": data})
+    try:
+        data = MarketDataAPI.get_ohlcv(ticker.upper())
+        if not data:
+            raise HTTPException(status_code=404, detail="Chart data not found.")
+        return sanitized_response({"data": data})
+    except HTTPException:
+        raise
+    except Exception as e:
+        raise HTTPException(
+            status_code=503,
+            detail=f"OHLC provider error ({type(e).__name__}): {e}",
+        ) from e
 
 @app.get("/api/macro")
 def get_macro_data():
@@ -346,7 +365,13 @@ def get_heatmap_data():
 
 @app.get("/api/portfolio")
 def get_portfolio():
-    return sanitized_response(paper_broker.get_portfolio())
+    try:
+        return sanitized_response(paper_broker.get_portfolio())
+    except Exception as e:
+        raise HTTPException(
+            status_code=503,
+            detail=f"Portfolio unavailable ({type(e).__name__}): {e}",
+        ) from e
 
 @app.post("/api/portfolio/execute")
 def execute_portfolio_trade(request: AnalysisRequest):

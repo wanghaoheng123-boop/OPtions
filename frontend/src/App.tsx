@@ -8,10 +8,18 @@ import CommandPalette from './components/CommandPalette';
 import './index.css';
 
 function axiosErrMessage(err: any): string {
+  if (!err?.response) {
+    const msg = err?.message || '';
+    if (msg.includes('Network Error') || err?.code === 'ERR_NETWORK') {
+      return 'Cannot reach API. For local dev start the backend on port 8005 (see README).';
+    }
+    return msg || 'Request failed (no response)';
+  }
   const d = err?.response?.data?.detail ?? err?.response?.data?.message;
   if (typeof d === 'string') return d;
+  if (Array.isArray(d)) return JSON.stringify(d);
   if (d != null) return JSON.stringify(d);
-  return err?.message || 'Request failed';
+  return err?.message || `Request failed with status code ${err.response?.status}`;
 }
 
 function App() {
@@ -104,7 +112,7 @@ function App() {
   ].filter(Boolean);
 
   return (
-    <div className="terminal-body">
+    <div className="terminal-body" data-testid="app-shell">
       <CommandPalette
         setViewMode={setViewMode}
         onRunSearch={() => ticker.trim() && fetchAnalysis(ticker.toUpperCase())}
@@ -116,7 +124,7 @@ function App() {
         }}
       />
       {terminalIssueLines.length > 0 && viewMode === 'terminal' && (
-        <div className="terminal-error-banner" role="alert">
+        <div className="terminal-error-banner" role="alert" data-testid="terminal-error-banner">
           <strong>Data issues</strong>
           <ul className="terminal-error-banner__list">
             {terminalIssueLines.map((line, i) => (
@@ -139,7 +147,13 @@ function App() {
             placeholder="Search Specific Ticker..." 
             className="terminal-input"
           />
-          <button onClick={handleSearch} disabled={loading} className="terminal-btn-primary">
+          <button
+            type="button"
+            onClick={handleSearch}
+            disabled={loading}
+            className="terminal-btn-primary"
+            aria-label="Run ticker search"
+          >
             {loading ? 'F...' : <Search size={14} />}
           </button>
         </div>

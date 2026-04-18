@@ -209,6 +209,133 @@ High-level map for due diligence: each row is a **proxy** with known blind spots
 
 **Ablation discipline:** when comparing runs (flags, spans, filters), log ticker set, flags, and outcome date in [`progress.md`](progress.md) per README §5c.
 
+---
+
+## Peer review charter (2026-04-18)
+
+**Comment sink (agreed for this repo):**
+
+1. **Primary:** GitHub **Issues** using templates under [`.github/ISSUE_TEMPLATE/`](.github/ISSUE_TEMPLATE/) (`Bug report`, `Peer review note`). Suggested labels: `review`, `bug`, `quant`, `ui`, `wontfix-data-limit` (create labels in the repo settings if missing).
+2. **Secondary / offline:** Append a dated bullet under **Peer review log** in this file with the same fields as the template.
+
+**Minimal repro template (copy into any Issue or log):**
+
+- Environment: local | Vercel | other; Python `x.y`; Node `x.y`; API base URL.
+- Steps: numbered list from cold start.
+- Expected vs actual: one sentence each.
+- Evidence: `curl` snippet or Network tab (status + path); no secrets.
+- Class: `data` | `contract` | `logic` (see triage playbook below).
+
+**AdversarialReviewer:** before closing an Issue, verify items in [`AGENTS.md`](AGENTS.md) adversarial checklist apply to the change scope, or document a waiver in the Issue.
+
+---
+
+## UI/API review matrix (manual checklist)
+
+Human reviewers complete this on each release candidate; attach evidence (screens + status codes) to the GitHub Issue or paste links in the peer review log.
+
+| # | Area | Check | Pass |
+|---|------|--------|------|
+| 1 | Dev wiring | Backend listens on same port as Vite proxy (default 8005); README curl health succeeds | [ ] |
+| 2 | Discovery | `GlobalDiscoveryFeed` loads; selecting a ticker opens terminal | [ ] |
+| 3 | Terminal | Analyze strip / portfolio strip / top banner show sensible messages when endpoints fail | [ ] |
+| 4 | Partial load | With analyze failing (e.g. bad ticker), chart still loads for valid OHLC ticker if chart API succeeds | [ ] |
+| 5 | Chart | Candlesticks render for SPY; Method drawer loads for `chart` panel | [ ] |
+| 6 | Command palette | Ctrl/⌘+K opens; health command returns JSON; Esc closes | [ ] |
+| 7 | API | `GET /api/health`, `GET /api/methodology`, `GET /api/chart/SPY`, `POST /api/analyze` (SPY) — note status codes | [ ] |
+| 8 | Mosaic panels | GEX, stat-arb, macro tiles do not throw blank uncaught errors when data missing | [ ] |
+
+---
+
+## Root-cause triage playbook
+
+1. **Symptom** — from UI, pytest, or `validate_*.py`.
+2. **Minimal repro** — smallest ticker / days / endpoint.
+3. **Classify**
+   - **Data:** rate limit, empty chain, 404 from vendor → document under methodology / `wontfix-data-limit` or retry policy.
+   - **Contract:** UI reads wrong key or backend renamed field → fix mapping; add contract test.
+   - **Logic:** wrong formula, NaN propagation, leakage → fix code; add invariant or regression test in [`tests/`](tests/).
+4. **Link code** — cite `skills/…` or `backend/main.py` route handler.
+5. **Close loop** — PR references Issue; AdversarialReviewer checks [`AGENTS.md`](AGENTS.md) list.
+
+### Automated campaign log (baseline — 2026-04-18)
+
+| Run | Outcome | Triage class |
+|-----|---------|--------------|
+| `pytest -m "not network"` | 4 passed | N/A |
+| `pytest -m network` | 4 passed | N/A |
+| `validate_regression.py` SPY,QQQ,IWM | REGRESSION OK | N/A |
+| `validate_batch_backtest.py --basket` | VALIDATION OK | N/A |
+
+No root-cause tickets required for this batch. When a row fails: open a Bug report Issue, classify per playbook, link `skills/` or `backend/main.py`, add a regression test if logic/contract.
+
+---
+
+## Optimization loop metrics (baseline — 2026-04-18)
+
+**Process:** measure → one scoped change → verify (`pytest`, `validate_*`, `npm run test:e2e`). Log deltas in [`progress.md`](progress.md). Do **not** treat raw backtest win rate as the primary optimization target without PBO / walk-forward controls (see literature table below).
+
+| Metric | How to capture | Command / artifact |
+|--------|----------------|---------------------|
+| Fast test reliability | Pass/fail | `python -m pytest tests/ -m "not network" -q` |
+| Live-data smoke | Pass/fail | `python -m pytest tests/ -m network -q` |
+| UI E2E | Pass/fail | `cd frontend && npm run test:e2e` ([`frontend/e2e/`](frontend/e2e/), mocked `/api`) |
+| API latency (local) | `time_total` | `curl` timing for `POST /api/analyze` (see [`README.md`](README.md) curl block); use `/dev/null` or `NUL` per OS |
+| Backtest structure | Exit code | `python scripts/validate_regression.py --tickers SPY,QQQ,IWM --days 400` |
+
+Helper (prints commands; `--quick` runs fast pytest): [`scripts/baseline_metrics.py`](scripts/baseline_metrics.py).
+
+---
+
+## External OSS landscape (reviewed — 2026-04-18)
+
+Stars are **order-of-magnitude snapshots** (verify on GitHub before relying on for comparisons). **None of these imply profitability**; they are design and engineering references for this repo’s FastAPI + React + `skills/` layout.
+
+| Project | Language | Why it matters here | Borrow | Avoid / caution |
+|---------|----------|---------------------|--------|------------------|
+| [OpenBB-finance/OpenBB](https://github.com/OpenBB-finance/OpenBB) | Python | Data provider composition, CLI density, agent/MCP patterns | Modular provider interfaces; UX density ideas | Different deploy model; do not copy proprietary data terms |
+| [microsoft/qlib](https://github.com/microsoft/qlib) | Python | Pipeline for research → backtest with experiment tracking | Dataset versioning, model zoo patterns | Heavy stack; most alpha claims need independent evaluation |
+| [polakowo/vectorbt](https://github.com/polakowo/vectorbt) | Python | Fast vectorized backtests, parameter scans | Vectorized metrics for sweeps; visualization of equity | API shape differs from current `StrategyBacktester` |
+| [kernc/backtesting.py](https://github.com/kernc/backtesting.py) | Python | Simple strategy API on OHLCV | Minimal API ergonomics for indicators | Single-threaded assumptions |
+| [freqtrade/freqtrade](https://github.com/freqtrade/freqtrade) | Python | Live/paper execution discipline, config-driven runs | Risk config patterns, dry-run workflows | Crypto-centric; adapt cautiously to options |
+| [stefan-jansen/machine-learning-for-trading](https://github.com/stefan-jansen/machine-learning-for-trading) | Python / notebooks | End-to-end ML for trading **book code** | Feature engineering examples next to code | Book edition vs your stack versions |
+
+---
+
+## Selected literature (DOI) — evaluation, labeling, costs
+
+Curated for **this** codebase (triple-barrier style backtests, meta-modeling, execution realism). Use for methodology and **honest** evaluation—not as performance guarantees.
+
+| Work | DOI / ID | One-line takeaway | Applicability |
+|------|-----------|-------------------|---------------|
+| Bailey, Borwein, López de Prado, Zhu — *The Probability of Backtest Overfitting* | [10.2139/ssrn.2326253](https://doi.org/10.2139/ssrn.2326253) | CSCV / PBO framing for strategy selection bias | **High** — justify why raw WR is not the KPI; add PBO/walk-forward where feasible |
+| López de Prado — *Advances in Financial Machine Learning* (Wiley, 2018) | ISBN 978-1-119-48208-6 | Triple barrier labeling, sample weights, meta-labeling | **High** — align `skills/backtester.py` / meta pipeline with documented assumptions |
+| Easley et al. — flow / “toxicity” microstructure (classical reference) | multiple venue DOIs — use venue copy | Order flow can be informative but mostly **not** in public retail APIs | **Partial** — do not imply you observe full order flow with yfinance |
+| Almgren & Chriss — optimal execution (foundational TCA) | standard journal copies | Explains why slippage / impact models matter | **Partial** — compare to [`TransactionCostModel`](skills/brokers.py) assumptions |
+| Cont — empirical properties of asset returns | e.g. Quantitative Finance streams | Stylized facts for vol clustering / fat tails | **Medium** — informs vol proxy limitations in BS-style engines |
+
+OpenAlex broad search is noisy; prefer **known DOIs / ISBN** and library copies for deep reading.
+
+---
+
+## Research backlog (prioritized — create GitHub Issues)
+
+Suggested Issue titles (labels: `research`, `quant`, or `ui`). Triage: data available? testable? copy-safe?
+
+1. **PBO / CSCV spike** — prototype minimal PBO estimate on existing backtest sweep outputs (tie to Bailey et al. DOI above).
+2. **Execution model audit** — map `TransactionCostModel` to published TCA assumptions; document gaps in methodology catalog.
+3. **Provider abstraction** — sketch interface to swap yfinance for paid OHLC / IV (OpenBB-style), without changing UI contracts.
+4. **Playwright coverage** — extend [`frontend/e2e/`](frontend/e2e/) for terminal mosaic panels with broader API mocks (`/api/statarb`, `/api/heatmap`).
+5. **Sector heatmap double-path** — investigate Vite log `/api/api/heatmap` when preview runs terminal (possible URL bug in a component).
+
+---
+
+## Peer review log (offline append-only)
+
+_Use dated bullets here if not using GitHub Issues._
+
+- *(none yet)*
+
 ### TerminalMosaic Updates (9 panels)
 - HMM Regime panel: shows state label, recommended strategy, confidence, vol regime, VIX proxy
 - MetaModel ML panel: shows bet size, verdict (APPROVE/REJECT), confidence, reason
