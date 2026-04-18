@@ -270,7 +270,8 @@ class MarketExpertTeam:
                 meta = MetaLabeler()
                 features = meta.build_features(ticker, lookback_days=252)
                 if features is not None and len(features) >= 30:
-                    X, y = meta.generate_training_labels(features, [])
+                    trade_log = backtest.get("trade_log") if isinstance(backtest, dict) else []
+                    X, y = meta.generate_training_labels(features, trade_log or [])
                     if X is not None and len(X) >= 30 and len(np.unique(y)) > 1:
                         train_stats = meta.train_meta_model(X, y)
                         if train_stats.get("is_trained"):

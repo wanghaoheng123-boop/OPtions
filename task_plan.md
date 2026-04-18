@@ -40,10 +40,10 @@ Transform the Agentic Quant Terminal V2 into an **institutional-grade options tr
 - [x] **P15**: Add Sharpe/Sortino/Calmar calculations to backtester — 2026-04-12
 - [x] **Greeks**: Add theta, rho, vanna, charm to greeks_calculator — 2026-04-12
 - [ ] **P2**: Fix `ParameterOptimizer` to truly inject parameters — DEFERRED (rebuilt in P10)
-- [ ] **P4**: Implement actual `MetaModel` training pipeline — Phase 2C
-- [ ] **P5**: Add options premium/slippage modeling to backtester — Phase 2A
-- [ ] **P7**: HFT GEX surface integration with real market data — Phase 5
-- [ ] **P13**: Implement AbstractBroker (IBKR/Alpaca) — Phase 5A
+- [x] **P4**: Implement actual `MetaModel` training pipeline — trade-entry labels from `trade_log` + orchestrator wiring — 2026-04-18
+- [x] **P5**: Add options premium/slippage modeling to backtester — `tc_breakdown` per trade, `tc_summary`, `premium_model` on backtest JSON — 2026-04-18
+- [x] **P7**: HFT GEX surface integration with real market data — `HFTOptionsPipeline.from_option_chain`, `GET /api/gex/live/{ticker}`, mosaic polling — 2026-04-18
+- [x] **P13**: Implement AbstractBroker (IBKR/Alpaca) — Alpaca REST when keys set; IBKR `IBKR_ENABLE_LIVE` guard — 2026-04-18
 - [x] **P14**: Connect frontend to all backend endpoints — Phase 4A (primary mosaic + discovery use `/api/analyze` bundle; other panels use dedicated REST; see README) — 2026-04-18
 
 ### Phase 1: Foundation & Core Math (Weeks 1-4)
@@ -79,7 +79,7 @@ Transform the Agentic Quant Terminal V2 into an **institutional-grade options tr
 
 - [B1] FRED_API_KEY not yet configured — macro panel shows mock data
 - [B2] No PyGithub token — researcher uses static dictionary
-- [B3] No IBKR/Alpaca broker keys — only paper trading available
+- [B3] Optional Alpaca keys — without them, broker routes use stubs; live multi-leg Alpaca orders not automated
 
 ## Decisions Log
 

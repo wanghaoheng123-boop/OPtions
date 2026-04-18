@@ -1,6 +1,7 @@
 from abc import ABC, abstractmethod
 from typing import Optional, Dict, List
 from datetime import datetime
+import os
 import numpy as np
 
 
@@ -176,6 +177,24 @@ class IBKRBroker(AbstractBroker):
         self._orders = {}
         self._order_counter = 1000
 
+    def _live_requested_response(self, method: str) -> Optional[dict]:
+        """If user opts into live IBKR via env, explain that TWS/Gateway is required."""
+        flag = os.getenv("IBKR_ENABLE_LIVE", "").lower()
+        if flag not in ("1", "true", "yes"):
+            return None
+        return {
+            "broker": self.broker_name,
+            "error": "IBKR_REQUIRES_TWS_OR_GATEWAY",
+            "message": (
+                "Live IBKR is not wired in this repo. Use Trader Workstation or "
+                "IB Gateway with ib_insync, or set ALPACA_API_KEY / ALPACA_API_SECRET "
+                "for Alpaca REST."
+            ),
+            "method": method,
+            "is_paper": self.paper,
+            "timestamp": datetime.now().isoformat(),
+        }
+
     def fetch_account_metrics(self) -> dict:
         """
         Fetch account balance and margin metrics.
@@ -183,6 +202,9 @@ class IBKRBroker(AbstractBroker):
         In production: GET /v1/portfolio/{accountId}/positions
         with IBKR REST API.
         """
+        blocked = self._live_requested_response("fetch_account_metrics")
+        if blocked:
+            return blocked
         # Stub: return simulated account data
         return {
             "broker": self.broker_name,
@@ -201,6 +223,9 @@ class IBKRBroker(AbstractBroker):
 
         In production: GET /v1/secdef/searches with type=OPT
         """
+        blocked = self._live_requested_response("get_option_chain")
+        if blocked:
+            return blocked
         # Stub: delegate to yfinance
         import yfinance as yf
         try:
@@ -225,6 +250,9 @@ class IBKRBroker(AbstractBroker):
 
         In production: POST /v1/orders
         """
+        blocked = self._live_requested_response("submit_complex_order")
+        if blocked:
+            return {**blocked, "status": "REJECTED"}
         import random
 
         self._order_counter += 1
@@ -402,6 +430,106 @@ class AlpacaBroker(AbstractBroker):
 
 
 # ============================================================
+# ALPACA REST (env: ALPACA_API_KEY, ALPACA_API_SECRET, optional ALPACA_PAPER)
+# ============================================================
+
+
+class AlpacaRESTBroker(AlpacaBroker):
+    """Live Alpaca Trading API for account and option contracts (httpx)."""
+
+    def __init__(self, api_key: str, api_secret: str, paper: bool = True):
+        super().__init__(api_key=api_key, api_secret=api_secret, paper=paper)
+        self._trade_base = (
+            "https://paper-api.alpaca.markets" if paper else "https://api.alpaca.markets"
+        )
+
+    def _headers(self) -> dict:
+        return {
+            "APCA-API-KEY-ID": self.api_key,
+            "APCA-API-SECRET-KEY": self.api_secret,
+        }
+
+    def fetch_account_metrics(self) -> dict:
+        try:
+            import httpx
+
+            with httpx.Client(timeout=25.0) as client:
+                r = client.get(f"{self._trade_base}/v2/account", headers=self._headers())
+                if r.status_code != 200:
+                    return {
+                        "broker": self.broker_name,
+                        "error": "ALPACA_ACCOUNT_HTTP_ERROR",
+                        "status_code": r.status_code,
+                        "body": r.text[:500],
+                        "source": "alpaca_rest",
+                    }
+                j = r.json()
+            cash = float(j.get("cash", 0) or 0)
+            pv = float(j.get("portfolio_value", cash) or cash)
+            bp = float(j.get("buying_power", 0) or 0)
+            return {
+                "broker": self.broker_name,
+                "account_id": j.get("account_number", self.api_key[:8] + "..."),
+                "cash_balance": cash,
+                "net_liquidation": pv,
+                "buying_power": bp,
+                "margin_utilization": 0.0,
+                "is_paper": self.paper,
+                "timestamp": datetime.now().isoformat(),
+                "source": "alpaca_rest",
+            }
+        except Exception as e:
+            return {"broker": self.broker_name, "error": str(e), "source": "alpaca_rest"}
+
+    def get_option_chain(self, ticker: str, expiration: str = None) -> dict:
+        try:
+            import httpx
+
+            params: Dict = {
+                "underlying_symbols": ticker.upper(),
+                "status": "active",
+                "limit": 500,
+            }
+            if expiration:
+                params["expiration_date"] = expiration
+            with httpx.Client(timeout=30.0) as client:
+                r = client.get(
+                    f"{self._trade_base}/v2/options/contracts",
+                    headers=self._headers(),
+                    params=params,
+                )
+                if r.status_code != 200:
+                    return {
+                        "error": "ALPACA_CONTRACTS_HTTP_ERROR",
+                        "status_code": r.status_code,
+                        "body": r.text[:400],
+                    }
+                data = r.json()
+            return {**data, "source": "alpaca_rest", "underlying": ticker.upper()}
+        except Exception as e:
+            return {"error": str(e), "source": "alpaca_rest"}
+
+    def submit_complex_order(
+        self,
+        ticker: str,
+        strategy_type: str,
+        dte: int,
+        sizing_pct: float,
+        strikes: dict = None,
+    ) -> dict:
+        return {
+            "status": "REJECTED",
+            "broker": self.broker_name,
+            "error": "ALPACA_MULTI_LEG_NOT_IMPLEMENTED",
+            "message": (
+                "Map strategy legs to OCC option symbols and POST /v2/orders; "
+                "not automated in this codebase."
+            ),
+            "source": "alpaca_rest",
+        }
+
+
+# ============================================================
 # BROKER FACTORY
 # ============================================================
 
@@ -424,8 +552,28 @@ def get_broker(broker_name: str = "PAPER", **kwargs) -> AbstractBroker:
     if not broker_class:
         raise ValueError(f"Unknown broker: {broker_name}. Available: {list(brokers.keys())}")
 
-    if broker_name.upper() == "PAPER":
+    name = broker_name.upper()
+    if name == "PAPER":
         return IBKRBroker(account_id="PAPER", paper=True)
+
+    if name == "ALPACA":
+        key = os.getenv("ALPACA_API_KEY") or kwargs.get("api_key")
+        secret = os.getenv("ALPACA_API_SECRET") or kwargs.get("api_secret")
+        paper_raw = os.getenv("ALPACA_PAPER", "true")
+        paper = str(paper_raw).lower() in ("1", "true", "yes")
+        if kwargs.get("paper") is not None:
+            paper = bool(kwargs.get("paper"))
+        if key and secret and key != "PAPER" and secret != "PAPER":
+            return AlpacaRESTBroker(
+                api_key=str(key),
+                api_secret=str(secret),
+                paper=paper,
+            )
+        return broker_class(
+            api_key=kwargs.get("api_key", "PAPER"),
+            api_secret=kwargs.get("api_secret", "PAPER"),
+            paper=kwargs.get("paper", True),
+        )
 
     return broker_class(**kwargs)
 

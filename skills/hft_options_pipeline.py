@@ -1,8 +1,10 @@
-import asyncio
-import numpy as np
-import scipy.stats as si
 import time
 import random
+from typing import Any, Dict
+
+import numpy as np
+import pandas as pd
+
 
 class HFTOptionsPipeline:
     """
@@ -88,5 +90,74 @@ class HFTOptionsPipeline:
             "dealer_tilt": dealer_tilt,
             "total_call_gex_m": round(call_gex_total / 1e6, 2),
             "total_put_gex_m": round(put_gex_total / 1e6, 2),
-            "strikes": gex_profile
+            "strikes": gex_profile,
+            "source": "simulated",
+        }
+
+    @classmethod
+    def from_option_chain(
+        cls,
+        calls_df: pd.DataFrame,
+        puts_df: pd.DataFrame,
+        spot_price: float,
+    ) -> Dict[str, Any]:
+        """
+        Build the same GEX payload shape as ``generate_live_gex_surface`` using
+        live chain OI and Black-Scholes gammas (``calc_gamma``).
+        """
+        from skills.gamma_exposure import MarketStructureAnalyzer
+
+        if calls_df is None or puts_df is None or calls_df.empty or puts_df.empty:
+            return {"error": "Missing options chain", "spot_price": spot_price, "strikes": []}
+
+        calls = calls_df.copy()
+        puts = puts_df.copy()
+        for col, default in (("openInterest", 0), ("calc_gamma", 0.0)):
+            if col not in calls.columns:
+                calls[col] = default
+            if col not in puts.columns:
+                puts[col] = default
+
+        calls["openInterest"] = pd.to_numeric(calls["openInterest"], errors="coerce").fillna(0)
+        puts["openInterest"] = pd.to_numeric(puts["openInterest"], errors="coerce").fillna(0)
+
+        ms = MarketStructureAnalyzer.calculate_gamma_exposure(calls, puts, spot_price)
+        if ms.get("error"):
+            return {"error": ms["error"], "spot_price": spot_price, "strikes": []}
+
+        calls["CallGEX"] = calls["calc_gamma"] * calls["openInterest"] * 100 * spot_price
+        puts["PutGEX"] = puts["calc_gamma"] * puts["openInterest"] * 100 * spot_price * -1
+
+        call_gex_total = float(calls["CallGEX"].sum())
+        put_gex_total = float(puts["PutGEX"].sum())
+
+        all_strikes = sorted(
+            set(calls["strike"].astype(float).tolist()) | set(puts["strike"].astype(float).tolist())
+        )
+        gex_profile = []
+        for K in all_strikes:
+            cg = float(calls.loc[calls["strike"] == K, "CallGEX"].sum())
+            pg = float(puts.loc[puts["strike"] == K, "PutGEX"].sum())
+            net = cg + pg
+            gex_profile.append(
+                {
+                    "strike": float(K),
+                    "call_gex": round(cg / 1e6, 4),
+                    "put_gex": round(pg / 1e6, 4),
+                    "net_gex": round(net / 1e6, 4),
+                }
+            )
+
+        dealer_tilt = ms.get("dealer_position_tilt", "Long Gamma")
+
+        return {
+            "timestamp": time.time(),
+            "spot_price": float(spot_price),
+            "call_wall": float(ms["call_wall_strike"]),
+            "put_wall": float(ms["put_wall_strike"]),
+            "dealer_tilt": dealer_tilt,
+            "total_call_gex_m": round(call_gex_total / 1e6, 2),
+            "total_put_gex_m": round(put_gex_total / 1e6, 2),
+            "strikes": gex_profile,
+            "source": "chain",
         }

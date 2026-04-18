@@ -132,31 +132,60 @@ class MetaLabeler:
             print(f"MetaLabeler build_features error: {e}")
             return None
 
-    def generate_training_labels(self, features: pd.DataFrame, backtest_results: List[dict]) -> tuple:
+    def generate_training_labels(
+        self, features: pd.DataFrame, trade_log: Optional[List[dict]] = None
+    ) -> tuple:
         """
-        Generate training labels by aligning backtest PnL with market features.
-        Label = 1 if backtest strategy was profitable, 0 if loss.
+        Build (X, y) for meta-labeling.
+
+        Primary path: align rows to **trade entry dates** from the iron-condor
+        backtester ``trade_log``; label = 1 if that trade's ``pnl`` > 0 else 0.
+
+        Fallback: if ``trade_log`` is missing or yields too few rows, use
+        next-day return sign (legacy proxy).
         """
-        if features is None or not backtest_results:
+        if features is None or not self._feature_names:
             return None, None
 
-        # Each backtest result maps to a time period
-        # We'll simulate labels from the feature matrix using return direction
-        # as a proxy for whether the primary strategy would succeed
+        trade_log = trade_log or []
+
+        if trade_log:
+            rows = []
+            labels = []
+            feat = features.copy()
+            feat['_day'] = pd.to_datetime(feat.index).normalize()
+
+            seen_days = set()
+            for tr in trade_log:
+                ed = tr.get('entry_date')
+                if ed is None:
+                    continue
+                day = pd.Timestamp(ed).normalize()
+                if day in seen_days:
+                    continue
+                m = feat.loc[feat['_day'] == day]
+                if m.empty:
+                    continue
+                row = m.iloc[-1]
+                rows.append(row[self._feature_names])
+                labels.append(1 if float(tr.get('pnl') or 0) > 0 else 0)
+                seen_days.add(day)
+
+            if (
+                len(rows) >= self.config["min_training_samples"]
+                and len(set(labels)) > 1
+            ):
+                X = pd.DataFrame(rows).reset_index(drop=True)
+                y = np.array(labels, dtype=int)
+                return X, y
+
+        # Fallback: next_return proxy
         X = features[self._feature_names]
-
-        # Use next_return sign as proxy label: positive return = primary model wins
         y_raw = features['next_return'].values
-
-        # Convert to binary: 1 if positive return (strategy wins), 0 if loss
-        # Only include rows where we have confident label
         y = np.where(y_raw > 0, 1, 0)
-
-        # Remove rows where y is NaN (last row has no next_return)
         valid_mask = ~np.isnan(y_raw)
         X = X.iloc[valid_mask]
         y = y[valid_mask]
-
         return X, y
 
     def train_meta_model(self, X: pd.DataFrame, y: np.ndarray) -> dict:

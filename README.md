@@ -49,16 +49,20 @@ pip install -r backend/requirements.txt
 |----------|----------|---------|
 | `FRED_API_KEY` | No (macro falls back to mock series) | [FRED](https://fred.stlouisfed.org/) macro indicators and search in `/api/macro*` |
 | `GITHUB_TOKEN` | No | Enables live GitHub lookup in `GitHubResearcher`; without it, a static verified-algorithm registry is used |
-| `VITE_WS_URL` | No | Base URL for the **Live GEX** WebSocket in the mosaic (see below). Defaults to `ws://localhost:8005` |
+| `VITE_WS_URL` | No | Base URL for the **Live GEX** WebSocket in local dev (path `/ws/gex` or `/api/ws/gex`). Production builds **poll** `GET /api/gex/live/{ticker}` instead |
+| `VITE_GEX_POLL` | No | Set to `1` to force REST polling in dev (same as production behavior) |
+| `ALPACA_API_KEY` / `ALPACA_API_SECRET` | No | When both are set (non-`PAPER`), [`get_broker("ALPACA")`](skills/brokers.py) uses **Alpaca REST** for account metrics and `/v2/options/contracts`; multi-leg order submission is not automated |
+| `ALPACA_PAPER` | No | Default `true` — paper-api host; set `false` for live trading host |
+| `IBKR_ENABLE_LIVE` | No | If `1` / `true`, IBKR broker methods return a structured error explaining that **TWS / IB Gateway + ib_insync** is required (no retail REST in this repo) |
 
-Live broker API keys are not read from the environment by the FastAPI app today; `skills/brokers.py` ships **IBKR/Alpaca stubs** for paper-style flows and transaction-cost math. Configure keys when you wire real execution.
+With Alpaca keys unset, `skills/brokers.py` uses **stubs** for paper-style flows and transaction-cost math.
 
 ### 4. Data flow (REST vs WebSocket)
 
 - **Discovery:** `GET /api/screener` → ticker list; choosing a symbol loads the terminal.
 - **Terminal analyze:** `POST /api/analyze` runs the full agentic pipeline (options chain, GEX/skew, `MarketExpertTeam`, paper trade) and returns data for the mosaic (HMM, meta-model, backtest, critic, etc. in one payload).
 - **Other panels:** dedicated REST calls, for example `GET /api/statarb`, `GET /api/heatmap`, `GET /api/macro*`, `GET /api/portfolio`, `POST /api/portfolio/execute`, `POST /api/broker/*`, `GET /api/hmm/{ticker}`, `GET /api/meta/{ticker}`.
-- **Live GEX tile:** the React component opens **`ws://.../ws/gex`** (see `frontend/src/components/LiveGammaExposure.tsx`). That stream is **separate** from the GEX snapshot embedded in `/api/analyze`; run a compatible WebSocket feed on the same host/port or set `VITE_WS_URL`.
+- **Live GEX tile:** in **development**, the mosaic can use a **WebSocket** mock feed (`/ws/gex` on the Python port). In **production** (e.g. Vite `build`), the UI **polls** [`GET /api/gex/live/{ticker}`](backend/main.py) for chain-backed gamma (serverless-friendly). Optional duplicate WS route: `/api/ws/gex`.
 
 ### 5. Performance validation (Phase 6B)
 
@@ -69,6 +73,30 @@ python scripts/validate_batch_backtest.py --tickers SPY --days 400
 ```
 
 Uses `POST /api/backtest/batch` in-process (no server) unless you pass `--url http://127.0.0.1:8005`. Exit code **1** if fewer than `--min-pass` tickers meet institutional gates (win rate ≥ 75%, profit factor ≥ 1.2, max drawdown < 20%).
+
+Flags:
+
+- **`--basket`** — fixed ETF basket `SPY,QQQ,IWM` (good for a quick multi-name sweep).
+- **`--strict`** — every requested symbol must return a result **and** pass all gates (stricter than `--min-pass`).
+
+Additional checks:
+
+```bash
+python scripts/validate_regression.py --tickers SPY,QQQ --days 400
+python -m pytest tests/ -m "not network"   # fast: health + meta labels
+python -m pytest tests/ -m network         # needs yfinance + options data
+```
+
+### 5b. Backtest accuracy and limitations (read this)
+
+Results are **research-grade simulations**, not guaranteed future performance:
+
+- **Prices** come from **yfinance** (adjusted/historical quirks, possible rate limits). Retry failed validations or use a smaller `--tickers` list if you see download errors.
+- **Options** in the iron-condor engine use **Black–Scholes** with a **realized-vol × volatility-premium** proxy, not exchange-reported IV surfaces or tick-level fills.
+- **Transaction costs** use [`TransactionCostModel`](skills/brokers.py) (commission / spread / slippage rules), not actual broker rebates or queue position.
+- **Meta-labeling** prefers labels from **`trade_log`** (per-trade win/loss on entry dates); if too few trades exist, it falls back to a **next-day return** proxy (see [`skills/meta_model.py`](skills/meta_model.py)).
+
+Use the scripts above for **regression** (structure + gates), not for proving live edge.
 
 ### 6. Setup the React Frontend
 The frontend houses the Vite compilation and the Mosaic UI terminal.
@@ -96,6 +124,16 @@ npm run dev
 ```
 
 Navigate your browser to: `http://localhost:5173/` and prepare for proactive institutional discovery.
+
+## Vercel (Services: Vite + FastAPI)
+
+This repo includes [`vercel.json`](vercel.json) with **experimentalServices**: Vite on `/`, FastAPI on `/api` (entrypoint [`backend/main.py`](backend/main.py), `maxDuration` 120s, 1024 MB). Root [`pyproject.toml`](pyproject.toml) exposes the FastAPI app via `[project.scripts] app = "backend.main:app"`. Python dependencies are listed in [`requirements.txt`](requirements.txt) at the repo root (and [`backend/requirements.txt`](backend/requirements.txt) for local backend-only installs).
+
+1. Connect the GitHub repo in the Vercel dashboard (enable **Services** / polyglot detection if prompted).
+2. Set environment variables (FRED, GitHub, Alpaca, etc.) in Project Settings.
+3. Deploy; open the production URL — API calls use relative `/api/...` from the browser.
+
+Use [`vercel dev -L`](https://vercel.com/docs/cli/dev) locally to run both services together (CLI 48.1.8+).
 
 ## 🤝 Contribution Guidelines
 Pull Requests addressing specific High-Frequency latency offsets or premium Tick-Data vendor hooks (ThetaData / Databento) are highly encouraged!

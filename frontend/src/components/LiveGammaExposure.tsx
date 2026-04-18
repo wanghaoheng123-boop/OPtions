@@ -2,16 +2,59 @@
 import React, { useEffect, useState } from 'react';
 import { Activity } from 'lucide-react';
 
-export default function LiveGammaExposure() {
+type Props = { ticker?: string | null };
+
+/**
+ * Local dev: WebSocket to mock 1s GEX stream.
+ * Production / Vercel: poll GET /api/gex/live/{ticker} (serverless-friendly).
+ * Override with VITE_WS_URL for a custom WebSocket base.
+ */
+export default function LiveGammaExposure({ ticker }: Props) {
   const [liveData, setLiveData] = useState<any>(null);
   const [wsStatus, setWsStatus] = useState<string>('Connecting...');
 
   useEffect(() => {
-    // Phase 11/12: Real-Time HFT WebSocket Feed Connection scaling
-    const wsUrl = import.meta.env.VITE_WS_URL 
-        ? `${import.meta.env.VITE_WS_URL}/ws/gex`
-        : 'ws://localhost:8005/ws/gex';
-        
+    const usePoll =
+      import.meta.env.VITE_GEX_POLL === '1' || Boolean(import.meta.env.PROD);
+
+    if (usePoll) {
+      if (!ticker) {
+        setWsStatus('OPEN A TICKER');
+        setLiveData(null);
+        return undefined;
+      }
+      let cancelled = false;
+      const load = async () => {
+        try {
+          setWsStatus('POLLING');
+          const res = await fetch(`/api/gex/live/${encodeURIComponent(ticker)}`);
+          const data = await res.json();
+          if (cancelled) return;
+          if (data.error) {
+            setWsStatus(`ERR: ${data.error}`);
+            setLiveData(null);
+            return;
+          }
+          setLiveData(data);
+          setWsStatus('REST LIVE');
+        } catch {
+          if (!cancelled) setWsStatus('FETCH FAILED');
+        }
+      };
+      load();
+      const id = window.setInterval(load, 2000);
+      return () => {
+        cancelled = true;
+        window.clearInterval(id);
+      };
+    }
+
+    const wsBase = import.meta.env.VITE_WS_URL
+      ? import.meta.env.VITE_WS_URL.replace(/\/$/, '')
+      : 'ws://localhost:8005';
+    const wsPath = import.meta.env.DEV ? '/ws/gex' : '/api/ws/gex';
+    const wsUrl = `${wsBase}${wsPath}`;
+
     const ws = new WebSocket(wsUrl);
 
     ws.onopen = () => {
@@ -34,14 +77,25 @@ export default function LiveGammaExposure() {
     return () => {
       ws.close();
     };
-  }, []);
+  }, [ticker]);
+
+  if (!ticker && (import.meta.env.PROD || import.meta.env.VITE_GEX_POLL === '1')) {
+    return (
+      <div className="terminal-loading">
+        <Activity size={24} className="text-secondary mb-2" />
+        <span className="text-xs text-secondary">Load a symbol for live chain GEX</span>
+      </div>
+    );
+  }
 
   if (!liveData) {
     return (
        <div className="terminal-loading">
           <Activity size={24} className="text-secondary mb-2" />
           <span>{wsStatus}</span>
-          <span className="text-xs text-secondary mt-1">Awaiting 1s WebSocket Stream</span>
+          <span className="text-xs text-secondary mt-1">
+            {import.meta.env.PROD ? 'REST poll 2s' : 'Awaiting 1s WebSocket Stream'}
+          </span>
        </div>
     );
   }
@@ -49,13 +103,17 @@ export default function LiveGammaExposure() {
   return (
     <div className="gex-stats mt-2">
        <div className="flex justify-between items-center mb-3 border-bottom pb-2">
-          <span className="text-xs font-mono text-secondary">HFT SOCKET: {wsStatus}</span>
-          <span className="text-xs font-mono text-accent">PING: 1000ms</span>
+          <span className="text-xs font-mono text-secondary">
+            {liveData.source === 'chain' ? 'CHAIN GEX' : 'HFT SOCKET'}: {wsStatus}
+          </span>
+          <span className="text-xs font-mono text-accent">
+            {import.meta.env.PROD ? 'POLL: 2000ms' : 'PING: 1000ms'}
+          </span>
        </div>
-       
+
        <div className="macro-row">
-         <span>Live Mock Spot</span>
-         <span className="text-accent">{liveData.spot_price.toFixed(2)}</span>
+         <span>Spot</span>
+         <span className="text-accent">{Number(liveData.spot_price).toFixed(2)}</span>
        </div>
        <div className="macro-row">
          <span>Call Wall (Max Gamma Resistance)</span>
@@ -79,20 +137,18 @@ export default function LiveGammaExposure() {
          <span>Total Put GEX (Millions)</span>
          <span className="text-danger">${liveData.total_put_gex_m}M</span>
        </div>
-       
-       {/* Real-time Order Book Simulation Bar representations */}
+
        <div className="mt-4">
           <div className="text-xs text-secondary mb-1">GEX Order Book Depth</div>
-          {liveData.strikes.slice(8, 13).map((strike: any, i: number) => (
+          {(liveData.strikes || []).slice(8, 13).map((strike: any, i: number) => (
              <div key={i} className="flex justify-between items-center text-xs font-mono mt-1">
                 <span className={strike.strike === liveData.call_wall ? 'text-success' : strike.strike === liveData.put_wall ? 'text-danger' : ''}>
                    {strike.strike}
                 </span>
                 <div style={{ flex: 1, margin: '0 8px', display: 'flex', border: '1px solid #333' }}>
-                   {/* Put Bar (Red) */}
-                   <div style={{ 
-                       width: '50%', 
-                       display: 'flex', 
+                   <div style={{
+                       width: '50%',
+                       display: 'flex',
                        justifyContent: 'flex-end',
                        borderRight: '1px solid #444'
                    }}>
@@ -102,7 +158,6 @@ export default function LiveGammaExposure() {
                           height: '10px'
                       }}></div>
                    </div>
-                   {/* Call Bar (Green) */}
                    <div style={{ width: '50%', display: 'flex' }}>
                       <div style={{
                           backgroundColor: 'rgba(34, 197, 94, 0.4)',
@@ -111,7 +166,7 @@ export default function LiveGammaExposure() {
                       }}></div>
                    </div>
                 </div>
-                <span>{strike.net_gex.toFixed(1)}M</span>
+                <span>{Number(strike.net_gex).toFixed(1)}M</span>
              </div>
           ))}
        </div>

@@ -426,11 +426,39 @@ def get_tc_estimate(broker_name: str, num_contracts: int = 10,
 
 
 # ============================================================
-# WEBSOCKET: Real-time GEX Feed
+# LIVE GEX (chain-backed JSON for polling / serverless)
 # ============================================================
 
-@app.websocket("/ws/gex")
-async def websocket_gex_feed(websocket: WebSocket):
+@app.get("/api/gex/live/{ticker}")
+def get_gex_live(ticker: str):
+    """Gamma exposure from live option chain (same pipeline as /api/analyze GEX)."""
+    t = ticker.upper()
+    try:
+        current_price = OptionsFetcher.get_current_price(t)
+        if current_price == 0.0:
+            return sanitized_response({"error": "Ticker not found", "ticker": t})
+        expirations = OptionsFetcher.get_options_expiration_dates(t)
+        if not expirations:
+            return sanitized_response({"error": "No options data", "ticker": t})
+        target_expiry = expirations[0]
+        data = OptionsFetcher.get_options_chain(t, target_expiry)
+        if not data:
+            return sanitized_response({"error": "Failed to load chain", "ticker": t})
+        calls = data["calls"]
+        puts = data["puts"]
+        r_rf = 0.045
+        T = 7.0 / 365.0
+        calls_g = GreeksCalculator.attach_greeks_to_chain(calls, current_price, r_rf, T, "call")
+        puts_g = GreeksCalculator.attach_greeks_to_chain(puts, current_price, r_rf, T, "put")
+        surface = HFTOptionsPipeline.from_option_chain(calls_g, puts_g, current_price)
+        surface["ticker"] = t
+        surface["expiry"] = target_expiry
+        return sanitized_response(surface)
+    except Exception as e:
+        return sanitized_response({"error": str(e), "ticker": t})
+
+
+async def _gex_websocket_loop(websocket: WebSocket):
     await websocket.accept()
     base_spot = 500.0
     try:
@@ -441,6 +469,20 @@ async def websocket_gex_feed(websocket: WebSocket):
             await asyncio.sleep(1.0)
     except WebSocketDisconnect:
         print("HFT GEX Feed Disconnected.")
+
+
+# ============================================================
+# WEBSOCKET: Real-time GEX Feed (local dev: /ws/gex; behind /api: /api/ws/gex)
+# ============================================================
+
+@app.websocket("/ws/gex")
+async def websocket_gex_feed(websocket: WebSocket):
+    await _gex_websocket_loop(websocket)
+
+
+@app.websocket("/api/ws/gex")
+async def websocket_gex_feed_api_prefix(websocket: WebSocket):
+    await _gex_websocket_loop(websocket)
 
 # ============================================================
 # HEALTH CHECK
@@ -469,7 +511,9 @@ def health_check():
             "macro": "/api/macro [GET]",
             "heatmap": "/api/heatmap [GET]",
             "screener": "/api/screener [GET]",
-            "ws_gex": "/ws/gex [WS]"
+            "gex_live": "/api/gex/live/{ticker} [GET]",
+            "ws_gex": "/ws/gex [WS]",
+            "ws_gex_api": "/api/ws/gex [WS]",
         }
     }
 

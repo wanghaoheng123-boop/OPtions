@@ -6,8 +6,11 @@
             "framework": "vite"
         },
         "backend": {
-            "entrypoint": "backend",
-            "routePrefix": "/api"
+            "entrypoint": "backend/main.py",
+            "routePrefix": "/api",
+            "framework": "fastapi",
+            "maxDuration": 120,
+            "memory": 1024
         }
     }
 }

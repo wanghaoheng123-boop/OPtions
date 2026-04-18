@@ -14,6 +14,11 @@ With running API (e.g. uvicorn main:app in backend/):
   python scripts/validate_batch_backtest.py --url http://127.0.0.1:8000 --tickers SPY,QQQ
 
 Exit code 0 if at least --min-pass tickers pass all gates; else 1.
+
+With ``--strict``, every ticker that produced a result row must pass all gates
+(and the result count must match the requested ticker count).
+
+With ``--basket``, tickers default to ``SPY,QQQ,IWM`` (overrides ``--tickers``).
 """
 
 from __future__ import annotations
@@ -109,9 +114,22 @@ def main() -> None:
         default=None,
         help="Base URL of running API; if omitted, uses in-process TestClient.",
     )
+    parser.add_argument(
+        "--strict",
+        action="store_true",
+        help="Require every requested ticker to appear in results and pass all gates.",
+    )
+    parser.add_argument(
+        "--basket",
+        action="store_true",
+        help="Use ETF basket SPY,QQQ,IWM (ignores --tickers).",
+    )
     args = parser.parse_args()
 
-    tickers = [t.strip().upper() for t in args.tickers.split(",") if t.strip()]
+    if args.basket:
+        tickers = ["SPY", "QQQ", "IWM"]
+    else:
+        tickers = [t.strip().upper() for t in args.tickers.split(",") if t.strip()]
     payload = {"tickers": tickers, "strategy": args.strategy, "days": args.days}
 
     if args.url:
@@ -146,6 +164,19 @@ def main() -> None:
         f"(required >= {args.min_pass}; gates WR>={GATES['win_rate_percent']}, "
         f"PF>={GATES['profit_factor']}, MaxDD<{GATES['max_drawdown']})"
     )
+
+    if args.strict:
+        result_tickers = {row.get("_ticker") for row in results}
+        missing = set(tickers) - result_tickers
+        if missing:
+            print(f"STRICT: missing results for tickers: {sorted(missing)}", file=sys.stderr)
+            raise SystemExit(1)
+        bad = [row.get("_ticker") for row in results if not passes_institutional(row)]
+        if bad:
+            print(f"STRICT: failed gates for: {bad}", file=sys.stderr)
+            raise SystemExit(1)
+        print("STRICT: all tickers passed gates")
+        raise SystemExit(0)
 
     if n_pass < args.min_pass:
         print("VALIDATION FAILED", file=sys.stderr)

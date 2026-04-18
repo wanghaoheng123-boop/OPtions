@@ -202,6 +202,7 @@ class IronCondorBacktester:
             order_type="limit"
         )
         tc_cost = tc['total_cost']
+        tc_breakdown = {k: tc[k] for k in tc if k != 'notional'}
 
         max_hold = min(self.max_hold_days, len(price_path) - 1)
 
@@ -221,13 +222,22 @@ class IronCondorBacktester:
 
             # Check barriers
             if unrealized >= profit_target * self.num_contracts * 100:
-                return {'pnl': round(unrealized - tc_cost, 2), 'barrier': 'pt', 'exit_day': day}
+                return {
+                    'pnl': round(unrealized - tc_cost, 2), 'barrier': 'pt', 'exit_day': day,
+                    'tc_breakdown': tc_breakdown,
+                }
             if unrealized <= -stop_loss * self.num_contracts * 100:
-                return {'pnl': round(unrealized - tc_cost, 2), 'barrier': 'sl', 'exit_day': day}
+                return {
+                    'pnl': round(unrealized - tc_cost, 2), 'barrier': 'sl', 'exit_day': day,
+                    'tc_breakdown': tc_breakdown,
+                }
             if T < 5 / 365:
                 # Time exit: close at current credit
                 pnl = (entry_credit - cur_credit * 0.5) * self.num_contracts * 100
-                return {'pnl': round(pnl - tc_cost, 2), 'barrier': 'time', 'exit_day': day}
+                return {
+                    'pnl': round(pnl - tc_cost, 2), 'barrier': 'time', 'exit_day': day,
+                    'tc_breakdown': tc_breakdown,
+                }
 
         # Expiration: all options expired
         final_credit = max(
@@ -238,7 +248,10 @@ class IronCondorBacktester:
             0.0
         )
         pnl = (entry_credit - final_credit) * self.num_contracts * 100
-        return {'pnl': round(pnl - tc_cost, 2), 'barrier': 'exp', 'exit_day': max_hold}
+        return {
+            'pnl': round(pnl - tc_cost, 2), 'barrier': 'exp', 'exit_day': max_hold,
+            'tc_breakdown': tc_breakdown,
+        }
 
     def run(self, ticker: str, days: int = 252) -> dict:
         """Run backtest on ticker with adaptive parameters."""
@@ -359,6 +372,11 @@ class IronCondorBacktester:
                 result['wing_pct'] = round(adaptive_wing_pct, 4)
                 result['dte'] = adaptive_dte
                 result['iv_rank_min'] = round(adaptive_iv_rank_min, 1)
+                entry_ts = oos_prices.index[i]
+                result['entry_date'] = (
+                    entry_ts.isoformat() if hasattr(entry_ts, 'isoformat')
+                    else str(pd.Timestamp(entry_ts).date())
+                )
                 trades.append(result)
             else:
                 equity_curve.append(equity)
@@ -416,6 +434,26 @@ class IronCondorBacktester:
             b = t.get('barrier', 'time')
             if b in barriers: barriers[b] += 1
 
+        tc_agg = {'commission': 0.0, 'spread_cost': 0.0, 'slippage': 0.0, 'total_cost': 0.0}
+        for t in trades:
+            tb = t.get('tc_breakdown') or {}
+            for k in tc_agg:
+                if k in tb:
+                    tc_agg[k] += float(tb[k])
+        for k in tc_agg:
+            tc_agg[k] = round(tc_agg[k], 2)
+
+        trade_log = []
+        for t in trades[:500]:
+            log_entry = {
+                'entry_date': t.get('entry_date'),
+                'pnl': t.get('pnl'),
+                'barrier': t.get('barrier'),
+                'win': bool(t.get('pnl', 0) > 0),
+                'tc_breakdown': t.get('tc_breakdown'),
+            }
+            trade_log.append(log_entry)
+
         return {
             'ticker': ticker,
             'strategy': 'iron_condor',
@@ -438,7 +476,14 @@ class IronCondorBacktester:
             'adaptive': self.use_adaptive,
             'earnings_filter': self.earnings_filter,
             'verdict': 'PASS' if win_rate >= 75 and pf >= 1.2 and max_dd_pct < 20 else 'FAIL',
-            'trade_sample': trades[:3]
+            'trade_sample': trades[:3],
+            'trade_log': trade_log,
+            'tc_summary': tc_agg,
+            'premium_model': {
+                'volatility_premium_mult': self.VOLATILITY_PREMIUM,
+                'order_type': 'limit',
+                'tcm_broker': self.tcm.broker,
+            },
         }
 
 

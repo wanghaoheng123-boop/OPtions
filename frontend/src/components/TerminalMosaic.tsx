@@ -335,7 +335,7 @@ export default function TerminalMosaic({ data, chartData, portfolio, onBackToSca
                <div className="panel-header">
                  High-Frequency Gamma Exposure (1s Tick)
                </div>
-               <LiveGammaExposure />
+               <LiveGammaExposure ticker={data?.ticker} />
 
                {marketStructure?.volatility_skew && (
                <div className="gex-stats mt-4">

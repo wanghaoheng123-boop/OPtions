@@ -1,0 +1,8 @@
+.claude/**
+**/venv/**
+**/.venv/**
+**/__pycache__/**
+*.pyc
+.git/**
+OPtions_OpenSourceTest/**
+.cursor/**
