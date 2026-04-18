@@ -15,6 +15,12 @@ frontend/.env
 .idea/
 .DS_Store
 
+# Claude worktrees (nested repos; never commit as submodule)
+.claude/
+
+# Nested clone / test tree (not a proper submodule)
+OPtions_OpenSourceTest/
+
 # Temporary Database / Logs
 data/
 logs/
