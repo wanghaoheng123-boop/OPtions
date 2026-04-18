@@ -2,7 +2,7 @@ import os
 import json
 import numpy as np
 import pandas as pd
-from skills.backtester import run_backtest as run_historical_backtest
+from skills.backtester import StrategyBacktester
 from skills.researcher_skill import GitHubResearcher
 from skills.meta_model import MetaLabeler
 from skills.parameter_optimizer import ParameterOptimizer
@@ -259,7 +259,9 @@ class MarketExpertTeam:
                 opt_params = None  # Fall back to default barriers
 
         # Step 5: Strategy Backtester - Triple Barrier with OOS verification
-        backtest = StrategyBacktester.run_historical_backtest(ticker, strategy, days=days)
+        backtest = StrategyBacktester.run_historical_backtest(
+            ticker, strategy, days=days
+        )
 
         # Step 6: Meta Labeler - ML regime detection
         meta_result = None

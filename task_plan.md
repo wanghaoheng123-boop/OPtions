@@ -44,7 +44,7 @@ Transform the Agentic Quant Terminal V2 into an **institutional-grade options tr
 - [ ] **P5**: Add options premium/slippage modeling to backtester — Phase 2A
 - [ ] **P7**: HFT GEX surface integration with real market data — Phase 5
 - [ ] **P13**: Implement AbstractBroker (IBKR/Alpaca) — Phase 5A
-- [ ] **P14**: Connect frontend to all backend endpoints — Phase 4A
+- [x] **P14**: Connect frontend to all backend endpoints — Phase 4A (primary mosaic + discovery use `/api/analyze` bundle; other panels use dedicated REST; see README) — 2026-04-18
 
 ### Phase 1: Foundation & Core Math (Weeks 1-4)
 - [ ] **1A**: Fix critical bugs (Agent-1)
@@ -70,8 +70,8 @@ Transform the Agentic Quant Terminal V2 into an **institutional-grade options tr
 
 ### Phase 6: Institutional Validation & Delivery (Weeks 18-24)
 - [x] **6A**: Batch backtest sweep — DONE (`/api/backtest/batch` for 20+ tickers)
-- [ ] **6B**: Performance validation (Agent-1)
-- [ ] **6C**: Documentation & knowledge transfer (Agent-3)
+- [x] **6B**: Performance validation — DONE (`scripts/validate_batch_backtest.py`, institutional gates) — 2026-04-18
+- [x] **6C**: Documentation & knowledge transfer — DONE (README: env vars, REST/WS data flow, validation) — 2026-04-18
 
 ---
 

@@ -457,3 +457,28 @@ def run_backtest(ticker: str, strategy: str = 'iron_condor',
         earnings_filter=kwargs.get('earnings_filter', True)
     )
     return bt.run(ticker, days)
+
+
+class StrategyBacktester:
+    """
+    Public API used by FastAPI and MarketExpertTeam.
+
+    The live engine is IronCondorBacktester (triple-barrier on credit, OOS slice).
+    The ``strategy`` argument is preserved on the response for callers; all names
+    currently run the same iron-condor path.
+    """
+
+    @staticmethod
+    def run_historical_backtest(
+        ticker: str,
+        strategy: str = 'iron_condor',
+        days: int = 252,
+        **kwargs,
+    ) -> dict:
+        out = run_backtest(ticker, 'iron_condor', days, **kwargs)
+        if isinstance(out, dict) and 'error' not in out:
+            out['strategy_requested'] = strategy
+            out.setdefault('strategy_run', 'iron_condor')
+            if 'max_drawdown_percent' in out and 'max_drawdown' not in out:
+                out['max_drawdown'] = out['max_drawdown_percent']
+        return out
