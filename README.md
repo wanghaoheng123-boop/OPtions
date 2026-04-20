@@ -132,6 +132,8 @@ npm run test:e2e                  # build + vite preview on :4173 + run e2e/
 
 Optional: `npm run test:e2e:ui` for the Playwright UI debugger. See [`frontend/playwright.config.ts`](frontend/playwright.config.ts).
 
+Set **`PLAYWRIGHT_BASE_URL`** (e.g. `http://127.0.0.1:4173`) if you run `vite preview` on a non-default host/port and want tests to skip the auto-started `webServer` (set **`PW_NO_WEBSERVER=1`** in that case so Playwright does not spawn a second preview).
+
 **`VITE_API_URL` (production):** set to the **API origin only** (e.g. `https://your-deployment.example.com`), **without** a trailing `/api`, because the app already requests paths like `/api/health`. A value ending in `/api` can produce double `/api/api/...` URLs depending on how paths are joined.
 
 ---

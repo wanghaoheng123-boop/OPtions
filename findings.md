@@ -298,6 +298,8 @@ Stars are **order-of-magnitude snapshots** (verify on GitHub before relying on f
 | [polakowo/vectorbt](https://github.com/polakowo/vectorbt) | Python | Fast vectorized backtests, parameter scans | Vectorized metrics for sweeps; visualization of equity | API shape differs from current `StrategyBacktester` |
 | [kernc/backtesting.py](https://github.com/kernc/backtesting.py) | Python | Simple strategy API on OHLCV | Minimal API ergonomics for indicators | Single-threaded assumptions |
 | [freqtrade/freqtrade](https://github.com/freqtrade/freqtrade) | Python | Live/paper execution discipline, config-driven runs | Risk config patterns, dry-run workflows | Crypto-centric; adapt cautiously to options |
+| [stefan-jansen/zipline-reloaded](https://github.com/stefan-jansen/zipline-reloaded) | Python | Zipline-class event-driven backtests, bundles, calendars | Pipeline structure for daily equity backtests | Different from options path in this repo; integration is non-trivial |
+| [quantopian/empyrical](https://github.com/quantopian/empyrical) | Python | Classic return / risk ratios (Sharpe, Sortino, max drawdown) | Reuse metric definitions for reporting parity | Repository archived; prefer maintained forks for new deps |
 | [stefan-jansen/machine-learning-for-trading](https://github.com/stefan-jansen/machine-learning-for-trading) | Python / notebooks | End-to-end ML for trading **book code** | Feature engineering examples next to code | Book edition vs your stack versions |
 
 ---

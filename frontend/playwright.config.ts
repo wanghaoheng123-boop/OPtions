@@ -3,6 +3,8 @@ import { defineConfig, devices } from '@playwright/test';
 /**
  * E2E runs against Vite preview with /api routes mocked in tests (no Python backend required).
  * Local: `npm run build && npm run test:e2e` from frontend/
+ *
+ * Env: `PLAYWRIGHT_BASE_URL` (default http://127.0.0.1:4173), `PW_NO_WEBSERVER=1` to skip auto webServer.
  */
 export default defineConfig({
   testDir: 'e2e',
