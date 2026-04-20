@@ -49,3 +49,12 @@ Issue templates: [`.github/ISSUE_TEMPLATE/`](.github/ISSUE_TEMPLATE/). Charter, 
 - **Baseline commands**: `python scripts/baseline_metrics.py` (optional `--quick`).
 - **Batch gates**: `python scripts/validate_batch_backtest.py --tickers SPY --days 400`
 - **Structure regression**: `python scripts/validate_regression.py --tickers SPY,QQQ --days 400`
+
+## Release gate snapshot (2026-04-20)
+
+- Fast tests: pass (`pytest -m "not network"`).
+- Network tests: pass (`pytest -m network`).
+- Regression script: pass (`validate_regression.py --tickers SPY,QQQ,IWM --days 400`).
+- Batch institutional gates: pass (`validate_batch_backtest.py --basket --days 400`).
+- Frontend E2E: pass (`frontend npm run test:e2e`, 1 macOS-only shortcut test skipped on non-macOS).
+- Open caveats are external dependency gates only (`FRED_API_KEY`, `GITHUB_TOKEN`, optional Alpaca creds / live broker scope).

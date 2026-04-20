@@ -135,7 +135,7 @@ class IronCondorBacktester:
         threshold = 70 - iv * 100
         return max(30, min(55, threshold))
 
-    def earnings_filter_active(self, ticker: str) -> bool:
+    def earnings_filter_active(self, ticker: str, as_of: datetime | None = None) -> bool:
         """
         Check if we're within 5 days of earnings month start.
         If True, skip trading this ticker this week.
@@ -146,7 +146,7 @@ class IronCondorBacktester:
             return False  # No earnings data — allow
 
         earnings_months = self.EARNINGS_CALENDAR[ticker]
-        now = datetime.now()
+        now = as_of or datetime.now()
         current_month = now.month
         current_day = now.day
 
@@ -282,8 +282,9 @@ class IronCondorBacktester:
         is_returns = returns.iloc[:split]
         trained_iv = OptionsPricing.estimate_iv(is_returns)
 
-        # IV Rank calculation for OOS period
-        full_rv = returns.rolling(252).std() * np.sqrt(252)
+        # IV Rank calculation aligned to full close index
+        close_returns = close.pct_change()
+        full_rv = close_returns.rolling(252).std() * np.sqrt(252)
 
         trades = []
         equity = 100000.0
@@ -292,95 +293,88 @@ class IronCondorBacktester:
 
         r = 0.045
         price_arr = oos_prices.reset_index(drop=True)
-        ret_arr = oos_returns.reset_index(drop=True)
-        rv_arr = full_rv.reset_index(drop=True)
-
-        trade_open = False
-
-        for i in range(len(price_arr)):
+        i = 0
+        while i < len(price_arr):
             S = float(price_arr.iloc[i])
+            current_dt = pd.Timestamp(oos_prices.index[i])
 
             # Current raw IV estimate
-            if i >= 30:
-                raw_iv = float(rv_arr.iloc[i]) if not pd.isna(rv_arr.iloc[i]) else trained_iv
-            else:
-                raw_iv = trained_iv
+            rv_now = full_rv.loc[current_dt] if current_dt in full_rv.index else np.nan
+            raw_iv = float(rv_now) if not pd.isna(rv_now) else trained_iv
 
             # Apply volatility premium (2.5x)
             iv = raw_iv * self.VOLATILITY_PREMIUM
 
             # IV Rank (based on raw IV for market comparison)
-            if i >= 252:
-                hist_iv = rv_arr.iloc[max(0, i-252):i].dropna()
-                if len(hist_iv) > 20:
-                    iv_rank = float(((hist_iv < raw_iv).sum() / len(hist_iv)) * 100)
-                else:
-                    iv_rank = 50.0
+            hist_iv = full_rv.loc[:current_dt].dropna().tail(253)
+            if len(hist_iv) > 21:
+                hist_base = hist_iv.iloc[:-1]
+                iv_rank = float(((hist_base < raw_iv).sum() / len(hist_base)) * 100)
             else:
                 iv_rank = 50.0
 
-            if not trade_open:
-                # Earnings filter check
-                if self.earnings_filter_active(ticker):
-                    equity_curve.append(equity)
-                    dates.append(oos_prices.index[i])
-                    continue
-
-                # Adaptive parameter calculation
-                if self.use_adaptive:
-                    adaptive_wing_pct = self.adaptive_wing(iv)
-                    adaptive_dte = self.adaptive_dte(iv)
-                    adaptive_iv_rank_min = self.adaptive_iv_rank_min(iv)
-                else:
-                    adaptive_wing_pct = self.wing_pct
-                    adaptive_dte = self.dte_entry
-                    adaptive_iv_rank_min = self.iv_rank_min
-
-                # Entry: IV Rank must be above adaptive threshold
-                if iv_rank < adaptive_iv_rank_min:
-                    equity_curve.append(equity)
-                    dates.append(oos_prices.index[i])
-                    continue
-
-                # Calculate entry with adaptive parameters
-                strikes = self._get_strikes(S, adaptive_wing_pct)
-                T = adaptive_dte / 365.0
-                credit = self._calc_credit(S, T, r, iv, strikes)
-
-                # Minimum credit threshold: must be >= 15% of wing width
-                min_credit = strikes['wing_width'] * self.MIN_CREDIT_PCT_OF_RISK
-                if credit < min_credit:
-                    equity_curve.append(equity)
-                    dates.append(oos_prices.index[i])
-                    continue
-
-                # Get price path for simulation
-                path_end = min(i + self.max_hold_days + 1, len(price_arr))
-                price_path = price_arr.iloc[i:path_end].values
-
-                # Simulate trade
-                result = self._simulate_trade(price_path, iv, adaptive_dte, strikes, credit)
-                equity += result['pnl']
+            # Earnings filter check
+            if self.earnings_filter_active(ticker, as_of=current_dt.to_pydatetime()):
                 equity_curve.append(equity)
                 dates.append(oos_prices.index[i])
+                i += 1
+                continue
 
-                result['entry_price'] = round(S, 2)
-                result['entry_credit'] = round(credit, 4)
-                result['iv_rank'] = round(iv_rank, 1)
-                result['iv_used'] = round(iv, 4)
-                result['strikes'] = strikes
-                result['wing_pct'] = round(adaptive_wing_pct, 4)
-                result['dte'] = adaptive_dte
-                result['iv_rank_min'] = round(adaptive_iv_rank_min, 1)
-                entry_ts = oos_prices.index[i]
-                result['entry_date'] = (
-                    entry_ts.isoformat() if hasattr(entry_ts, 'isoformat')
-                    else str(pd.Timestamp(entry_ts).date())
-                )
-                trades.append(result)
+            # Adaptive parameter calculation
+            if self.use_adaptive:
+                adaptive_wing_pct = self.adaptive_wing(iv)
+                adaptive_dte = self.adaptive_dte(iv)
+                adaptive_iv_rank_min = self.adaptive_iv_rank_min(iv)
             else:
+                adaptive_wing_pct = self.wing_pct
+                adaptive_dte = self.dte_entry
+                adaptive_iv_rank_min = self.iv_rank_min
+
+            # Entry: IV Rank must be above adaptive threshold
+            if iv_rank < adaptive_iv_rank_min:
                 equity_curve.append(equity)
                 dates.append(oos_prices.index[i])
+                i += 1
+                continue
+
+            # Calculate entry with adaptive parameters
+            strikes = self._get_strikes(S, adaptive_wing_pct)
+            T = adaptive_dte / 365.0
+            credit = self._calc_credit(S, T, r, iv, strikes)
+
+            # Minimum credit threshold: must be >= 15% of wing width
+            min_credit = strikes['wing_width'] * self.MIN_CREDIT_PCT_OF_RISK
+            if credit < min_credit:
+                equity_curve.append(equity)
+                dates.append(oos_prices.index[i])
+                i += 1
+                continue
+
+            # Get price path for simulation
+            path_end = min(i + self.max_hold_days + 1, len(price_arr))
+            price_path = price_arr.iloc[i:path_end].values
+
+            # Simulate trade (single-position model: skip overlapping entries)
+            result = self._simulate_trade(price_path, iv, adaptive_dte, strikes, credit)
+            equity += result['pnl']
+            equity_curve.append(equity)
+            dates.append(oos_prices.index[i])
+
+            result['entry_price'] = round(S, 2)
+            result['entry_credit'] = round(credit, 4)
+            result['iv_rank'] = round(iv_rank, 1)
+            result['iv_used'] = round(iv, 4)
+            result['strikes'] = strikes
+            result['wing_pct'] = round(adaptive_wing_pct, 4)
+            result['dte'] = adaptive_dte
+            result['iv_rank_min'] = round(adaptive_iv_rank_min, 1)
+            entry_ts = oos_prices.index[i]
+            result['entry_date'] = (
+                entry_ts.isoformat() if hasattr(entry_ts, 'isoformat')
+                else str(pd.Timestamp(entry_ts).date())
+            )
+            trades.append(result)
+            i += max(1, int(result.get('exit_day', 1)))
 
         if not trades:
             return {
@@ -410,10 +404,11 @@ class IronCondorBacktester:
         # Equity curve metrics
         eq = np.array(equity_curve, dtype=float)
         cumret = eq - eq[0]
-        running_max = np.maximum.accumulate(cumret)
-        drawdowns = running_max - cumret
+        running_max = np.maximum.accumulate(eq)
+        drawdowns = running_max - eq
         max_dd = float(np.nanmax(drawdowns)) if len(drawdowns) > 0 else 0
-        max_dd_pct = max_dd / equity * 100
+        dd_pct_series = np.where(running_max > 0, drawdowns / running_max * 100, 0)
+        max_dd_pct = float(np.nanmax(dd_pct_series)) if len(dd_pct_series) > 0 else 0
 
         # Sharpe / Sortino / Calmar
         daily_rets = np.diff(eq) / eq[:-1]
@@ -458,6 +453,7 @@ class IronCondorBacktester:
             'ticker': ticker,
             'strategy': 'iron_condor',
             'n_trades': n,
+            'num_trades': n,
             'n_wins': n_wins,
             'win_rate_percent': round(win_rate, 2),
             'total_net_pnl': round(total_pnl, 2),
@@ -471,6 +467,7 @@ class IronCondorBacktester:
             'sortino_ratio': round(sortino, 2),
             'calmar_ratio': round(calmar, 2),
             'trained_iv': round(trained_iv, 4),
+            'trained_volatility': round(trained_iv, 4),
             'barrier_hits': barriers,
             'num_contracts': self.num_contracts,
             'adaptive': self.use_adaptive,

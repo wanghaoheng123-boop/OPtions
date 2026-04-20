@@ -40,7 +40,18 @@ export default function MacroSearchTerminal() {
       if (res.data.data?.error) {
           setErrorMsg(res.data.data.message);
       } else {
-          setChartData(res.data.data || []);
+          const raw = res.data.data || [];
+          const asOhlc = raw.map((pt: any) => {
+            const v = Number(pt?.value);
+            return {
+              time: pt?.time,
+              open: v,
+              high: v,
+              low: v,
+              close: v,
+            };
+          }).filter((pt: any) => pt.time && Number.isFinite(pt.close));
+          setChartData(asOhlc);
       }
     } catch (err) {
       console.error(err);

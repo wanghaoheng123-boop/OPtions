@@ -1,6 +1,35 @@
 # Findings: Institutional Agentic Options Terminal
 
-> Last Updated: 2026-04-18
+> Last Updated: 2026-04-20
+
+---
+
+## Completion Snapshot (2026-04-20)
+
+- Project roadmap phases are complete in code; remaining gates are external credentials/data access, not missing implementation.
+- Full validation sweep passed on 2026-04-20:
+  - `python -m pytest tests/ -m "not network" -q` -> 4 passed
+  - `python -m pytest tests/ -m network -q` -> 4 passed
+  - `python scripts/validate_regression.py --tickers SPY,QQQ,IWM --days 400` -> REGRESSION OK
+  - `python scripts/validate_batch_backtest.py --basket --days 400` -> VALIDATION OK (institutional_pass 3/3)
+  - `cd frontend && npm run test:e2e` -> 5 passed, 1 skipped
+- External dependency status:
+  - **FRED**: no key -> expected fallback (`FRED_API_KEY_MISSING` + mock macro panel values)
+  - **GitHub researcher**: no token -> verified static algorithm registry path remains primary
+  - **Alpaca**: keys unlock REST account/contracts; multi-leg order automation intentionally rejected (`ALPACA_MULTI_LEG_NOT_IMPLEMENTED`)
+
+## 15-Phase Program Snapshot (2026-04-20)
+
+- Program artifacts created in `review/PROGRAM15/` covering scope freeze, inventory/contracts, reliability uplift, validation/risk, and closure.
+- Critical quant loop hardening delivered:
+  - single-position progression and OOS IV-rank alignment in `skills/backtester.py`
+  - optimizer cache contamination remediation in `skills/parameter_optimizer.py`
+  - orchestrator backtest-key compatibility in `core_agents/orchestrator.py`
+- Reliability and CI uplift delivered:
+  - macro series shape compatibility in `frontend/src/components/MacroSearchTerminal.tsx`
+  - added tests: `tests/test_integrity_quant.py`, `tests/test_contract_expansion.py`
+  - strict release-gates CI job in `.github/workflows/ci.yml`
+- Validation matrix passed (`pytest` non-network + network, regression, strict batch, frontend e2e).
 
 ---
 

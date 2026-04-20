@@ -185,8 +185,8 @@ class MarketExpertTeam:
             "sharpe_ratio": f"{sharpe:.2f}",
             "sortino_ratio": f"{sortino:.2f}",
             "calmar_ratio": f"{calmar:.2f}",
-            "num_trades": backtest_result.get("num_trades", 0),
-            "trained_volatility": f"{backtest_result.get('trained_volatility', 0):.6f}",
+            "num_trades": backtest_result.get("num_trades", backtest_result.get("n_trades", 0)),
+            "trained_volatility": f"{backtest_result.get('trained_volatility', backtest_result.get('trained_iv', 0)):.6f}",
             "barrier_hits": backtest_result.get("barrier_hits", {})
         }
 

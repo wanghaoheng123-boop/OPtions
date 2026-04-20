@@ -79,6 +79,7 @@ class ParameterOptimizer:
 
         grid_combinations = list(itertools.product(tp_bounds, sl_bounds, time_horizons, ewma_spans))
         results = []
+        cache: Dict[str, Dict] = {}
 
         # Walk-Forward Loop
         for start_idx in range(0, len(returns) - train_window - test_window, test_window):
@@ -96,9 +97,9 @@ class ParameterOptimizer:
             # Compute trained volatility from in-sample
             for tp, sl, t_hor, ewma_span in grid_combinations:
                 # Skip already tested combinations (cache)
-                cache_key = f"{tp}_{sl}_{t_hor}_{ewma_span}"
-                if hasattr(cls, '_cache') and cache_key in cls._cache:
-                    cached_result = cls._cache[cache_key]
+                cache_key = f"{ticker}_{method}_{start_idx}_{train_end}_{test_start}_{test_end}_{tp}_{sl}_{t_hor}_{ewma_span}"
+                if cache_key in cache:
+                    cached_result = dict(cache[cache_key])
                 else:
                     # Train: compute EWMA volatility from in-sample
                     in_sample_vol = train_ret.ewm(span=ewma_span).std().iloc[-1]
@@ -114,9 +115,7 @@ class ParameterOptimizer:
                         "trained_vol": trained_vol,
                         **simulated_metrics
                     }
-                    if not hasattr(cls, '_cache'):
-                        cls._cache = {}
-                    cls._cache[cache_key] = cached_result
+                    cache[cache_key] = dict(cached_result)
 
                 cached_result["window_start"] = start_idx
                 cached_result["window_end"] = test_end

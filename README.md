@@ -59,6 +59,29 @@ pip install -r backend/requirements.txt
 
 With Alpaca keys unset, `skills/brokers.py` uses **stubs** for paper-style flows and transaction-cost math.
 
+### 3b. External dependency gates (completion runbook)
+
+These are the only remaining credential-dependent capabilities after the code completion sweep:
+
+- **FRED (`FRED_API_KEY`)**: without key, `/api/macro*` returns fallback data and `FRED_API_KEY_MISSING`.
+- **GitHub (`GITHUB_TOKEN`)**: without token, researcher uses the in-repo verified algorithm registry.
+- **Alpaca (`ALPACA_API_KEY` / `ALPACA_API_SECRET`)**: enables live account/contracts REST paths; multi-leg strategy order automation is intentionally not implemented.
+
+Quick verification commands:
+
+```bash
+curl -s http://127.0.0.1:8005/api/macro
+curl -s "http://127.0.0.1:8005/api/macro/search?query=GDP"
+curl -s http://127.0.0.1:8005/api/broker/account/ALPACA
+curl -s "http://127.0.0.1:8005/api/broker/tc/ALPACA?num_contracts=10&mid_price=2.5&order_type=market"
+```
+
+Expected behavior:
+
+- Missing FRED key -> payload contains `FRED_API_KEY_MISSING` (graceful fallback).
+- Missing Alpaca keys -> broker endpoint returns paper/stub metrics.
+- Alpaca keys present -> broker endpoint returns `source: "alpaca_rest"` on live REST account/contract paths.
+
 ### 4. Data flow (REST vs WebSocket)
 
 - **Discovery:** `GET /api/screener` → ticker list; choosing a symbol loads the terminal.

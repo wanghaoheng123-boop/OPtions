@@ -1,15 +1,15 @@
 # Progress: Institutional Agentic Options Terminal
 
-> Last Updated: 2026-04-18
-> Overall: Execution (orchestration terminal overhaul)
+> Last Updated: 2026-04-20
+> Overall: Execution complete (release-hardened baseline)
 
 ---
 
 ## Status
-- **Overall**: Planning Complete, entering execution
-- **Current Phase**: Phase 0 (Setup & Pre-Work)
-- **Active Agent**: Agent Orchestrator (planning session)
-- **Last Updated**: 2026-04-12 00:00 UTC
+- **Overall**: Phases 0-6 complete, validation green, release-ready with external credential caveats
+- **Current Phase**: Phase 6 (Institutional Validation & Delivery) - COMPLETE
+- **Active Agent**: Single-agent CLI execution (completion sweep)
+- **Last Updated**: 2026-04-20
 
 ---
 
@@ -230,3 +230,46 @@ Environment: Windows, Python 3.10.11, repo root `OPTION TRADING APP`.
 - [x] Chart/API reliability: lightweight-charts v5 candlestick API; user-visible fetch errors; OHLC float sanitization; pytest for `/api/chart`.
 - [x] `GET /api/methodology` + UI methodology drawer (`skills/methodology_catalog.py`, mosaic Method button).
 - [x] UI tokens / empty states; README §5c regression matrix; expanded adversarial checklist in `AGENTS.md`.
+
+### 2026-04-20 — Project completion execution (single-agent CLI)
+
+- [x] Reconciled planning drift: `task_plan.md` updated to mark Phase 1/P2 status consistent with implemented code and prior logs.
+- [x] Blockers reclassified as **external dependency gates** instead of unresolved code tasks:
+  - FRED key absent -> macro fallback path intentionally returns `FRED_API_KEY_MISSING`.
+  - GitHub token absent -> researcher uses verified static algorithm registry.
+  - Alpaca keys optional -> account/contracts via REST with credentials; multi-leg order automation explicitly not implemented.
+- [x] Full validation sweep (all green):
+  - `python -m pytest tests/ -m "not network" -q` -> 4 passed
+  - `python -m pytest tests/ -m network -q` -> 4 passed
+  - `python scripts/validate_regression.py --tickers SPY,QQQ,IWM --days 400` -> REGRESSION OK
+  - `python scripts/validate_batch_backtest.py --basket --days 400` -> VALIDATION OK, institutional_pass 3/3
+  - `cd frontend && npm run test:e2e` -> 5 passed, 1 skipped (macOS Meta+K guard)
+- [x] Release artifacts refreshed (`README.md`, `findings.md`, `AGENTS.md`, `task_plan.md`, `progress.md`) with completion and residual-risk notes.
+
+### Residual risk / caveats (post-completion)
+
+- Data-provider/runtime dependencies remain: yfinance availability, FRED key for live macro data, optional broker credentials for live account/contract pulls.
+- Live broker multi-leg execution remains intentionally out-of-scope in this repo baseline (documented limitation, not a hidden defect).
+
+### 2026-04-20 (late) — 15-phase institutional execution loop
+
+- [x] Phase 1 scope freeze completed: `review/PROGRAM15/PHASE1_SCOPE_FREEZE.md`
+- [x] Phase 2-3 inventory and endpoint contract matrix completed: `review/PROGRAM15/PHASE2_3_INVENTORY_AND_CONTRACT_MATRIX.md`
+- [x] Phase 4 critical quant fixes delivered:
+  - `skills/backtester.py` (single-position progression, OOS-aligned IV rank, DD% correction, contract aliases)
+  - `skills/parameter_optimizer.py` (window/ticker-safe local cache)
+  - `core_agents/orchestrator.py` (backtest key compatibility)
+- [x] Phase 5-9 reliability uplift delivered:
+  - `frontend/src/components/MacroSearchTerminal.tsx` shape compatibility fix
+  - new tests: `tests/test_integrity_quant.py`, `tests/test_contract_expansion.py`
+  - CI uplift: `.github/workflows/ci.yml` `release-gates` job
+  - report: `review/PROGRAM15/PHASE5_9_RELIABILITY_AND_CI_REPORT.md`
+- [x] Phase 10-12 validation and proxy review 1 completed:
+  - non-network pytest: pass
+  - network pytest: pass
+  - regression script: pass
+  - strict batch gate: pass
+  - frontend e2e: pass
+  - report: `review/PROGRAM15/PHASE10_12_VALIDATION_AND_RISK_REPORT.md`
+- [x] Phase 13-15 dry run, proxy review 2, and closure completed:
+  - report: `review/PROGRAM15/PHASE13_15_DRYRUN_REVIEW_AND_CLOSURE.md`
