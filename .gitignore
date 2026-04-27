@@ -25,3 +25,4 @@ OPtions_OpenSourceTest/
 data/
 logs/
 *.sqlite3
+.vercel
