@@ -1,0 +1,27 @@
+{"id":"stream_options_chain","type":"DataStream","label":"Options Chain Feed","kind":"options_chain","source_path":"skills/options_chain_fetcher.py","description":"Underlying option chain and spot retrieval input."}
+{"id":"stream_gex_live","type":"DataStream","label":"GEX Live Surface","kind":"gex_stream","source_path":"backend/main.py","description":"REST and websocket style gamma exposure feed."}
+{"id":"stream_iv_skew","type":"DataStream","label":"IV Skew and Rank Stream","kind":"iv_skew","source_path":"skills/volatility_skew.py","description":"Volatility skew/rank/percentile style diagnostics."}
+{"id":"stream_vix_proxy","type":"DataStream","label":"VIX Proxy Stream","kind":"vol_proxy","source_path":"skills/regime_hmm.py","description":"Proxy volatility regime indicator used by HMM/meta logic."}
+{"id":"instrument_spy","type":"Instrument","label":"SPY","symbol_group":"equity_index_etf","description":"Primary benchmark ticker."}
+{"id":"instrument_qqq","type":"Instrument","label":"QQQ","symbol_group":"equity_index_etf","description":"Technology index ETF."}
+{"id":"instrument_uvxy","type":"Instrument","label":"UVXY","symbol_group":"volatility_etf","description":"Volatility ETF tracked as dependency target candidate."}
+{"id":"risk_critic_gate","type":"RiskModule","label":"Critic Risk Gate","module_path":"core_agents/orchestrator.py","gate_profile":"wr_pf_dd","description":"Hard gate on win-rate, PF, and drawdown."}
+{"id":"risk_kelly_sizing","type":"RiskModule","label":"Kelly Sizing Engine","module_path":"skills/paper_trader.py","gate_profile":"kelly_capped","description":"Position sizing and portfolio limits."}
+{"id":"risk_margin_metrics","type":"RiskModule","label":"Margin and Account Metrics","module_path":"skills/brokers.py","gate_profile":"account_checks","description":"Buying power and margin utilization context."}
+{"id":"exec_paper_broker","type":"ExecutionModule","label":"Paper Broker","module_path":"skills/paper_trader.py","mode":"paper","description":"Paper execution and portfolio state transitions."}
+{"id":"exec_broker_factory","type":"ExecutionModule","label":"Broker Factory","module_path":"skills/brokers.py","mode":"broker_abstraction","description":"Abstracted broker routing and order submission."}
+{"id":"strategy_iron_condor","type":"Strategy","label":"Iron Condor","family":"options_income","description":"Range-bound premium selling structure."}
+{"id":"strategy_short_put","type":"Strategy","label":"Short Put","family":"options_income","description":"Cash-secured premium short strategy."}
+{"id":"strategy_wheel","type":"Strategy","label":"Wheel","family":"options_income","description":"Put assignment to covered-call cycle strategy."}
+{"id":"strategy_covered_call","type":"Strategy","label":"Covered Call","family":"options_income","description":"Yield enhancement call-selling strategy."}
+{"id":"comp_greeks_engine","type":"Computation","label":"Greeks Engine","module_path":"skills/greeks_calculator.py","description":"Black-Scholes based Greeks calculations."}
+{"id":"comp_gex_analyzer","type":"Computation","label":"Gamma Exposure Analyzer","module_path":"skills/gamma_exposure.py","description":"Dealer gamma and wall metrics computation."}
+{"id":"comp_parameter_optimizer","type":"Computation","label":"Parameter Optimizer","module_path":"skills/parameter_optimizer.py","description":"Grid/WFO style optimization loops."}
+{"id":"comp_backtester","type":"Computation","label":"Strategy Backtester","module_path":"skills/backtester.py","description":"Historical simulation and risk metrics."}
+{"id":"comp_orchestrator_loop","type":"Computation","label":"Agentic Orchestrator Loop","module_path":"core_agents/orchestrator.py","description":"Strategy selection and recommendation synthesis."}
+{"id":"stream_macro_fred","type":"DataStream","label":"FRED Macro Stream","kind":"macro_economic_feed","source_path":"skills/macro_fetcher.py","description":"Macro indicators from FRED series and fallback pathways."}
+{"id":"comp_market_data_api","type":"Computation","label":"Market Data API Adapter","module_path":"skills/market_data_api.py","description":"Market OHLC retrieval and normalization for charts and analytics."}
+{"id":"comp_macro_fetcher","type":"Computation","label":"Macro Data Fetcher","module_path":"skills/macro_fetcher.py","description":"Fetches macro indicators and search results for macro panels."}
+{"id":"comp_kalman_filter","type":"Computation","label":"Kalman Filter Engine","module_path":"skills/kalman_filter.py","description":"Dynamic hedge ratio estimation for stat-arb pairs."}
+{"id":"comp_meta_labeler","type":"Computation","label":"Meta Labeler Engine","module_path":"skills/meta_model.py","description":"Meta-labeling model for bet sizing and trade filtering."}
+{"id":"comp_methodology_catalog","type":"Computation","label":"Methodology Catalog","module_path":"skills/methodology_catalog.py","description":"Panel methodology documentation surface for API and UI."}

@@ -97,7 +97,7 @@ function App() {
       .get('/api/portfolio')
       .then((res) => setPortfolio(res.data))
       .catch((err) => {
-        setPortfolioError(err?.message || 'Failed to load portfolio');
+        setPortfolioError(axiosErrMessage(err));
       });
   }, []);
 

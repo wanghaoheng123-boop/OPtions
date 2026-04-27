@@ -10,10 +10,29 @@ interface SectorData {
 
 export default function SectorHeatmap() {
   const [sectors, setSectors] = useState<SectorData[]>([]);
+  const [error, setError] = useState<string | null>(null);
 
   useEffect(() => {
-    axios.get('/api/heatmap').then(res => setSectors(res.data));
+    axios
+      .get('/api/heatmap')
+      .then((res) => {
+        if (Array.isArray(res.data)) {
+          setSectors(res.data);
+          setError(null);
+          return;
+        }
+        setSectors([]);
+        setError('Heatmap response shape is invalid.');
+      })
+      .catch((err) => {
+        setSectors([]);
+        setError(err?.response?.data?.detail || err?.message || 'Heatmap request failed');
+      });
   }, []);
+
+  if (error) {
+    return <div className="terminal-loading">{error}</div>;
+  }
 
   return (
     <div className="heatmap-grid">

@@ -1,0 +1,31 @@
+{
+  "schema_version": "1.0",
+  "project": "OPTION TRADING APP",
+  "created": "2026-04-27T14:30:00Z",
+  "last_updated": "2026-04-27T14:30:00Z",
+  "active_agent": "Codex 5.3",
+  "last_inspection": {
+    "timestamp": null,
+    "results": {}
+  },
+  "tasks": [
+    {
+      "id": "TASK-001",
+      "title": "Migrate to Multi-Agent Hybrid Memory Architecture",
+      "status": "PENDING",
+      "priority": "HIGH",
+      "files_touched": [],
+      "verify_status": {
+        "A": null,
+        "B": null,
+        "C": null,
+        "D": null,
+        "E": null,
+        "F": null
+      },
+      "notes": ""
+    }
+  ],
+  "blockers": [],
+  "checkpoint": null
+}

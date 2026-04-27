@@ -4,11 +4,22 @@ import axios from 'axios';
 
 export default function MacroPanel() {
   const [macro, setMacro] = useState<any>(null);
+  const [error, setError] = useState<string | null>(null);
 
   useEffect(() => {
-    axios.get('/api/macro').then(res => setMacro(res.data));
+    axios
+      .get('/api/macro')
+      .then((res) => {
+        setMacro(res.data);
+        setError(null);
+      })
+      .catch((err) => {
+        setMacro(null);
+        setError(err?.response?.data?.detail || err?.message || 'Failed to load macro data');
+      });
   }, []);
 
+  if (error) return <div className="terminal-loading">{error}</div>;
   if (!macro) return <div className="terminal-loading">Loading FED Data...</div>;
 
   return (

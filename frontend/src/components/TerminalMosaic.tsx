@@ -166,7 +166,7 @@ export default function TerminalMosaic({
                        {(portfolio.positions || []).map((p: any, i: number) => (
                           <div key={i} className="trade-item">
                              <span className="trade-tkr">{p.ticker}</span>
-                             <span className="trade-strat text-secondary">{p.strategy} <span className="text-accent ml-1">({((p.kelly_percentage || 0.1) * 100).toFixed(0)}%)</span></span>
+                             <span className="trade-strat text-secondary">{p.strategy} <span className="text-accent ml-1">({(((p.kelly_percentage ?? p.kelly_pct) || 0.1) * 100).toFixed(0)}%)</span></span>
                           </div>
                        ))}
                     </div>
@@ -213,30 +213,30 @@ export default function TerminalMosaic({
              </span>
              <MethodologyDrawer panelId="hmm_regime" />
            </div>
-           {data?.agent_insights?.hmm_regime ? (
+           {agentInsights?.hmm_regime ? (
              <>
                <div className="regime-label" style={{ fontSize: '0.8rem', marginTop: '4px' }}>
-                 <span className="text-accent">{data.agent_insights.hmm_regime.regime_label}</span>
+                 <span className="text-accent">{agentInsights.hmm_regime.regime_label}</span>
                </div>
                <div className="flex gap-2 mt-2" style={{ gap: '8px', flexWrap: 'wrap' }}>
                  <div className="mini-stat">
                     <span>Strategy:</span>
-                    <span className="text-accent">{data.agent_insights.hmm_regime.recommended_strategy}</span>
+                    <span className="text-accent">{agentInsights.hmm_regime.recommended_strategy}</span>
                  </div>
                  <div className="mini-stat">
                     <span>Confidence:</span>
-                    <span className={data.agent_insights.hmm_regime.confidence > 0.6 ? 'text-success' : 'text-warning'}>
-                       {(data.agent_insights.hmm_regime.confidence * 100).toFixed(0)}%
+                    <span className={agentInsights.hmm_regime.confidence > 0.6 ? 'text-success' : 'text-warning'}>
+                       {(agentInsights.hmm_regime.confidence * 100).toFixed(0)}%
                     </span>
                  </div>
                </div>
                <div className="mini-stat mt-1">
                   <span>Vol Regime:</span>
-                  <span>{data.agent_insights.hmm_regime.regime_characteristics?.volatility}</span>
+                  <span>{agentInsights.hmm_regime.regime_characteristics?.volatility}</span>
                </div>
                <div className="mini-stat">
                   <span>VIX Proxy:</span>
-                  <span>{data.agent_insights.hmm_regime.regime_characteristics?.vix_proxy?.toFixed(2)}</span>
+                  <span>{agentInsights.hmm_regime.regime_characteristics?.vix_proxy?.toFixed(2)}</span>
                </div>
              </>
            ) : (
@@ -303,9 +303,9 @@ export default function TerminalMosaic({
                        Trader: {agentInsights.strategy_proposed || 'N/A'}
                      </span>
                      <p className="text-secondary text-sm">{agentInsights.trader_insight}</p>
-                     {researchCtx.name && (
+                     {(researchCtx.name || researchCtx.algorithm) && (
                        <p className="text-xs text-accent mt-1">
-                         Algo: {researchCtx.name}
+                         Algo: {researchCtx.name || researchCtx.algorithm}
                        </p>
                      )}
                   </div>
@@ -348,7 +348,7 @@ export default function TerminalMosaic({
                         </div>
                         <div className="mini-stat">
                            <span>Trades:</span>
-                           <span>{backtest.num_trades || 0}</span>
+                           <span>{backtest.num_trades || backtest.n_trades || 0}</span>
                         </div>
                         {backtest.barrier_hits && (
                           <div className="mini-stat">

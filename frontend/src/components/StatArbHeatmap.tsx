@@ -4,16 +4,30 @@ import React, { useState, useEffect } from 'react';
 export default function StatArbHeatmap() {
     const [pairs, setPairs] = useState([]);
     const [loading, setLoading] = useState(true);
+    const [error, setError] = useState<string | null>(null);
 
     useEffect(() => {
         fetch('/api/statarb')
-            .then(res => res.json())
+            .then(async (res) => {
+                const data = await res.json();
+                if (!res.ok) {
+                    throw new Error(data?.detail || 'StatArb request failed');
+                }
+                return data;
+            })
             .then(data => {
-                if (data.pairs) setPairs(data.pairs);
+                if (Array.isArray(data?.pairs)) {
+                    setPairs(data.pairs);
+                    setError(null);
+                } else {
+                    setPairs([]);
+                    setError('StatArb response shape is invalid.');
+                }
                 setLoading(false);
             })
             .catch(e => {
                 console.error("Failed to load pairs", e);
+                setError(e?.message || 'Failed to load pairs');
                 setLoading(false);
             });
     }, []);
@@ -32,6 +46,8 @@ export default function StatArbHeatmap() {
             
             {loading ? (
                 <div style={{color: '#a0a0ab', fontStyle: 'italic'}}>Scanning historic correlations...</div>
+            ) : error ? (
+                <div style={{color: '#ff453a', fontStyle: 'italic'}}>{error}</div>
             ) : (
                 <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(120px, 1fr))', gap: '8px' }}>
                     {pairs.map((p, i) => (

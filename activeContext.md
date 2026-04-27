@@ -2,23 +2,34 @@
 
 ## Current focus
 
-Browser QA (Playwright), optimization-loop baselines, external OSS and literature survey captured in [`findings.md`](findings.md); research backlog items ready to become GitHub Issues.
+15-phase institutional delivery loop executed with critical quant fixes, expanded contract tests, strict validation sweep, proxy review board checkpoints, and closure artifacts under `review/PROGRAM15/`.
 
 ## Last actions
 
-- Added Playwright config and E2E specs under [`frontend/e2e/`](frontend/e2e/) with API route mocks; `aria-label` on search button; `data-testid` on app shell and error banner.
-- Extended CI with a **`playwright`** job (Node 20, `npm ci`, `playwright install --with-deps chromium`, `npm run test:e2e`).
-- Documented optimization metrics, OSS landscape, DOI-based paper shortlist, and prioritized research backlog in [`findings.md`](findings.md).
-- Added [`scripts/baseline_metrics.py`](scripts/baseline_metrics.py) and README §6b.
+- Completed phase artifacts:
+  - `review/PROGRAM15/PHASE1_SCOPE_FREEZE.md`
+  - `review/PROGRAM15/PHASE2_3_INVENTORY_AND_CONTRACT_MATRIX.md`
+  - `review/PROGRAM15/PHASE5_9_RELIABILITY_AND_CI_REPORT.md`
+  - `review/PROGRAM15/PHASE10_12_VALIDATION_AND_RISK_REPORT.md`
+  - `review/PROGRAM15/PHASE13_15_DRYRUN_REVIEW_AND_CLOSURE.md`
+- Applied quant and contract reliability fixes in:
+  - `skills/backtester.py`
+  - `skills/parameter_optimizer.py`
+  - `core_agents/orchestrator.py`
+  - `frontend/src/components/MacroSearchTerminal.tsx`
+  - `.github/workflows/ci.yml`
+- Added targeted tests:
+  - `tests/test_integrity_quant.py`
+  - `tests/test_contract_expansion.py`
 
 ## Immediate next steps
 
-1. Create GitHub Issues from the **Research backlog** list in `findings.md` (labels `research` / `quant` / `ui`).
-2. If `VITE_API_URL` is used in deploy, confirm it is **origin-only** (no trailing `/api`).
-3. Human reviewers: extend E2E mocks for `/api/statarb` and `/api/heatmap` if Vite proxy noise in logs becomes a failure signal.
+1. Optional: run a full PR review pass and split high-value follow-up tasks from phase closure reports into GitHub Issues.
+2. Optional: add websocket test coverage (`/ws/gex`, `/api/ws/gex`) to close remaining contract gap.
+3. Optional: run additional long-horizon ablation campaign to monitor post-fix robustness.
 
 ## Adversarial batch sign-off (this deliverable)
 
-Documentation, automation, and honest scoping (no profit guarantees) reviewed against [`AGENTS.md`](AGENTS.md) checklist: **pass** for merged artifacts.
+Proxy institutional review board passed midpoint and pre-release gates with no unresolved critical blockers for this program cycle.
 
-**Supervisor:** approve when Playwright job is green on `main` and research Issues are triaged.
+**Supervisor:** approve after standard branch/PR checks and optional websocket coverage enhancement.

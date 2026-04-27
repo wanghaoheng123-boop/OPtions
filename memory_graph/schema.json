@@ -1,0 +1,44 @@
+{
+  "graph_name": "trading_system_relational_logic",
+  "version": "1.0.0",
+  "node_types": {
+    "DataStream": {
+      "required": ["id", "label", "kind"],
+      "optional": ["source_path", "description"]
+    },
+    "Instrument": {
+      "required": ["id", "label", "symbol_group"],
+      "optional": ["description"]
+    },
+    "RiskModule": {
+      "required": ["id", "label", "module_path"],
+      "optional": ["gate_profile", "description"]
+    },
+    "ExecutionModule": {
+      "required": ["id", "label", "module_path"],
+      "optional": ["mode", "description"]
+    },
+    "Strategy": {
+      "required": ["id", "label", "family"],
+      "optional": ["description"]
+    },
+    "Computation": {
+      "required": ["id", "label", "module_path"],
+      "optional": ["description"]
+    }
+  },
+  "edge_types": {
+    "feeds": ["DataStream", "Computation", "RiskModule", "Strategy"],
+    "depends_on": ["Computation", "DataStream", "RiskModule", "ExecutionModule", "Instrument"],
+    "constrains": ["RiskModule", "Strategy", "ExecutionModule", "Computation"],
+    "produces_metric": ["Computation", "DataStream", "RiskModule", "ExecutionModule"],
+    "validates": ["Computation", "RiskModule", "Strategy"],
+    "routes_to": ["Computation", "ExecutionModule", "Strategy"],
+    "sizes": ["RiskModule", "ExecutionModule", "Strategy"],
+    "prices": ["Computation", "Strategy", "ExecutionModule"]
+  },
+  "identity_rules": {
+    "node_id": "lower_snake_case unique string",
+    "edge_id": "source__relation__target format"
+  }
+}

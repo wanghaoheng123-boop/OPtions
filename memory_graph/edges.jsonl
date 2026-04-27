@@ -1,0 +1,29 @@
+{"id":"stream_options_chain__feeds__comp_greeks_engine","source":"stream_options_chain","relation":"feeds","target":"comp_greeks_engine","evidence":"backend/main.py analyze flow"}
+{"id":"comp_greeks_engine__feeds__comp_gex_analyzer","source":"comp_greeks_engine","relation":"feeds","target":"comp_gex_analyzer","evidence":"gamma exposure uses Greeks-enriched chain"}
+{"id":"stream_iv_skew__feeds__comp_orchestrator_loop","source":"stream_iv_skew","relation":"feeds","target":"comp_orchestrator_loop","evidence":"strategy selection context"}
+{"id":"stream_gex_live__feeds__comp_orchestrator_loop","source":"stream_gex_live","relation":"feeds","target":"comp_orchestrator_loop","evidence":"live structure signal input"}
+{"id":"stream_vix_proxy__feeds__comp_orchestrator_loop","source":"stream_vix_proxy","relation":"feeds","target":"comp_orchestrator_loop","evidence":"regime and risk context"}
+{"id":"comp_orchestrator_loop__routes_to__strategy_iron_condor","source":"comp_orchestrator_loop","relation":"routes_to","target":"strategy_iron_condor","evidence":"strategy selection"}
+{"id":"comp_orchestrator_loop__routes_to__strategy_short_put","source":"comp_orchestrator_loop","relation":"routes_to","target":"strategy_short_put","evidence":"strategy selection"}
+{"id":"comp_orchestrator_loop__routes_to__strategy_wheel","source":"comp_orchestrator_loop","relation":"routes_to","target":"strategy_wheel","evidence":"strategy selection"}
+{"id":"comp_orchestrator_loop__routes_to__strategy_covered_call","source":"comp_orchestrator_loop","relation":"routes_to","target":"strategy_covered_call","evidence":"strategy selection"}
+{"id":"comp_orchestrator_loop__depends_on__comp_parameter_optimizer","source":"comp_orchestrator_loop","relation":"depends_on","target":"comp_parameter_optimizer","evidence":"quick_scan optimization call"}
+{"id":"comp_orchestrator_loop__depends_on__comp_backtester","source":"comp_orchestrator_loop","relation":"depends_on","target":"comp_backtester","evidence":"historical backtest call"}
+{"id":"risk_critic_gate__constrains__comp_orchestrator_loop","source":"risk_critic_gate","relation":"constrains","target":"comp_orchestrator_loop","evidence":"hard gate veto checks"}
+{"id":"risk_kelly_sizing__sizes__exec_paper_broker","source":"risk_kelly_sizing","relation":"sizes","target":"exec_paper_broker","evidence":"position size and caps"}
+{"id":"risk_margin_metrics__constrains__exec_broker_factory","source":"risk_margin_metrics","relation":"constrains","target":"exec_broker_factory","evidence":"buying power and margin context"}
+{"id":"strategy_iron_condor__routes_to__exec_paper_broker","source":"strategy_iron_condor","relation":"routes_to","target":"exec_paper_broker","evidence":"paper execution path"}
+{"id":"strategy_short_put__routes_to__exec_paper_broker","source":"strategy_short_put","relation":"routes_to","target":"exec_paper_broker","evidence":"paper execution path"}
+{"id":"strategy_wheel__routes_to__exec_paper_broker","source":"strategy_wheel","relation":"routes_to","target":"exec_paper_broker","evidence":"paper execution path"}
+{"id":"strategy_covered_call__routes_to__exec_paper_broker","source":"strategy_covered_call","relation":"routes_to","target":"exec_paper_broker","evidence":"paper execution path"}
+{"id":"exec_paper_broker__produces_metric__risk_critic_gate","source":"exec_paper_broker","relation":"produces_metric","target":"risk_critic_gate","evidence":"trade outcomes influence gate metrics"}
+{"id":"stream_gex_live__depends_on__instrument_spy","source":"stream_gex_live","relation":"depends_on","target":"instrument_spy","evidence":"ticker stream dependency"}
+{"id":"stream_gex_live__depends_on__instrument_qqq","source":"stream_gex_live","relation":"depends_on","target":"instrument_qqq","evidence":"ticker stream dependency"}
+{"id":"stream_vix_proxy__depends_on__instrument_uvxy","source":"stream_vix_proxy","relation":"depends_on","target":"instrument_uvxy","evidence":"volatility instrument linkage target"}
+{"id":"comp_market_data_api__produces_metric__stream_macro_fred","source":"comp_market_data_api","relation":"produces_metric","target":"stream_macro_fred","evidence":"macro endpoint normalization flow"}
+{"id":"comp_macro_fetcher__produces_metric__stream_macro_fred","source":"comp_macro_fetcher","relation":"produces_metric","target":"stream_macro_fred","evidence":"macro_fetcher emits macro series payloads"}
+{"id":"stream_macro_fred__feeds__comp_orchestrator_loop","source":"stream_macro_fred","relation":"feeds","target":"comp_orchestrator_loop","evidence":"macro context influences strategy and commentary"}
+{"id":"comp_kalman_filter__validates__comp_backtester","source":"comp_kalman_filter","relation":"validates","target":"comp_backtester","evidence":"pairs spread signal validation against backtest outcomes"}
+{"id":"comp_meta_labeler__constrains__comp_orchestrator_loop","source":"comp_meta_labeler","relation":"constrains","target":"comp_orchestrator_loop","evidence":"meta verdict can reject sizing/entry recommendations"}
+{"id":"comp_methodology_catalog__produces_metric__comp_orchestrator_loop","source":"comp_methodology_catalog","relation":"produces_metric","target":"comp_orchestrator_loop","evidence":"methodology surfaces provide contextual explanation metadata"}
+{"id":"comp_kalman_filter__feeds__strategy_iron_condor","source":"comp_kalman_filter","relation":"feeds","target":"strategy_iron_condor","evidence":"cross-regime stat-arb diagnostics contribute to strategy gating context"}

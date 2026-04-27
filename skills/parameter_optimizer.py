@@ -1,9 +1,13 @@
 import itertools
+import json
+import hashlib
+import sqlite3
 import numpy as np
 import pandas as pd
 import yfinance as yf
 from datetime import datetime, timedelta
 from typing import Dict, List, Tuple, Optional
+from pathlib import Path
 
 
 class ParameterOptimizer:
@@ -26,6 +30,77 @@ class ParameterOptimizer:
         "time_horizons": [3, 5, 10],
         "ewma_spans": [10, 20, 30]
     }
+    EPISODIC_DB_PATH = Path(__file__).resolve().parents[1] / "episodic_state" / "episodes.db"
+
+    @classmethod
+    def _stable_hash(cls, payload: dict) -> str:
+        packed = json.dumps(payload, sort_keys=True, separators=(",", ":"))
+        return hashlib.sha256(packed.encode("utf-8")).hexdigest()
+
+    @classmethod
+    def _failure_signature_hash(cls, ticker: str, strategy_type: str, tp: float, sl: float, t_hor: int, ewma_span: int, reason: str) -> str:
+        return cls._stable_hash({
+            "ticker": ticker.upper(),
+            "strategy_type": strategy_type,
+            "tp": tp,
+            "sl": sl,
+            "t_hor": t_hor,
+            "ewma_span": ewma_span,
+            "reason": reason,
+        })
+
+    @classmethod
+    def _has_known_failure(cls, signature_hash: str) -> bool:
+        if not cls.EPISODIC_DB_PATH.exists():
+            return False
+        try:
+            conn = sqlite3.connect(cls.EPISODIC_DB_PATH)
+            try:
+                row = conn.execute(
+                    "SELECT 1 FROM failure_constraint_registry WHERE failed_signature_hash = ? LIMIT 1",
+                    (signature_hash,),
+                ).fetchone()
+                return row is not None
+            finally:
+                conn.close()
+        except Exception:
+            return False
+
+    @classmethod
+    def _record_failure(cls, signature_hash: str, ticker: str, strategy_type: str, reason: str, context: dict) -> None:
+        if not cls.EPISODIC_DB_PATH.exists():
+            return
+        try:
+            now = datetime.utcnow().isoformat()
+            conn = sqlite3.connect(cls.EPISODIC_DB_PATH)
+            try:
+                conn.execute(
+                    """
+                    INSERT INTO failure_constraint_registry (
+                      failed_signature_hash, first_seen_utc, last_seen_utc, strategy_type, ticker,
+                      constraint_class, constraint_detail, failure_context_json
+                    ) VALUES (?, ?, ?, ?, ?, ?, ?, ?)
+                    ON CONFLICT(failed_signature_hash) DO UPDATE SET
+                      last_seen_utc=excluded.last_seen_utc,
+                      constraint_detail=excluded.constraint_detail,
+                      failure_context_json=excluded.failure_context_json
+                    """,
+                    (
+                        signature_hash,
+                        now,
+                        now,
+                        strategy_type,
+                        ticker.upper(),
+                        "optimizer_gate",
+                        reason,
+                        json.dumps(context, sort_keys=True),
+                    ),
+                )
+                conn.commit()
+            finally:
+                conn.close()
+        except Exception:
+            return
 
     @classmethod
     def optimize_barriers(cls, ticker: str, strategy_type: str,
@@ -96,6 +171,11 @@ class ParameterOptimizer:
 
             # Compute trained volatility from in-sample
             for tp, sl, t_hor, ewma_span in grid_combinations:
+                fail_signature = cls._failure_signature_hash(
+                    ticker, strategy_type, tp, sl, t_hor, ewma_span, "known_failed_combo"
+                )
+                if cls._has_known_failure(fail_signature):
+                    continue
                 # Skip already tested combinations (cache)
                 cache_key = f"{ticker}_{method}_{start_idx}_{train_end}_{test_start}_{test_end}_{tp}_{sl}_{t_hor}_{ewma_span}"
                 if cache_key in cache:
@@ -158,6 +238,29 @@ class ParameterOptimizer:
         )
 
         best = param_groups.iloc[0]
+        best_config = {
+            "ticker": ticker.upper(),
+            "strategy_type": strategy_type,
+            "tp": float(best["tp"]),
+            "sl": float(best["sl"]),
+            "t_hor": int(best["t_hor"]),
+            "ewma_span": int(best["ewma_span"]),
+            "method": method,
+            "days": days,
+        }
+        config_hash = cls._stable_hash(best_config)
+        verdict = "PASS" if best["win_rate"] >= 75 and best["profit_factor"] >= 1.2 else "FAIL"
+        if verdict == "FAIL":
+            sig = cls._failure_signature_hash(
+                ticker,
+                strategy_type,
+                float(best["tp"]),
+                float(best["sl"]),
+                int(best["t_hor"]),
+                int(best["ewma_span"]),
+                "wfo_best_failed_constraints",
+            )
+            cls._record_failure(sig, ticker, strategy_type, "wfo_best_failed_constraints", best_config)
 
         return {
             "optimal_tp_multiplier": round(float(best["tp"]), 2),
@@ -175,7 +278,8 @@ class ParameterOptimizer:
             "train_window_days": train_window,
             "test_window_days": test_window,
             "all_parameters_tested": len(grid_combinations),
-            "verdict": "PASS" if best["win_rate"] >= 75 and best["profit_factor"] >= 1.2 else "FAIL"
+            "verdict": verdict,
+            "config_hash": config_hash
         }
 
     @classmethod
@@ -315,6 +419,11 @@ class ParameterOptimizer:
         best_pf = 0.0
 
         for tp, sl, t_hor in grid:
+            fail_signature = cls._failure_signature_hash(
+                ticker, strategy_type, tp, sl, t_hor, 20, "known_failed_combo"
+            )
+            if cls._has_known_failure(fail_signature):
+                continue
             metrics = cls._simulate_walk_forward(
                 out_sample, out_prices, trained_vol, tp, sl, t_hor, strategy_type
             )
@@ -328,6 +437,23 @@ class ParameterOptimizer:
                 }
 
         if best:
+            config_payload = {
+                "ticker": ticker.upper(),
+                "strategy_type": strategy_type,
+                "tp": best["tp"],
+                "sl": best["sl"],
+                "t_hor": best["t_hor"],
+                "ewma_span": 20,
+                "method": "single_split_70_30",
+                "days": days,
+            }
+            config_hash = cls._stable_hash(config_payload)
+            verdict = "PASS" if best["win_rate"] >= 75 and best["profit_factor"] >= 1.2 else "FAIL"
+            if verdict == "FAIL":
+                sig = cls._failure_signature_hash(
+                    ticker, strategy_type, best["tp"], best["sl"], best["t_hor"], 20, "quick_scan_best_failed_constraints"
+                )
+                cls._record_failure(sig, ticker, strategy_type, "quick_scan_best_failed_constraints", config_payload)
             return {
                 "optimal_tp_multiplier": best["tp"],
                 "optimal_sl_multiplier": best["sl"],
@@ -339,7 +465,8 @@ class ParameterOptimizer:
                 "max_drawdown": best["max_drawdown"],
                 "num_trades": best["num_trades"],
                 "method": "single_split_70_30",
-                "verdict": "PASS" if best["win_rate"] >= 75 and best["profit_factor"] >= 1.2 else "FAIL"
+                "verdict": verdict,
+                "config_hash": config_hash
             }
 
         return {"error": "No viable parameters found"}

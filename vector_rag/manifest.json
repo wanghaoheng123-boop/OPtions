@@ -1,0 +1,76 @@
+{
+  "version": "1.0.0",
+  "description": "Vector RAG ingestion manifest for external and heavy reference artifacts.",
+  "documents": [
+    {
+      "doc_id": "ticker_results_deep_dive",
+      "source_path": "review/SECTOR_DEEP_DIVE/TICKER_RESULTS.json",
+      "source_type": "json",
+      "domain": "optimization_results",
+      "artifact_origin": "review_pipeline",
+      "priority": "high",
+      "ingestion_status": "indexed",
+      "indexed_chunks": 1260,
+      "indexed_at_utc": "2026-04-27T14:30:41+00:00"
+    },
+    {
+      "doc_id": "sector_analysis_results",
+      "source_path": "sector_analysis_results.json",
+      "source_type": "json",
+      "domain": "sector_backtest_summary",
+      "artifact_origin": "review_pipeline",
+      "priority": "high",
+      "ingestion_status": "indexed",
+      "indexed_chunks": 332,
+      "indexed_at_utc": "2026-04-27T14:30:41+00:00"
+    },
+    {
+      "doc_id": "optimization_loop_digest",
+      "source_path": "review/SECTOR_DEEP_DIVE/OPTIMIZATION_LOOP_DIGEST.json",
+      "source_type": "json",
+      "domain": "optimization_diagnostics",
+      "artifact_origin": "review_pipeline",
+      "priority": "high",
+      "ingestion_status": "indexed",
+      "indexed_chunks": 99,
+      "indexed_at_utc": "2026-04-27T14:30:41+00:00"
+    },
+    {
+      "doc_id": "loop1_investigation_report",
+      "source_path": "review/LOOP1/LOOP1_INVESTIGATION_REPORT.md",
+      "source_type": "markdown",
+      "domain": "audit_report",
+      "artifact_origin": "review_pipeline",
+      "priority": "medium",
+      "ingestion_status": "indexed",
+      "indexed_chunks": 50,
+      "indexed_at_utc": "2026-04-27T14:30:41+00:00"
+    },
+    {
+      "doc_id": "sector_deep_dive_report",
+      "source_path": "review/SECTOR_DEEP_DIVE/SECTOR_DEEP_DIVE_REPORT.md",
+      "source_type": "markdown",
+      "domain": "audit_report",
+      "artifact_origin": "review_pipeline",
+      "priority": "medium",
+      "ingestion_status": "indexed",
+      "indexed_chunks": 21,
+      "indexed_at_utc": "2026-04-27T14:30:41+00:00"
+    },
+    {
+      "doc_id": "findings_master",
+      "source_path": "findings.md",
+      "source_type": "markdown",
+      "domain": "governance_and_research",
+      "artifact_origin": "manual_documentation",
+      "priority": "medium",
+      "ingestion_status": "indexed",
+      "indexed_chunks": 38,
+      "indexed_at_utc": "2026-04-27T14:30:41+00:00"
+    }
+  ],
+  "embedding_store": "sqlite_fts",
+  "embedding_model": "none",
+  "last_indexed_utc": "2026-04-27T14:30:41+00:00",
+  "total_indexed_chunks": 1800
+}

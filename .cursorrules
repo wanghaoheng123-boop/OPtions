@@ -1,0 +1,87 @@
+# Multi-Agent Hybrid Memory Router Rules
+
+## Objective
+Maintain long-running coding continuity and optimization rigor with minimal token bloat.
+
+## Boot Sequence (mandatory at every session start)
+1. Read `workspace/SESSION_STATE.json`
+2. Read `workspace/MEMORY_LOG.md`
+3. Read `workspace/USAGE_MONITOR.json`
+4. Read `openviking/memories/L0/session_state/current_focus.md`
+5. Read `openviking/memories/L0/session_state/live_invariants.md`
+
+## Memory Layers
+- OpenViking L0 (hot state): `openviking/memories/L0/`
+- OpenViking L1 (architecture/governance/domain): `openviking/memories/L1/`
+- OpenViking L2 (history/archive): `openviking/memories/L2/`
+- GraphRAG relational layer: `memory_graph/schema.json`, `memory_graph/nodes.jsonl`, `memory_graph/edges.jsonl`, `memory_graph/extraction_map.md`
+- Episodic time-series memory: `episodic_state/episodes.db`, `episodic_state/schema.sql`
+- Vector RAG (local SQLite FTS): `vector_rag/manifest.json`, `vector_rag/embeddings.db`, `vector_rag/chunks/chunking_policy.md`
+
+## Per-Layer Query Routing
+1. Starting a new coding session:
+   - Query `workspace/SESSION_STATE.json` then OpenViking L0.
+2. API contract or endpoint changes:
+   - Query GraphRAG first for dependency impact.
+   - Then query L1 architecture/governance.
+3. Optimization loop or parameter tuning:
+   - Query episodic SQLite first (`failure_constraint_registry`, `optimization_episode`).
+   - Do not launch new candidate if signature is known-failed unless override is documented.
+4. Reading backtest outcomes:
+   - Query episodic SQLite (`ticker_backtest_episode`, `validation_gate_episode`) first.
+5. Architecture and dependency reasoning:
+   - Query GraphRAG first, then L1 system patterns.
+6. Heavy references/research artifacts:
+   - Query Vector RAG first (`vector_rag/embeddings.db`).
+   - Fall back to L2 archives for full context.
+7. Historical retrospection:
+   - Query L2 and Vector RAG, not L0.
+
+## Workspace Files Protocol
+- `workspace/SESSION_STATE.json`:
+  - Update every task step (`last_updated`, task status, files touched).
+- `workspace/MEMORY_LOG.md`:
+  - Append verification and session history entries each session.
+- `workspace/USAGE_MONITOR.json`:
+  - Update every 10 major agent actions.
+  - If context >80%, write checkpoint in `SESSION_STATE.json`.
+  - If context >90%, append handoff in `MEMORY_LOG.md`.
+
+## Failure Repeat Guard (mandatory)
+- `skills/parameter_optimizer.py` uses signature hashing to prevent repeated failed parameter runs.
+- Before each optimization iteration, query `failure_constraint_registry`.
+- Signature format is based on stable hash of:
+  - ticker
+  - strategy_type
+  - tp
+  - sl
+  - t_hor
+  - ewma_span
+  - reason
+
+## Guardrails
+- Never present model output as hidden market intent.
+- Preserve frontend/backend contract compatibility.
+- Keep methodology and routing documents synchronized with behavior changes.
+- Never hardcode secrets or expose `.env` values.
+
+## Update Triggers
+Update memory artifacts when:
+- New strategy, ticker universe element, risk gate, or execution module is added.
+- API payload contracts, panel dependencies, or endpoint semantics change.
+- Optimization schema, validation thresholds, benchmark methods, or failure-signature logic changes.
+- New external reference corpora are introduced.
+- Broker integration behavior changes (account, margin, order constraints).
+
+## Anti-Hallucination and Completion Mandate
+1. Do not guess facts, endpoints, formulas, or schema details.
+2. If uncertain, explicitly state uncertainty and verify from source files before proceeding.
+3. No truncation placeholders in generated artifacts for migration files.
+4. Every methodological claim must be tied to a project artifact or validated source.
+5. Do not skip verification loops to save time.
+6. Persist durable state to memory layers and `workspace/`; do not keep critical state only in ephemeral chat context.
+
+## Token-Efficiency Rules
+- Prefer targeted retrieval by layer over broad document loading.
+- Do not load L2 and large reports unless required by task context.
+- Write concise deltas into L0 and workspace logs after each major session.

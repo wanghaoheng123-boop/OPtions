@@ -42,6 +42,30 @@ def sanitized_response(data: dict):
     return jsonable_encoder(_sanitize(data))
 
 
+def _canonicalize_backtest_keys(backtest: dict) -> dict:
+    out = dict(backtest or {})
+    if "max_drawdown_percent" in out and "max_drawdown" not in out:
+        out["max_drawdown"] = out["max_drawdown_percent"]
+    if "n_trades" in out and "num_trades" not in out:
+        out["num_trades"] = out["n_trades"]
+    if "num_trades" in out and "n_trades" not in out:
+        out["n_trades"] = out["num_trades"]
+    if "trained_iv" in out and "trained_volatility" not in out:
+        out["trained_volatility"] = out["trained_iv"]
+    return out
+
+
+def _canonicalize_agent_result(agent_result: dict) -> dict:
+    result = dict(agent_result or {})
+    backtest = _canonicalize_backtest_keys(result.get("backtest", {}))
+    result["backtest"] = backtest
+    researcher = dict(result.get("researcher_context", {}))
+    if "algorithm" in researcher and "name" not in researcher:
+        researcher["name"] = researcher["algorithm"]
+    result["researcher_context"] = researcher
+    return result
+
+
 from skills.options_chain_fetcher import OptionsFetcher
 from skills.greeks_calculator import GreeksCalculator
 from skills.gamma_exposure import MarketStructureAnalyzer
@@ -144,11 +168,12 @@ def analyze_ticker(request: AnalysisRequest):
             use_meta_model=True,
             use_optimization=True,
         )
+        canonical_agent_result = _canonicalize_agent_result(agent_result)
 
-        critic_verdict = agent_result.get("critic_review", {}).get("verdict", "REJECTED")
+        critic_verdict = canonical_agent_result.get("critic_review", {}).get("verdict", "REJECTED")
         is_approved = critic_verdict == "APPROVED"
-        strategy = agent_result.get("strategy_proposed", "unknown")
-        backtest_stats = agent_result.get("backtest", {})
+        strategy = canonical_agent_result.get("strategy_proposed", "unknown")
+        backtest_stats = canonical_agent_result.get("backtest", {})
 
         trade_executed = paper_broker.execute_trade(
             ticker=ticker,
@@ -163,7 +188,8 @@ def analyze_ticker(request: AnalysisRequest):
             "current_price": round(current_price, 2),
             "target_expiry": target_expiry,
             "market_structure": market_structure,
-            **agent_result,
+            **canonical_agent_result,
+            "agent_insights": canonical_agent_result,
             "paper_trade_status": trade_executed,
         }
         return sanitized_response(response)
@@ -184,13 +210,15 @@ def run_backtest(request: BacktestRequest):
     from skills.backtester import StrategyBacktester
     ticker = request.ticker.upper()
     result = StrategyBacktester.run_historical_backtest(ticker, request.strategy, days=request.days or 252)
-    return sanitized_response(result)
+    return sanitized_response(_canonicalize_backtest_keys(result))
 
 @app.post("/api/backtest/optimize")
 def run_optimized_backtest(request: BacktestRequest):
     from skills.parameter_optimizer import ParameterOptimizer
     ticker = request.ticker.upper()
     result = ParameterOptimizer.quick_scan(ticker, request.strategy, days=min(request.days or 252, 252))
+    if "error" in result:
+        raise HTTPException(status_code=503, detail=result["error"])
     return sanitized_response(result)
 
 
@@ -391,7 +419,7 @@ async def get_statarb_heatmap():
         heatmap = StatArbScanner.scan_pairs(days=90)
         return sanitized_response({"pairs": heatmap})
     except Exception as e:
-        return sanitized_response({"error": str(e)})
+        raise HTTPException(status_code=503, detail=f"StatArb scan failed: {e}") from e
 
 @app.get("/api/screener")
 async def get_global_screener():
@@ -420,7 +448,7 @@ def submit_broker_order(request: BrokerOrderRequest):
         )
         return sanitized_response(result)
     except Exception as e:
-        return sanitized_response({"error": str(e)})
+        raise HTTPException(status_code=503, detail=f"Broker order failed: {e}") from e
 
 
 @app.get("/api/broker/positions/{broker_name}")
@@ -431,7 +459,7 @@ def get_broker_positions(broker_name: str):
         positions = broker.get_positions()
         return sanitized_response({"positions": positions})
     except Exception as e:
-        return sanitized_response({"error": str(e)})
+        raise HTTPException(status_code=503, detail=f"Broker positions failed: {e}") from e
 
 
 @app.get("/api/broker/account/{broker_name}")
@@ -442,7 +470,7 @@ def get_broker_account(broker_name: str):
         metrics = broker.fetch_account_metrics()
         return sanitized_response(metrics)
     except Exception as e:
-        return sanitized_response({"error": str(e)})
+        raise HTTPException(status_code=503, detail=f"Broker account failed: {e}") from e
 
 
 @app.get("/api/broker/tc/{broker_name}")
@@ -452,7 +480,7 @@ def get_tc_estimate(broker_name: str, num_contracts: int = 10,
     try:
         broker = broker_name.upper()
         if broker not in ["IBKR", "ALPACA", "PAPER"]:
-            return sanitized_response({"error": f"Unknown broker: {broker_name}"})
+            raise HTTPException(status_code=400, detail=f"Unknown broker: {broker_name}")
         tcm = TransactionCostModel(broker)
         cost = tcm.total_cost(
             num_contracts=num_contracts,
@@ -461,7 +489,9 @@ def get_tc_estimate(broker_name: str, num_contracts: int = 10,
         )
         return sanitized_response(cost)
     except Exception as e:
-        return sanitized_response({"error": str(e)})
+        if isinstance(e, HTTPException):
+            raise
+        raise HTTPException(status_code=503, detail=f"TC estimate failed: {e}") from e
 
 
 # ============================================================
@@ -475,14 +505,14 @@ def get_gex_live(ticker: str):
     try:
         current_price = OptionsFetcher.get_current_price(t)
         if current_price == 0.0:
-            return sanitized_response({"error": "Ticker not found", "ticker": t})
+            raise HTTPException(status_code=404, detail=f"Ticker not found: {t}")
         expirations = OptionsFetcher.get_options_expiration_dates(t)
         if not expirations:
-            return sanitized_response({"error": "No options data", "ticker": t})
+            raise HTTPException(status_code=404, detail=f"No options data for ticker: {t}")
         target_expiry = expirations[0]
         data = OptionsFetcher.get_options_chain(t, target_expiry)
         if not data:
-            return sanitized_response({"error": "Failed to load chain", "ticker": t})
+            raise HTTPException(status_code=503, detail=f"Failed to load options chain: {t}")
         calls = data["calls"]
         puts = data["puts"]
         r_rf = 0.045
@@ -494,7 +524,9 @@ def get_gex_live(ticker: str):
         surface["expiry"] = target_expiry
         return sanitized_response(surface)
     except Exception as e:
-        return sanitized_response({"error": str(e), "ticker": t})
+        if isinstance(e, HTTPException):
+            raise
+        raise HTTPException(status_code=503, detail=f"GEX live failed ({t}): {e}") from e
 
 
 async def _gex_websocket_loop(websocket: WebSocket):

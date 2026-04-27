@@ -1,0 +1,7 @@
+{
+  "snapshot_type": "agent_memory_reference",
+  "source_path": "memory/agent_memory.json",
+  "snapshot_note": "Large legacy flat-file memory is retained as authoritative source reference for cold-tier migration lineage.",
+  "migration_policy": "Do not duplicate full payload here to avoid stale divergence; read source on demand.",
+  "created_for": "OpenViking L2 migration"
+}

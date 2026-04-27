@@ -1,0 +1,39 @@
+{
+  "metadata_schema_version": "1.0.0",
+  "required_tags": [
+    "doc_id",
+    "domain",
+    "source_type",
+    "artifact_origin"
+  ],
+  "optional_tags": [
+    "ticker",
+    "strategy",
+    "time_window",
+    "quality_gate",
+    "classification",
+    "regime",
+    "verdict"
+  ],
+  "domain_values": [
+    "optimization_results",
+    "sector_backtest_summary",
+    "optimization_diagnostics",
+    "audit_report",
+    "governance_and_research",
+    "market_structure"
+  ],
+  "quality_gate_values": [
+    "strict_pass",
+    "strict_fail",
+    "relaxed_pass",
+    "fallback_used",
+    "not_applicable"
+  ],
+  "artifact_origin_values": [
+    "review_pipeline",
+    "runtime_memory",
+    "manual_documentation",
+    "validation_script"
+  ]
+}
