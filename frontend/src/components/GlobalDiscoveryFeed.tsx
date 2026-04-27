@@ -2,6 +2,7 @@
 import React, { useState, useEffect } from 'react';
 import axios from 'axios';
 import { Target, AlertTriangle, Zap, TrendingUp, TrendingDown } from 'lucide-react';
+import { extractApiErrorMessage } from '../lib/apiError';
 
 interface GlobalDiscoveryFeedProps {
   onSelectTicker: (ticker: string) => void;
@@ -24,7 +25,7 @@ export default function GlobalDiscoveryFeed({ onSelectTicker }: GlobalDiscoveryF
       })
       .catch(e => {
         console.error("Screener failed:", e);
-        setError(e?.response?.data?.detail || e?.message || 'Screener request failed');
+        setError(extractApiErrorMessage(e, 'Screener request failed'));
         setLoading(false);
       });
   }, []);

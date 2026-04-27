@@ -22,14 +22,31 @@ class MarketStructureAnalyzer:
             
         calls = calls_df.copy()
         puts = puts_df.copy()
+        required_cols = {"calc_gamma", "openInterest", "strike"}
+        if not required_cols.issubset(calls.columns) or not required_cols.issubset(puts.columns):
+            return {"error": "Missing required option columns"}
+
+        for frame in (calls, puts):
+            frame["calc_gamma"] = pd.to_numeric(frame["calc_gamma"], errors="coerce")
+            frame["openInterest"] = pd.to_numeric(frame["openInterest"], errors="coerce")
+            frame["strike"] = pd.to_numeric(frame["strike"], errors="coerce")
+
+        calls = calls.dropna(subset=["calc_gamma", "openInterest", "strike"])
+        puts = puts.dropna(subset=["calc_gamma", "openInterest", "strike"])
+        if calls.empty or puts.empty:
+            return {"error": "Insufficient clean options data"}
         
         # Spot * Gamma * Open Interest * 100 (contract factor)
         # Using Spot * Gamma or just Gamma * OI is a common approximation for GEX.
         calls['CallGEX'] = calls['calc_gamma'] * calls['openInterest'] * 100 * spot_price
         puts['PutGEX'] = puts['calc_gamma'] * puts['openInterest'] * 100 * spot_price * -1 # Puts given negative sign for visualization
         
+        if calls["CallGEX"].empty or puts["PutGEX"].empty:
+            return {"error": "Insufficient gamma exposure rows"}
         call_wall_idx = calls['CallGEX'].idxmax()
         put_wall_idx = puts['PutGEX'].idxmin() # Minimum because put GEX is negative
+        if call_wall_idx not in calls.index or put_wall_idx not in puts.index:
+            return {"error": "Failed to locate GEX wall indices"}
         
         call_wall_strike = float(calls.loc[call_wall_idx, 'strike'])
         put_wall_strike = float(puts.loc[put_wall_idx, 'strike'])

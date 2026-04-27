@@ -1,6 +1,7 @@
 // @ts-nocheck
 import { useEffect, useState } from 'react';
 import axios from 'axios';
+import { extractApiErrorMessage } from '../lib/apiError';
 
 export default function MacroPanel() {
   const [macro, setMacro] = useState<any>(null);
@@ -15,7 +16,7 @@ export default function MacroPanel() {
       })
       .catch((err) => {
         setMacro(null);
-        setError(err?.response?.data?.detail || err?.message || 'Failed to load macro data');
+        setError(extractApiErrorMessage(err, 'Failed to load macro data'));
       });
   }, []);
 

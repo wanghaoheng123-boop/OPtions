@@ -2578,6 +2578,346 @@
             },
             "critic_review": "REJECTED",
             "status": "REJECTED"
+        },
+        {
+            "timestamp": "2026-04-27T23:15:55.536445",
+            "ticker": "SPY",
+            "market_data": {
+                "spot_price": 713.0504760742188,
+                "call_wall_strike": 720.0,
+                "call_wall_gex": 80757209.34555762,
+                "put_wall_strike": 712.0,
+                "put_wall_gex": -94280572.51450947,
+                "total_net_gex": -90106199.65212214,
+                "dealer_position_tilt": "Short Gamma",
+                "volatility_skew": {
+                    "volatility_skew_index": 0.78,
+                    "sentiment": "Neutral Skew",
+                    "otm_put_iv": 35.16,
+                    "otm_call_iv": 34.38,
+                    "spot_price": 713.0504760742188,
+                    "iv_current": 34.77,
+                    "iv_rank": null,
+                    "iv_percentile": null
+                },
+                "iv_rank": {
+                    "ticker": "SPY",
+                    "iv_current": 12.49,
+                    "iv_rank": 31.5,
+                    "iv_low": 6.94,
+                    "iv_high": 24.55,
+                    "lookback_days": 252,
+                    "verdict": "NEUTRAL",
+                    "timestamp": "2026-04-27T23:15:52.826241"
+                },
+                "iv_percentile": {
+                    "ticker": "SPY",
+                    "iv_current": 12.48,
+                    "iv_percentile": 24.8,
+                    "days_above_current": 115,
+                    "total_days": 153,
+                    "lookback_days": 252,
+                    "verdict": "BUY_PREMIUM",
+                    "timestamp": "2026-04-27T23:15:53.591880"
+                },
+                "full_volatility_analysis": {
+                    "ticker": "SPY",
+                    "spot_price": 713.0504760742188,
+                    "volatility_skew": {
+                        "volatility_skew_index": 0.78,
+                        "sentiment": "Neutral Skew",
+                        "otm_put_iv": 35.16,
+                        "otm_call_iv": 34.38,
+                        "spot_price": 713.0504760742188,
+                        "iv_current": 34.77,
+                        "iv_rank": null,
+                        "iv_percentile": null
+                    },
+                    "iv_rank": {
+                        "ticker": "SPY",
+                        "iv_current": 12.48,
+                        "iv_rank": 31.5,
+                        "iv_low": 6.94,
+                        "iv_high": 24.55,
+                        "lookback_days": 252,
+                        "verdict": "NEUTRAL",
+                        "timestamp": "2026-04-27T23:15:54.422315"
+                    },
+                    "iv_percentile": {
+                        "ticker": "SPY",
+                        "iv_current": 12.49,
+                        "iv_percentile": 24.8,
+                        "days_above_current": 115,
+                        "total_days": 153,
+                        "lookback_days": 252,
+                        "verdict": "BUY_PREMIUM",
+                        "timestamp": "2026-04-27T23:15:55.198727"
+                    },
+                    "aggregate_verdict": "BUY_PREMIUM",
+                    "recommendation": "BUY premium (depressed IV)"
+                }
+            },
+            "trader_insight": "SPY at 713.05. Neutral skew (Neutral Skew). Call Wall $720, Put Wall $712. Deploying Iron Condor \u2014 net volatility seller framework. Algo: SpotGamma-Approximation \u2014 IV overstatement creates premium edge.",
+            "backtest_result": {
+                "error": "Insufficient OOS data"
+            },
+            "critic_review": "REJECTED",
+            "status": "REJECTED"
+        },
+        {
+            "timestamp": "2026-04-27T23:17:31.009405",
+            "ticker": "SPY",
+            "market_data": {
+                "spot_price": 713.1300048828125,
+                "call_wall_strike": 720.0,
+                "call_wall_gex": 82135356.12365817,
+                "put_wall_strike": 712.0,
+                "put_wall_gex": -94303838.24196208,
+                "total_net_gex": -82845741.09358096,
+                "dealer_position_tilt": "Short Gamma",
+                "volatility_skew": {
+                    "volatility_skew_index": 1.17,
+                    "sentiment": "Bearish Protection (Moderate Skew)",
+                    "otm_put_iv": 35.55,
+                    "otm_call_iv": 34.38,
+                    "spot_price": 713.1300048828125,
+                    "iv_current": 34.96,
+                    "iv_rank": null,
+                    "iv_percentile": null
+                },
+                "iv_rank": {
+                    "ticker": "SPY",
+                    "iv_current": 12.46,
+                    "iv_rank": 31.3,
+                    "iv_low": 6.94,
+                    "iv_high": 24.55,
+                    "lookback_days": 252,
+                    "verdict": "NEUTRAL",
+                    "timestamp": "2026-04-27T23:17:22.248032"
+                },
+                "iv_percentile": {
+                    "ticker": "SPY",
+                    "iv_current": 12.46,
+                    "iv_percentile": 24.8,
+                    "days_above_current": 115,
+                    "total_days": 153,
+                    "lookback_days": 252,
+                    "verdict": "BUY_PREMIUM",
+                    "timestamp": "2026-04-27T23:17:24.442658"
+                },
+                "full_volatility_analysis": {
+                    "ticker": "SPY",
+                    "spot_price": 713.1300048828125,
+                    "volatility_skew": {
+                        "volatility_skew_index": 1.17,
+                        "sentiment": "Bearish Protection (Moderate Skew)",
+                        "otm_put_iv": 35.55,
+                        "otm_call_iv": 34.38,
+                        "spot_price": 713.1300048828125,
+                        "iv_current": 34.96,
+                        "iv_rank": null,
+                        "iv_percentile": null
+                    },
+                    "iv_rank": {
+                        "ticker": "SPY",
+                        "iv_current": 12.47,
+                        "iv_rank": 31.4,
+                        "iv_low": 6.94,
+                        "iv_high": 24.55,
+                        "lookback_days": 252,
+                        "verdict": "NEUTRAL",
+                        "timestamp": "2026-04-27T23:17:27.240362"
+                    },
+                    "iv_percentile": {
+                        "ticker": "SPY",
+                        "iv_current": 12.44,
+                        "iv_percentile": 24.2,
+                        "days_above_current": 116,
+                        "total_days": 153,
+                        "lookback_days": 252,
+                        "verdict": "BUY_PREMIUM",
+                        "timestamp": "2026-04-27T23:17:29.641884"
+                    },
+                    "aggregate_verdict": "BUY_PREMIUM",
+                    "recommendation": "BUY premium (depressed IV). Bearish protection skew \u2014 cash-secured puts"
+                }
+            },
+            "trader_insight": "SPY at 713.13. Neutral skew (Bearish Protection (Moderate Skew)). Call Wall $720, Put Wall $712. Deploying Iron Condor \u2014 net volatility seller framework. Algo: SpotGamma-Approximation \u2014 IV overstatement creates premium edge.",
+            "backtest_result": {
+                "error": "Insufficient OOS data"
+            },
+            "critic_review": "REJECTED",
+            "status": "REJECTED"
+        },
+        {
+            "timestamp": "2026-04-27T23:18:51.227139",
+            "ticker": "SPY",
+            "market_data": {
+                "spot_price": 712.7999877929688,
+                "call_wall_strike": 720.0,
+                "call_wall_gex": 78100729.1215167,
+                "put_wall_strike": 714.0,
+                "put_wall_gex": -117707288.62592843,
+                "total_net_gex": -240838186.46003556,
+                "dealer_position_tilt": "Short Gamma",
+                "volatility_skew": {
+                    "volatility_skew_index": 0.78,
+                    "sentiment": "Neutral Skew",
+                    "otm_put_iv": 35.16,
+                    "otm_call_iv": 34.38,
+                    "spot_price": 712.7999877929688,
+                    "iv_current": 34.77,
+                    "iv_rank": null,
+                    "iv_percentile": null
+                },
+                "iv_rank": {
+                    "ticker": "SPY",
+                    "iv_current": 12.41,
+                    "iv_rank": 31.1,
+                    "iv_low": 6.94,
+                    "iv_high": 24.55,
+                    "lookback_days": 252,
+                    "verdict": "NEUTRAL",
+                    "timestamp": "2026-04-27T23:18:41.965377"
+                },
+                "iv_percentile": {
+                    "ticker": "SPY",
+                    "iv_current": 12.4,
+                    "iv_percentile": 23.5,
+                    "days_above_current": 117,
+                    "total_days": 153,
+                    "lookback_days": 252,
+                    "verdict": "BUY_PREMIUM",
+                    "timestamp": "2026-04-27T23:18:44.340660"
+                },
+                "full_volatility_analysis": {
+                    "ticker": "SPY",
+                    "spot_price": 712.7999877929688,
+                    "volatility_skew": {
+                        "volatility_skew_index": 0.78,
+                        "sentiment": "Neutral Skew",
+                        "otm_put_iv": 35.16,
+                        "otm_call_iv": 34.38,
+                        "spot_price": 712.7999877929688,
+                        "iv_current": 34.77,
+                        "iv_rank": null,
+                        "iv_percentile": null
+                    },
+                    "iv_rank": {
+                        "ticker": "SPY",
+                        "iv_current": 12.42,
+                        "iv_rank": 31.1,
+                        "iv_low": 6.94,
+                        "iv_high": 24.55,
+                        "lookback_days": 252,
+                        "verdict": "NEUTRAL",
+                        "timestamp": "2026-04-27T23:18:47.328712"
+                    },
+                    "iv_percentile": {
+                        "ticker": "SPY",
+                        "iv_current": 12.42,
+                        "iv_percentile": 23.5,
+                        "days_above_current": 117,
+                        "total_days": 153,
+                        "lookback_days": 252,
+                        "verdict": "BUY_PREMIUM",
+                        "timestamp": "2026-04-27T23:18:49.842607"
+                    },
+                    "aggregate_verdict": "BUY_PREMIUM",
+                    "recommendation": "BUY premium (depressed IV)"
+                }
+            },
+            "trader_insight": "SPY at 712.80. Neutral skew (Neutral Skew). Call Wall $720, Put Wall $714. Deploying Iron Condor \u2014 net volatility seller framework. Algo: SpotGamma-Approximation \u2014 IV overstatement creates premium edge.",
+            "backtest_result": {
+                "error": "Insufficient OOS data"
+            },
+            "critic_review": "REJECTED",
+            "status": "REJECTED"
+        },
+        {
+            "timestamp": "2026-04-27T23:19:40.316282",
+            "ticker": "SPY",
+            "market_data": {
+                "spot_price": 712.7951049804688,
+                "call_wall_strike": 720.0,
+                "call_wall_gex": 78503496.52269857,
+                "put_wall_strike": 712.0,
+                "put_wall_gex": -105759228.06543794,
+                "total_net_gex": -140618944.6544361,
+                "dealer_position_tilt": "Short Gamma",
+                "volatility_skew": {
+                    "volatility_skew_index": 0.78,
+                    "sentiment": "Neutral Skew",
+                    "otm_put_iv": 35.16,
+                    "otm_call_iv": 34.38,
+                    "spot_price": 712.7951049804688,
+                    "iv_current": 34.77,
+                    "iv_rank": null,
+                    "iv_percentile": null
+                },
+                "iv_rank": {
+                    "ticker": "SPY",
+                    "iv_current": 12.31,
+                    "iv_rank": 30.5,
+                    "iv_low": 6.94,
+                    "iv_high": 24.55,
+                    "lookback_days": 252,
+                    "verdict": "NEUTRAL",
+                    "timestamp": "2026-04-27T23:19:37.294142"
+                },
+                "iv_percentile": {
+                    "ticker": "SPY",
+                    "iv_current": 12.31,
+                    "iv_percentile": 22.9,
+                    "days_above_current": 118,
+                    "total_days": 153,
+                    "lookback_days": 252,
+                    "verdict": "BUY_PREMIUM",
+                    "timestamp": "2026-04-27T23:19:38.023992"
+                },
+                "full_volatility_analysis": {
+                    "ticker": "SPY",
+                    "spot_price": 712.7951049804688,
+                    "volatility_skew": {
+                        "volatility_skew_index": 0.78,
+                        "sentiment": "Neutral Skew",
+                        "otm_put_iv": 35.16,
+                        "otm_call_iv": 34.38,
+                        "spot_price": 712.7951049804688,
+                        "iv_current": 34.77,
+                        "iv_rank": null,
+                        "iv_percentile": null
+                    },
+                    "iv_rank": {
+                        "ticker": "SPY",
+                        "iv_current": 12.31,
+                        "iv_rank": 30.5,
+                        "iv_low": 6.94,
+                        "iv_high": 24.55,
+                        "lookback_days": 252,
+                        "verdict": "NEUTRAL",
+                        "timestamp": "2026-04-27T23:19:38.834535"
+                    },
+                    "iv_percentile": {
+                        "ticker": "SPY",
+                        "iv_current": 12.33,
+                        "iv_percentile": 23.5,
+                        "days_above_current": 117,
+                        "total_days": 153,
+                        "lookback_days": 252,
+                        "verdict": "BUY_PREMIUM",
+                        "timestamp": "2026-04-27T23:19:39.928484"
+                    },
+                    "aggregate_verdict": "BUY_PREMIUM",
+                    "recommendation": "BUY premium (depressed IV)"
+                }
+            },
+            "trader_insight": "SPY at 712.80. Neutral skew (Neutral Skew). Call Wall $720, Put Wall $712. Deploying Iron Condor \u2014 net volatility seller framework. Algo: SpotGamma-Approximation \u2014 IV overstatement creates premium edge.",
+            "backtest_result": {
+                "error": "Insufficient OOS data"
+            },
+            "critic_review": "REJECTED",
+            "status": "REJECTED"
         }
     ],
     "verified_algorithms": []

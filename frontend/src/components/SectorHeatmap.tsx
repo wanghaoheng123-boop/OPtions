@@ -1,6 +1,7 @@
 // @ts-nocheck
 import { useEffect, useState } from 'react';
 import axios from 'axios';
+import { extractApiErrorMessage } from '../lib/apiError';
 
 interface SectorData {
   id: string;
@@ -26,7 +27,7 @@ export default function SectorHeatmap() {
       })
       .catch((err) => {
         setSectors([]);
-        setError(err?.response?.data?.detail || err?.message || 'Heatmap request failed');
+        setError(extractApiErrorMessage(err, 'Heatmap request failed'));
       });
   }, []);
 

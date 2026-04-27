@@ -3,6 +3,7 @@ import { useState, useEffect } from 'react';
 import axios from 'axios';
 import { Search, BarChart3, AlertTriangle } from 'lucide-react';
 import TradingChart from './TradingChart';
+import { extractApiErrorMessage } from '../lib/apiError';
 
 export default function MacroSearchTerminal() {
   const [query, setQuery] = useState('');
@@ -25,7 +26,7 @@ export default function MacroSearchTerminal() {
       }
     } catch (err: any) {
       console.error(err);
-      setErrorMsg('Failed to query backend. Ensure FRED API Key is loaded in .env');
+      setErrorMsg(extractApiErrorMessage(err, 'Failed to query macro backend'));
     } finally {
       setLoading(false);
     }
@@ -55,6 +56,7 @@ export default function MacroSearchTerminal() {
       }
     } catch (err) {
       console.error(err);
+      setErrorMsg(extractApiErrorMessage(err, 'Failed to load macro series'));
     }
   };
 

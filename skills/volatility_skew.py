@@ -3,6 +3,22 @@ import numpy as np
 import yfinance as yf
 from datetime import datetime, timedelta
 from typing import Dict, Optional
+import logging
+import time
+
+logger = logging.getLogger(__name__)
+
+
+def _retry(op_name: str, fn, attempts: int = 3, delay_s: float = 0.4):
+    last_err = None
+    for i in range(attempts):
+        try:
+            return fn()
+        except Exception as exc:
+            last_err = exc
+            if i < attempts - 1:
+                time.sleep(delay_s * (i + 1))
+    raise RuntimeError(f"{op_name} failed after {attempts} attempts: {last_err}") from last_err
 
 
 class VolatilitySkewAnalyzer:
@@ -22,6 +38,14 @@ class VolatilitySkewAnalyzer:
         Also computes IV Rank and IV Percentile over lookback period.
         """
         try:
+            if "impliedVolatility" not in calls.columns or "impliedVolatility" not in puts.columns:
+                return {
+                    "volatility_skew_index": 0.0,
+                    "sentiment": "Neutral (Missing implied volatility)",
+                    "iv_rank": None,
+                    "iv_percentile": None,
+                    "iv_current": None
+                }
             # Drop invalid IVs
             valid_calls = calls[(calls['impliedVolatility'] > 0) & (calls['impliedVolatility'] < 3.0)]
             valid_puts = puts[(puts['impliedVolatility'] > 0) & (puts['impliedVolatility'] < 3.0)]
@@ -71,7 +95,7 @@ class VolatilitySkewAnalyzer:
                 "iv_percentile": None
             }
         except Exception as e:
-            print(f"Error calculating IV Skew: {e}")
+            logger.warning("Error calculating IV Skew: %s", e)
             return {
                 "volatility_skew_index": 0.0,
                 "sentiment": "Error calculating skew",
@@ -94,7 +118,10 @@ class VolatilitySkewAnalyzer:
         """
         try:
             tk = yf.Ticker(ticker)
-            current_price = tk.history(period="1d")["Close"].iloc[-1]
+            hist_now = _retry("iv_rank_current_price", lambda: tk.history(period="1d", timeout=8))
+            if hist_now.empty or "Close" not in hist_now.columns:
+                return None
+            current_price = hist_now["Close"].iloc[-1]
         except Exception:
             return None
 
@@ -111,6 +138,10 @@ class VolatilitySkewAnalyzer:
                     chain = tk.option_chain(expiry)
                     calls = chain.calls
                     puts = chain.puts
+                    if "strike" not in calls.columns or "strike" not in puts.columns:
+                        continue
+                    if "impliedVolatility" not in calls.columns or "impliedVolatility" not in puts.columns:
+                        continue
 
                     # Find ATM strike (closest to current price)
                     all_strikes = sorted(set(calls['strike'].tolist() + puts['strike'].tolist()))
@@ -139,8 +170,16 @@ class VolatilitySkewAnalyzer:
             start_date = end_date - timedelta(days=lookback_days)
 
             try:
-                hist = yf.download(ticker, start=start_date.strftime('%Y-%m-%d'),
-                                   end=end_date.strftime('%Y-%m-%d'), progress=False)
+                hist = _retry(
+                    "iv_rank_history_download",
+                    lambda: yf.download(
+                        ticker,
+                        start=start_date.strftime('%Y-%m-%d'),
+                        end=end_date.strftime('%Y-%m-%d'),
+                        progress=False,
+                        timeout=8,
+                    ),
+                )
                 if len(hist) < 20:
                     return None
 
@@ -179,10 +218,12 @@ class VolatilitySkewAnalyzer:
                     "verdict": "SELL_PREMIUM" if iv_rank > 50 else ("BUY_PREMIUM" if iv_rank < 30 else "NEUTRAL"),
                     "timestamp": datetime.now().isoformat()
                 }
-            except Exception:
+            except Exception as e:
+                logger.warning("IV rank historical download failed for %s: %s", ticker, e)
                 return None
 
-        except Exception:
+        except Exception as e:
+            logger.warning("IV rank failed for %s: %s", ticker, e)
             return None
 
     @staticmethod
@@ -197,7 +238,10 @@ class VolatilitySkewAnalyzer:
         """
         try:
             tk = yf.Ticker(ticker)
-            current_price = tk.history(period="1d")["Close"].iloc[-1]
+            hist_now = _retry("iv_pct_current_price", lambda: tk.history(period="1d", timeout=8))
+            if hist_now.empty or "Close" not in hist_now.columns:
+                return None
+            current_price = hist_now["Close"].iloc[-1]
             expirations = tk.options
 
             if not expirations:
@@ -210,6 +254,10 @@ class VolatilitySkewAnalyzer:
                     chain = tk.option_chain(expiry)
                     calls = chain.calls
                     puts = chain.puts
+                    if "strike" not in calls.columns or "strike" not in puts.columns:
+                        continue
+                    if "impliedVolatility" not in calls.columns or "impliedVolatility" not in puts.columns:
+                        continue
 
                     all_strikes = sorted(set(calls['strike'].tolist() + puts['strike'].tolist()))
                     atm_strike = min(all_strikes, key=lambda s: abs(s - current_price))
@@ -234,8 +282,16 @@ class VolatilitySkewAnalyzer:
             start_date = end_date - timedelta(days=lookback_days)
 
             try:
-                hist = yf.download(ticker, start=start_date.strftime('%Y-%m-%d'),
-                                   end=end_date.strftime('%Y-%m-%d'), progress=False)
+                hist = _retry(
+                    "iv_pct_history_download",
+                    lambda: yf.download(
+                        ticker,
+                        start=start_date.strftime('%Y-%m-%d'),
+                        end=end_date.strftime('%Y-%m-%d'),
+                        progress=False,
+                        timeout=8,
+                    ),
+                )
                 if len(hist) < 20:
                     return None
 
@@ -264,10 +320,12 @@ class VolatilitySkewAnalyzer:
                     "verdict": "SELL_PREMIUM" if iv_percentile > 50 else ("BUY_PREMIUM" if iv_percentile < 30 else "NEUTRAL"),
                     "timestamp": datetime.now().isoformat()
                 }
-            except Exception:
+            except Exception as e:
+                logger.warning("IV percentile historical download failed for %s: %s", ticker, e)
                 return None
 
-        except Exception:
+        except Exception as e:
+            logger.warning("IV percentile failed for %s: %s", ticker, e)
             return None
 
     @classmethod

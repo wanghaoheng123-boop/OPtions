@@ -1,5 +1,21 @@
 import yfinance as yf
 import pandas as pd
+import logging
+import time
+
+logger = logging.getLogger(__name__)
+
+
+def _retry(op_name: str, fn, attempts: int = 3, delay_s: float = 0.4):
+    last_err = None
+    for i in range(attempts):
+        try:
+            return fn()
+        except Exception as exc:
+            last_err = exc
+            if i < attempts - 1:
+                time.sleep(delay_s * (i + 1))
+    raise RuntimeError(f"{op_name} failed after {attempts} attempts: {last_err}") from last_err
 
 class MarketDataAPI:
     """
@@ -24,7 +40,10 @@ class MarketDataAPI:
         """
         try:
             tk = yf.Ticker(ticker)
-            df = tk.history(period=period, interval=interval)
+            df = _retry(
+                "get_ohlcv_history",
+                lambda: tk.history(period=period, interval=interval, timeout=8),
+            )
             if df.empty:
                 return []
             
@@ -32,6 +51,10 @@ class MarketDataAPI:
             df = df.reset_index()
             # Normalize column names in case yfinance changes index names
             date_col = 'Date' if 'Date' in df.columns else 'Datetime'
+            required_cols = {"Open", "High", "Low", "Close", "Volume", date_col}
+            if not required_cols.issubset(df.columns):
+                logger.warning("OHLCV missing required columns for %s: %s", ticker, sorted(df.columns))
+                return []
             
             def _f(x):
                 try:
@@ -52,7 +75,7 @@ class MarketDataAPI:
                 })
             return formatted_data
         except Exception as e:
-            print(f"Error fetching OHLCV for {ticker}: {e}")
+            logger.warning("Error fetching OHLCV for %s: %s", ticker, e)
             return []
 
     @classmethod
@@ -62,7 +85,14 @@ class MarketDataAPI:
         """
         tickers = list(cls.SECTOR_ETFS.values())
         try:
-            data = yf.download(tickers, period="5d", progress=False)['Close']
+            downloaded = _retry(
+                "get_sector_heatmap_download",
+                lambda: yf.download(tickers, period="5d", progress=False, timeout=8),
+            )
+            if "Close" not in downloaded:
+                logger.warning("Heatmap close column missing")
+                return []
+            data = downloaded["Close"]
             returns = data.pct_change().iloc[-1] * 100 # percentage
             
             heatmap_data = []
@@ -75,5 +105,5 @@ class MarketDataAPI:
                 })
             return heatmap_data
         except Exception as e:
-            print(f"Error fetching Heatmap: {e}")
+            logger.warning("Error fetching Heatmap: %s", e)
             return []

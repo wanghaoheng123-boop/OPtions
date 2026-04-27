@@ -5,21 +5,11 @@ import { Search, LayoutDashboard } from 'lucide-react';
 import GlobalDiscoveryFeed from './components/GlobalDiscoveryFeed';
 import TerminalMosaic from './components/TerminalMosaic';
 import CommandPalette from './components/CommandPalette';
+import { extractApiErrorMessage } from './lib/apiError';
 import './index.css';
 
 function axiosErrMessage(err: any): string {
-  if (!err?.response) {
-    const msg = err?.message || '';
-    if (msg.includes('Network Error') || err?.code === 'ERR_NETWORK') {
-      return 'Cannot reach API. For local dev start the backend on port 8005 (see README).';
-    }
-    return msg || 'Request failed (no response)';
-  }
-  const d = err?.response?.data?.detail ?? err?.response?.data?.message;
-  if (typeof d === 'string') return d;
-  if (Array.isArray(d)) return JSON.stringify(d);
-  if (d != null) return JSON.stringify(d);
-  return err?.message || `Request failed with status code ${err.response?.status}`;
+  return extractApiErrorMessage(err, 'Request failed');
 }
 
 function App() {

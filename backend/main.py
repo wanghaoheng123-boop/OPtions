@@ -68,6 +68,15 @@ def _canonicalize_agent_result(agent_result: dict) -> dict:
     return result
 
 
+def _status_for_runtime_error(error_text: str) -> int:
+    e = (error_text or "").lower()
+    if any(token in e for token in ("rate limit", "timeout", "timed out", "connection", "upstream", "provider", "download")):
+        return 503
+    if any(token in e for token in ("insufficient", "missing", "empty", "nan", "invalid", "column")):
+        return 424
+    return 500
+
+
 from skills.options_chain_fetcher import OptionsFetcher
 from skills.greeks_calculator import GreeksCalculator
 from skills.gamma_exposure import MarketStructureAnalyzer
@@ -214,9 +223,10 @@ def analyze_ticker(request: AnalysisRequest):
     except HTTPException:
         raise
     except Exception as e:
+        msg = f"Analyze pipeline error ({type(e).__name__}): {e}"
         raise HTTPException(
-            status_code=500,
-            detail=f"Analyze pipeline error ({type(e).__name__}): {e}",
+            status_code=_status_for_runtime_error(str(e)),
+            detail=msg,
         ) from e
 
 # ============================================================
