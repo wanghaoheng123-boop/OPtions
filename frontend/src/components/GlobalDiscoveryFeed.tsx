@@ -10,6 +10,7 @@ interface GlobalDiscoveryFeedProps {
 export default function GlobalDiscoveryFeed({ onSelectTicker }: GlobalDiscoveryFeedProps) {
   const [opportunities, setOpportunities] = useState<any[]>([]);
   const [loading, setLoading] = useState(true);
+  const [error, setError] = useState<string | null>(null);
 
   useEffect(() => {
     // Poll the backend screener
@@ -18,10 +19,12 @@ export default function GlobalDiscoveryFeed({ onSelectTicker }: GlobalDiscoveryF
         if (res.data.top_opportunities) {
           setOpportunities(res.data.top_opportunities);
         }
+        setError(null);
         setLoading(false);
       })
       .catch(e => {
         console.error("Screener failed:", e);
+        setError(e?.response?.data?.detail || e?.message || 'Screener request failed');
         setLoading(false);
       });
   }, []);
@@ -39,6 +42,10 @@ export default function GlobalDiscoveryFeed({ onSelectTicker }: GlobalDiscoveryF
       {loading ? (
         <div className="terminal-loading" style={{ height: '300px' }}>
            <div className="pulsing-text">Scanning Global Liquidity Universe... This takes processing power.</div>
+        </div>
+      ) : error ? (
+        <div className="terminal-loading" style={{ height: '300px', color: '#ff453a' }}>
+          {error}
         </div>
       ) : (
         <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(320px, 1fr))', gap: '20px' }}>

@@ -1,10 +1,12 @@
-from fastapi import FastAPI, HTTPException, WebSocket, WebSocketDisconnect
+from fastapi import FastAPI, HTTPException, WebSocket, WebSocketDisconnect, Request
 from fastapi.middleware.cors import CORSMiddleware
 from pydantic import BaseModel
 from fastapi.encoders import jsonable_encoder
+from fastapi.responses import JSONResponse
 import sys
 import os
 import asyncio
+import logging
 from typing import List, Optional
 import numpy as np
 
@@ -82,6 +84,7 @@ from skills.regime_hmm import RegimeDetectorHMM
 from skills.brokers import get_broker, TransactionCostModel, IBKRBroker, AlpacaBroker
 
 app = FastAPI(title="Agentic Quant Terminal API V2 - Institutional Grade")
+logger = logging.getLogger(__name__)
 
 app.add_middleware(
     CORSMiddleware,
@@ -90,6 +93,21 @@ app.add_middleware(
     allow_methods=["*"],
     allow_headers=["*"],
 )
+
+
+@app.exception_handler(Exception)
+async def unhandled_exception_handler(request: Request, exc: Exception):
+    logger.exception("Unhandled API error on %s %s", request.method, request.url.path, exc_info=exc)
+    # Always return JSON so frontend never crashes on plain-text error pages.
+    return JSONResponse(
+        status_code=500,
+        content=sanitized_response(
+            {
+                "detail": f"Internal server error ({type(exc).__name__}): {exc}",
+                "path": request.url.path,
+            }
+        ),
+    )
 
 class AnalysisRequest(BaseModel):
     ticker: str

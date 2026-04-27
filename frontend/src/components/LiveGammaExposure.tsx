@@ -28,8 +28,17 @@ export default function LiveGammaExposure({ ticker }: Props) {
         try {
           setWsStatus('POLLING');
           const res = await fetch(`/api/gex/live/${encodeURIComponent(ticker)}`);
+          const parseSafe = async () => {
+            const text = await res.text();
+            if (!text) return null;
+            try {
+              return JSON.parse(text);
+            } catch {
+              return { detail: text.slice(0, 240) };
+            }
+          };
           if (!res.ok) {
-            const errData = await res.json().catch(() => null);
+            const errData = await parseSafe();
             const msg = errData?.detail || `HTTP ${res.status}`;
             if (!cancelled) {
               setWsStatus(`ERR: ${msg}`);
@@ -37,7 +46,7 @@ export default function LiveGammaExposure({ ticker }: Props) {
             }
             return;
           }
-          const data = await res.json();
+          const data = await parseSafe();
           if (cancelled) return;
           setLiveData(data);
           setWsStatus('REST LIVE');

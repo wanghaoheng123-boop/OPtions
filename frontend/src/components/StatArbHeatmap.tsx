@@ -7,9 +7,19 @@ export default function StatArbHeatmap() {
     const [error, setError] = useState<string | null>(null);
 
     useEffect(() => {
+        const parseSafe = async (res: Response) => {
+            const text = await res.text();
+            if (!text) return null;
+            try {
+                return JSON.parse(text);
+            } catch {
+                return { detail: text.slice(0, 240) };
+            }
+        };
+
         fetch('/api/statarb')
             .then(async (res) => {
-                const data = await res.json();
+                const data = await parseSafe(res);
                 if (!res.ok) {
                     throw new Error(data?.detail || 'StatArb request failed');
                 }
