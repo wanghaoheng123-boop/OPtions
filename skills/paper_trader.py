@@ -136,6 +136,11 @@ class PaperTrader:
             return {
                 "kelly_pct": 0.05,  # Default 5% if insufficient data
                 "half_kelly_pct": 0.025,
+                "optimal_allocation_pct": 0.025,
+                "win_rate": round(win_rate, 4),
+                "avg_win_loss_ratio": 1.0,
+                "profit_factor": backtest_stats.get("profit_factor", 1.0),
+                "num_trades": num_trades,
                 "is_reliable": False,
                 "reason": f"Insufficient trades ({num_trades} < 5) for reliable Kelly estimation"
             }
@@ -201,7 +206,7 @@ class PaperTrader:
 
         # Calculate Kelly sizing
         kelly = self.calculate_kelly_sizing(backtest_stats)
-        allocation_pct = kelly["optimal_allocation_pct"]
+        allocation_pct = kelly.get("optimal_allocation_pct", self.config["min_allocation_pct"])
 
         # Calculate position size
         allocation = portfolio["cash_balance"] * allocation_pct

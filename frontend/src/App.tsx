@@ -1,5 +1,5 @@
 // @ts-nocheck
-import { useState, useEffect, useCallback } from 'react';
+import { useState, useEffect, useCallback, useRef } from 'react';
 import axios from 'axios';
 import { Search, LayoutDashboard } from 'lucide-react';
 import GlobalDiscoveryFeed from './components/GlobalDiscoveryFeed';
@@ -33,6 +33,8 @@ function App() {
   const [portfolioError, setPortfolioError] = useState<string | null>(null);
   const [chartFetchError, setChartFetchError] = useState<string | null>(null);
   const [chartRenderError, setChartRenderError] = useState<string | null>(null);
+  const requestSeqRef = useRef(0);
+  const activeControllerRef = useRef<AbortController | null>(null);
 
   const chartPanelError = chartFetchError || chartRenderError;
 
@@ -41,6 +43,14 @@ function App() {
   }, []);
 
   const fetchAnalysis = async (targetTicker: string) => {
+    requestSeqRef.current += 1;
+    const requestSeq = requestSeqRef.current;
+    if (activeControllerRef.current) {
+      activeControllerRef.current.abort();
+    }
+    const controller = new AbortController();
+    activeControllerRef.current = controller;
+
     setLoading(true);
     setViewMode('terminal');
     setAnalyzeError(null);
@@ -49,10 +59,12 @@ function App() {
     setChartRenderError(null);
 
     const settled = await Promise.allSettled([
-      axios.post('/api/analyze', { ticker: targetTicker }),
-      axios.get(`/api/chart/${targetTicker}`),
-      axios.get('/api/portfolio'),
+      axios.post('/api/analyze', { ticker: targetTicker }, { signal: controller.signal, timeout: 30000 }),
+      axios.get(`/api/chart/${targetTicker}`, { signal: controller.signal, timeout: 30000 }),
+      axios.get('/api/portfolio', { signal: controller.signal, timeout: 30000 }),
     ]);
+
+    if (requestSeq !== requestSeqRef.current) return;
 
     const [anRes, chRes, poRes] = settled;
 
@@ -60,8 +72,10 @@ function App() {
       setData(anRes.value.data);
       setAnalyzeError(null);
     } else {
-      setData(null);
-      setAnalyzeError(axiosErrMessage(anRes.reason));
+      if (anRes.reason?.code !== 'ERR_CANCELED') {
+        setData(null);
+        setAnalyzeError(axiosErrMessage(anRes.reason));
+      }
     }
 
     if (chRes.status === 'fulfilled') {
@@ -77,28 +91,47 @@ function App() {
         setChartFetchError(null);
       }
     } else {
-      setChartData([]);
-      setChartFetchError(axiosErrMessage(chRes.reason));
+      if (chRes.reason?.code !== 'ERR_CANCELED') {
+        setChartData([]);
+        setChartFetchError(axiosErrMessage(chRes.reason));
+      }
     }
 
     if (poRes.status === 'fulfilled') {
       setPortfolio(poRes.value.data);
       setPortfolioError(null);
     } else {
-      setPortfolioError(axiosErrMessage(poRes.reason));
+      if (poRes.reason?.code !== 'ERR_CANCELED') {
+        setPortfolioError(axiosErrMessage(poRes.reason));
+      }
     }
 
-    setLoading(false);
+    if (requestSeq === requestSeqRef.current) {
+      setLoading(false);
+      activeControllerRef.current = null;
+    }
   };
 
   // Initial load: Only load portfolio and discovery mode by default
   useEffect(() => {
+    const controller = new AbortController();
     axios
-      .get('/api/portfolio')
+      .get('/api/portfolio', { signal: controller.signal, timeout: 30000 })
       .then((res) => setPortfolio(res.data))
       .catch((err) => {
-        setPortfolioError(axiosErrMessage(err));
+        if (err?.code !== 'ERR_CANCELED') {
+          setPortfolioError(axiosErrMessage(err));
+        }
       });
+    return () => controller.abort();
+  }, []);
+
+  useEffect(() => {
+    return () => {
+      if (activeControllerRef.current) {
+        activeControllerRef.current.abort();
+      }
+    };
   }, []);
 
   const handleSearch = () => {
