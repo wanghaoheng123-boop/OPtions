@@ -65,6 +65,39 @@ body {
   height: 48px;
 }
 
+.data-health-strip {
+  display: flex;
+  align-items: center;
+  gap: 0.8rem;
+  padding: 0.35rem 1rem;
+  background: var(--bg-panel);
+  border-bottom: 1px solid var(--border-color);
+  font-size: 0.72rem;
+  color: var(--text-secondary);
+  flex-wrap: wrap;
+}
+
+.data-health-strip__item {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.3rem;
+}
+
+.data-health-strip__status {
+  text-transform: uppercase;
+  letter-spacing: 0.04em;
+}
+
+.data-health-strip__status--ok { color: var(--success); }
+.data-health-strip__status--error { color: var(--danger); }
+.data-health-strip__status--loading { color: #f59e0b; }
+.data-health-strip__status--idle { color: var(--text-secondary); }
+
+.data-health-strip__ts {
+  margin-left: auto;
+  font-family: var(--font-mono);
+}
+
 .nav-brand {
   display: flex;
   align-items: center;

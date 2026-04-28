@@ -4,21 +4,9 @@ import yfinance as yf
 from datetime import datetime, timedelta
 from typing import Dict, Optional
 import logging
-import time
+from skills.data_resilience import retry_operation
 
 logger = logging.getLogger(__name__)
-
-
-def _retry(op_name: str, fn, attempts: int = 3, delay_s: float = 0.4):
-    last_err = None
-    for i in range(attempts):
-        try:
-            return fn()
-        except Exception as exc:
-            last_err = exc
-            if i < attempts - 1:
-                time.sleep(delay_s * (i + 1))
-    raise RuntimeError(f"{op_name} failed after {attempts} attempts: {last_err}") from last_err
 
 
 class VolatilitySkewAnalyzer:
@@ -118,7 +106,7 @@ class VolatilitySkewAnalyzer:
         """
         try:
             tk = yf.Ticker(ticker)
-            hist_now = _retry("iv_rank_current_price", lambda: tk.history(period="1d", timeout=8))
+            hist_now = retry_operation("iv_rank_current_price", lambda: tk.history(period="1d", timeout=8))
             if hist_now.empty or "Close" not in hist_now.columns:
                 return None
             current_price = hist_now["Close"].iloc[-1]
@@ -170,7 +158,7 @@ class VolatilitySkewAnalyzer:
             start_date = end_date - timedelta(days=lookback_days)
 
             try:
-                hist = _retry(
+                hist = retry_operation(
                     "iv_rank_history_download",
                     lambda: yf.download(
                         ticker,
@@ -238,7 +226,7 @@ class VolatilitySkewAnalyzer:
         """
         try:
             tk = yf.Ticker(ticker)
-            hist_now = _retry("iv_pct_current_price", lambda: tk.history(period="1d", timeout=8))
+            hist_now = retry_operation("iv_pct_current_price", lambda: tk.history(period="1d", timeout=8))
             if hist_now.empty or "Close" not in hist_now.columns:
                 return None
             current_price = hist_now["Close"].iloc[-1]
@@ -282,7 +270,7 @@ class VolatilitySkewAnalyzer:
             start_date = end_date - timedelta(days=lookback_days)
 
             try:
-                hist = _retry(
+                hist = retry_operation(
                     "iv_pct_history_download",
                     lambda: yf.download(
                         ticker,

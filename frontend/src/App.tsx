@@ -23,10 +23,19 @@ function App() {
   const [portfolioError, setPortfolioError] = useState<string | null>(null);
   const [chartFetchError, setChartFetchError] = useState<string | null>(null);
   const [chartRenderError, setChartRenderError] = useState<string | null>(null);
+  const [dataHealth, setDataHealth] = useState({
+    analyze: { status: 'idle', ts: null as string | null },
+    chart: { status: 'idle', ts: null as string | null },
+    portfolio: { status: 'idle', ts: null as string | null },
+  });
   const requestSeqRef = useRef(0);
   const activeControllerRef = useRef<AbortController | null>(null);
 
   const chartPanelError = chartFetchError || chartRenderError;
+  const stampNow = () => new Date().toISOString();
+  const markHealth = (key: 'analyze' | 'chart' | 'portfolio', status: 'ok' | 'error' | 'loading' | 'idle') => {
+    setDataHealth((prev) => ({ ...prev, [key]: { status, ts: stampNow() } }));
+  };
 
   const onChartRenderError = useCallback((msg: string) => {
     setChartRenderError(msg || 'Chart rendering failed');
@@ -47,6 +56,9 @@ function App() {
     setPortfolioError(null);
     setChartFetchError(null);
     setChartRenderError(null);
+    markHealth('analyze', 'loading');
+    markHealth('chart', 'loading');
+    markHealth('portfolio', 'loading');
 
     const settled = await Promise.allSettled([
       axios.post('/api/analyze', { ticker: targetTicker }, { signal: controller.signal, timeout: 30000 }),
@@ -61,10 +73,12 @@ function App() {
     if (anRes.status === 'fulfilled') {
       setData(anRes.value.data);
       setAnalyzeError(null);
+      markHealth('analyze', 'ok');
     } else {
       if (anRes.reason?.code !== 'ERR_CANCELED') {
         setData(null);
         setAnalyzeError(axiosErrMessage(anRes.reason));
+        markHealth('analyze', 'error');
       }
     }
 
@@ -79,20 +93,24 @@ function App() {
       } else {
         setChartData(series);
         setChartFetchError(null);
+        markHealth('chart', 'ok');
       }
     } else {
       if (chRes.reason?.code !== 'ERR_CANCELED') {
         setChartData([]);
         setChartFetchError(axiosErrMessage(chRes.reason));
+        markHealth('chart', 'error');
       }
     }
 
     if (poRes.status === 'fulfilled') {
       setPortfolio(poRes.value.data);
       setPortfolioError(null);
+      markHealth('portfolio', 'ok');
     } else {
       if (poRes.reason?.code !== 'ERR_CANCELED') {
         setPortfolioError(axiosErrMessage(poRes.reason));
+        markHealth('portfolio', 'error');
       }
     }
 
@@ -107,10 +125,14 @@ function App() {
     const controller = new AbortController();
     axios
       .get('/api/portfolio', { signal: controller.signal, timeout: 30000 })
-      .then((res) => setPortfolio(res.data))
+      .then((res) => {
+        setPortfolio(res.data);
+        markHealth('portfolio', 'ok');
+      })
       .catch((err) => {
         if (err?.code !== 'ERR_CANCELED') {
           setPortfolioError(axiosErrMessage(err));
+          markHealth('portfolio', 'error');
         }
       });
     return () => controller.abort();
@@ -181,6 +203,29 @@ function App() {
           </button>
         </div>
       </nav>
+      <div className="data-health-strip" role="status" aria-live="polite">
+        <span className="data-health-strip__item">
+          Analyze:
+          <strong className={`data-health-strip__status data-health-strip__status--${dataHealth.analyze.status}`}>
+            {dataHealth.analyze.status}
+          </strong>
+        </span>
+        <span className="data-health-strip__item">
+          Chart:
+          <strong className={`data-health-strip__status data-health-strip__status--${dataHealth.chart.status}`}>
+            {dataHealth.chart.status}
+          </strong>
+        </span>
+        <span className="data-health-strip__item">
+          Portfolio:
+          <strong className={`data-health-strip__status data-health-strip__status--${dataHealth.portfolio.status}`}>
+            {dataHealth.portfolio.status}
+          </strong>
+        </span>
+        <span className="data-health-strip__ts">
+          Last update: {(dataHealth.portfolio.ts || dataHealth.chart.ts || dataHealth.analyze.ts || 'n/a').replace('T', ' ').slice(0, 19)}
+        </span>
+      </div>
 
       {/* Dynamic View Mode Router */}
       {viewMode === 'discovery' ? (

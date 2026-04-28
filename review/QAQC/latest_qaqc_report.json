@@ -1,0 +1,28 @@
+{
+  "timestamp_utc": "2026-04-28T14:38:34.102110+00:00",
+  "overall_status": "PASS",
+  "results": [
+    {
+      "command": "python -m pytest tests/test_smoke_api.py -q",
+      "started_at": "2026-04-28T14:38:24.780843+00:00",
+      "exit_code": 0,
+      "stdout": ".......                                                                  [100%]\n=============================== warnings summary ===============================\ntests/test_smoke_api.py::test_methodology_index\n  /opt/homebrew/Caskroom/miniforge/base/lib/python3.12/site-packages/requests/__init__.py:113: RequestsDependencyWarning: urllib3 (2.5.0) or chardet (7.0.1)/charset_normalizer (3.4.4) doesn't match a supported version!\n    warnings.warn(\n\n-- Docs: https://docs.pytest.org/en/stable/how-to/capture-warnings.html\n7 passed, 1 warning in 6.46s\n",
+      "stderr": "",
+      "status": "PASS"
+    },
+    {
+      "command": "python -m pytest tests/ -m not network -q",
+      "started_at": "2026-04-28T14:38:31.714019+00:00",
+      "exit_code": 0,
+      "stdout": ".........                                                                [100%]\n=============================== warnings summary ===============================\n../../../../../../../opt/homebrew/Caskroom/miniforge/base/lib/python3.12/site-packages/requests/__init__.py:113\n  /opt/homebrew/Caskroom/miniforge/base/lib/python3.12/site-packages/requests/__init__.py:113: RequestsDependencyWarning: urllib3 (2.5.0) or chardet (7.0.1)/charset_normalizer (3.4.4) doesn't match a supported version!\n    warnings.warn(\n\n-- Docs: https://docs.pytest.org/en/stable/how-to/capture-warnings.html\n9 passed, 4 deselected, 1 warning in 1.92s\n",
+      "stderr": "",
+      "status": "PASS"
+    }
+  ],
+  "qaqc_checklist": {
+    "api_contract_transport_errors": "manual review required",
+    "ui_display_states": "manual review required",
+    "quant_leakage_overfit_gate": "manual review required",
+    "residual_risks_logged": "manual review required"
+  }
+}

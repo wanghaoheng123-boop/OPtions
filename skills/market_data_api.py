@@ -1,21 +1,10 @@
 import yfinance as yf
 import pandas as pd
 import logging
-import time
+from skills.data_resilience import retry_operation
 
 logger = logging.getLogger(__name__)
 
-
-def _retry(op_name: str, fn, attempts: int = 3, delay_s: float = 0.4):
-    last_err = None
-    for i in range(attempts):
-        try:
-            return fn()
-        except Exception as exc:
-            last_err = exc
-            if i < attempts - 1:
-                time.sleep(delay_s * (i + 1))
-    raise RuntimeError(f"{op_name} failed after {attempts} attempts: {last_err}") from last_err
 
 class MarketDataAPI:
     """
@@ -40,7 +29,7 @@ class MarketDataAPI:
         """
         try:
             tk = yf.Ticker(ticker)
-            df = _retry(
+            df = retry_operation(
                 "get_ohlcv_history",
                 lambda: tk.history(period=period, interval=interval, timeout=8),
             )
@@ -85,7 +74,7 @@ class MarketDataAPI:
         """
         tickers = list(cls.SECTOR_ETFS.values())
         try:
-            downloaded = _retry(
+            downloaded = retry_operation(
                 "get_sector_heatmap_download",
                 lambda: yf.download(tickers, period="5d", progress=False, timeout=8),
             )

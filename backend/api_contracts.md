@@ -30,3 +30,5 @@
 ## Error Envelope Policy
 - Use transport-level status codes.
 - Error body should include `detail` string for frontend extraction.
+- Critical feed endpoints (`/api/hmm/*`, `/api/meta/*`, `/api/statarb*`, `/api/macro*`, `/api/heatmap`, `/api/screener`) must not return HTTP 200 for runtime failures.
+- Degradation metadata should be represented as explicit fields in successful payloads, not hidden in fallback strings.

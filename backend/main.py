@@ -315,7 +315,8 @@ def get_hmm_regime(ticker: str):
         result["adaptive_strategy"] = adaptive.get("final_strategy", result["recommended_strategy"])
         return sanitized_response(result)
     except Exception as e:
-        return sanitized_response({"error": str(e), "ticker": ticker.upper()})
+        msg = f"HMM regime failed ({ticker.upper()}): {e}"
+        raise HTTPException(status_code=_status_for_runtime_error(str(e)), detail=msg) from e
 
 @app.get("/api/hmm/{ticker}/validation")
 def get_hmm_validation(ticker: str):
@@ -324,7 +325,8 @@ def get_hmm_validation(ticker: str):
         validation = hmm.validate_against_historical_events()
         return sanitized_response(validation)
     except Exception as e:
-        return sanitized_response({"error": str(e)})
+        msg = f"HMM validation failed ({ticker.upper()}): {e}"
+        raise HTTPException(status_code=_status_for_runtime_error(str(e)), detail=msg) from e
 
 # ============================================================
 # META-MODEL ENDPOINT
@@ -347,7 +349,8 @@ def get_meta_label(ticker: str):
         result = meta.get_bet_size(current_features)
         return sanitized_response(result)
     except Exception as e:
-        return sanitized_response({"error": str(e), "ticker": ticker.upper()})
+        msg = f"Meta-model inference failed ({ticker.upper()}): {e}"
+        raise HTTPException(status_code=_status_for_runtime_error(str(e)), detail=msg) from e
 
 # ============================================================
 # KALMAN FILTER PAIRS ENDPOINT
@@ -359,7 +362,7 @@ async def get_kalman_statarb():
         pairs = StatArbScanner.scan_pairs_kalman(days=90)
         return sanitized_response({"pairs": pairs})
     except Exception as e:
-        return sanitized_response({"error": str(e)})
+        raise HTTPException(status_code=_status_for_runtime_error(str(e)), detail=f"StatArb kalman scan failed: {e}") from e
 
 @app.get("/api/statarb/institutional")
 async def get_institutional_statarb():
@@ -367,7 +370,7 @@ async def get_institutional_statarb():
         pairs = StatArbScanner.get_institutional_pairs_scan(days=90)
         return sanitized_response({"pairs": pairs})
     except Exception as e:
-        return sanitized_response({"error": str(e)})
+        raise HTTPException(status_code=_status_for_runtime_error(str(e)), detail=f"StatArb institutional scan failed: {e}") from e
 
 # ============================================================
 # ORIGINAL ENDPOINTS (Preserved)
@@ -403,21 +406,43 @@ def get_chart_data(ticker: str):
 
 @app.get("/api/macro")
 def get_macro_data():
-    return sanitized_response(macro_client.get_latest_macro_indicators())
+    try:
+        data = macro_client.get_latest_macro_indicators()
+        if not data:
+            raise HTTPException(status_code=503, detail="Macro feed unavailable (empty response).")
+        return sanitized_response(data)
+    except HTTPException:
+        raise
+    except Exception as e:
+        raise HTTPException(status_code=_status_for_runtime_error(str(e)), detail=f"Macro feed failed: {e}") from e
 
 @app.get("/api/macro/search")
 def search_macro(query: str):
-    data = macro_client.search_macro_database(query)
-    return sanitized_response({"results": data})
+    try:
+        data = macro_client.search_macro_database(query)
+        return sanitized_response({"results": data})
+    except Exception as e:
+        raise HTTPException(status_code=_status_for_runtime_error(str(e)), detail=f"Macro search failed: {e}") from e
 
 @app.get("/api/macro/series/{series_id}")
 def get_macro_series(series_id: str):
-    data = macro_client.get_historical_series(series_id)
-    return sanitized_response({"data": data})
+    try:
+        data = macro_client.get_historical_series(series_id)
+        return sanitized_response({"data": data})
+    except Exception as e:
+        raise HTTPException(status_code=_status_for_runtime_error(str(e)), detail=f"Macro series failed ({series_id}): {e}") from e
 
 @app.get("/api/heatmap")
 def get_heatmap_data():
-    return sanitized_response(MarketDataAPI.get_sector_heatmap())
+    try:
+        data = MarketDataAPI.get_sector_heatmap()
+        if not data:
+            raise HTTPException(status_code=503, detail="Sector heatmap feed unavailable.")
+        return sanitized_response(data)
+    except HTTPException:
+        raise
+    except Exception as e:
+        raise HTTPException(status_code=_status_for_runtime_error(str(e)), detail=f"Heatmap feed failed: {e}") from e
 
 @app.get("/api/portfolio")
 def get_portfolio():
@@ -454,7 +479,7 @@ async def get_global_screener():
     try:
         return sanitized_response(GlobalScreener.run_daily_sweep())
     except Exception as e:
-        return sanitized_response({"error": str(e)})
+        raise HTTPException(status_code=_status_for_runtime_error(str(e)), detail=f"Screener failed: {e}") from e
 
 # ============================================================
 # BROKER ENDPOINTS

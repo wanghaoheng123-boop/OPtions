@@ -31,6 +31,11 @@ class ParameterOptimizer:
         "ewma_spans": [10, 20, 30]
     }
     EPISODIC_DB_PATH = Path(__file__).resolve().parents[1] / "episodic_state" / "episodes.db"
+    FAILURE_REASON_CANDIDATES = (
+        "known_failed_combo",
+        "quick_scan_best_failed_constraints",
+        "wfo_best_failed_constraints",
+    )
 
     @classmethod
     def _stable_hash(cls, payload: dict) -> str:
@@ -48,6 +53,14 @@ class ParameterOptimizer:
             "ewma_span": ewma_span,
             "reason": reason,
         })
+
+    @classmethod
+    def _is_known_failed_combo(cls, ticker: str, strategy_type: str, tp: float, sl: float, t_hor: int, ewma_span: int) -> bool:
+        for reason in cls.FAILURE_REASON_CANDIDATES:
+            signature = cls._failure_signature_hash(ticker, strategy_type, tp, sl, t_hor, ewma_span, reason)
+            if cls._has_known_failure(signature):
+                return True
+        return False
 
     @classmethod
     def _has_known_failure(cls, signature_hash: str) -> bool:
@@ -171,10 +184,7 @@ class ParameterOptimizer:
 
             # Compute trained volatility from in-sample
             for tp, sl, t_hor, ewma_span in grid_combinations:
-                fail_signature = cls._failure_signature_hash(
-                    ticker, strategy_type, tp, sl, t_hor, ewma_span, "known_failed_combo"
-                )
-                if cls._has_known_failure(fail_signature):
+                if cls._is_known_failed_combo(ticker, strategy_type, tp, sl, t_hor, ewma_span):
                     continue
                 # Skip already tested combinations (cache)
                 cache_key = f"{ticker}_{method}_{start_idx}_{train_end}_{test_start}_{test_end}_{tp}_{sl}_{t_hor}_{ewma_span}"
@@ -419,10 +429,7 @@ class ParameterOptimizer:
         best_pf = 0.0
 
         for tp, sl, t_hor in grid:
-            fail_signature = cls._failure_signature_hash(
-                ticker, strategy_type, tp, sl, t_hor, 20, "known_failed_combo"
-            )
-            if cls._has_known_failure(fail_signature):
+            if cls._is_known_failed_combo(ticker, strategy_type, tp, sl, t_hor, 20):
                 continue
             metrics = cls._simulate_walk_forward(
                 out_sample, out_prices, trained_vol, tp, sl, t_hor, strategy_type

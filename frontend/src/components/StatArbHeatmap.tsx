@@ -1,12 +1,15 @@
 // @ts-nocheck
 import React, { useState, useEffect } from 'react';
+import DataPanelState from './DataPanelState';
 
 export default function StatArbHeatmap() {
     const [pairs, setPairs] = useState([]);
     const [loading, setLoading] = useState(true);
     const [error, setError] = useState<string | null>(null);
+    const [lastUpdated, setLastUpdated] = useState<string | null>(null);
 
-    useEffect(() => {
+    const load = () => {
+        setLoading(true);
         const parseSafe = async (res: Response) => {
             const text = await res.text();
             if (!text) return null;
@@ -29,6 +32,7 @@ export default function StatArbHeatmap() {
                 if (Array.isArray(data?.pairs)) {
                     setPairs(data.pairs);
                     setError(null);
+                    setLastUpdated(new Date().toISOString());
                 } else {
                     setPairs([]);
                     setError('StatArb response shape is invalid.');
@@ -40,6 +44,10 @@ export default function StatArbHeatmap() {
                 setError(e?.message || 'Failed to load pairs');
                 setLoading(false);
             });
+    };
+
+    useEffect(() => {
+        load();
     }, []);
 
     const getColor = (zScore) => {
@@ -55,11 +63,15 @@ export default function StatArbHeatmap() {
             </h3>
             
             {loading ? (
-                <div style={{color: '#a0a0ab', fontStyle: 'italic'}}>Scanning historic correlations...</div>
+                <DataPanelState mode="loading" message="Scanning historic correlations..." />
             ) : error ? (
-                <div style={{color: '#ff453a', fontStyle: 'italic'}}>{error}</div>
+                <DataPanelState mode="error" title="StatArb unavailable" message={error} onRetry={load} />
+            ) : !pairs.length ? (
+                <DataPanelState mode="empty" title="No StatArb pairs" message="No valid pairs were returned for this run." onRetry={load} />
             ) : (
-                <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(120px, 1fr))', gap: '8px' }}>
+                <div>
+                    <div className="text-xs text-secondary mb-2">Last updated: {lastUpdated ? lastUpdated.replace('T', ' ').slice(0, 19) : 'n/a'}</div>
+                    <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(120px, 1fr))', gap: '8px' }}>
                     {pairs.map((p, i) => (
                         <div key={i} style={{
                             backgroundColor: getColor(p.z_score),
@@ -85,6 +97,7 @@ export default function StatArbHeatmap() {
                             )}
                         </div>
                     ))}
+                </div>
                 </div>
             )}
         </div>

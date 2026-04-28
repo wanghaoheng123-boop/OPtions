@@ -3,6 +3,7 @@ import React, { useState, useEffect } from 'react';
 import axios from 'axios';
 import { Target, AlertTriangle, Zap, TrendingUp, TrendingDown } from 'lucide-react';
 import { extractApiErrorMessage } from '../lib/apiError';
+import DataPanelState from './DataPanelState';
 
 interface GlobalDiscoveryFeedProps {
   onSelectTicker: (ticker: string) => void;
@@ -12,15 +13,17 @@ export default function GlobalDiscoveryFeed({ onSelectTicker }: GlobalDiscoveryF
   const [opportunities, setOpportunities] = useState<any[]>([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
+  const [lastUpdated, setLastUpdated] = useState<string | null>(null);
 
-  useEffect(() => {
-    // Poll the backend screener
+  const load = () => {
+    setLoading(true);
     axios.get('/api/screener')
       .then(res => {
         if (res.data.top_opportunities) {
           setOpportunities(res.data.top_opportunities);
         }
         setError(null);
+        setLastUpdated(new Date().toISOString());
         setLoading(false);
       })
       .catch(e => {
@@ -28,6 +31,11 @@ export default function GlobalDiscoveryFeed({ onSelectTicker }: GlobalDiscoveryF
         setError(extractApiErrorMessage(e, 'Screener request failed'));
         setLoading(false);
       });
+  };
+
+  useEffect(() => {
+    // Poll the backend screener
+    load();
   }, []);
 
   return (
@@ -41,14 +49,14 @@ export default function GlobalDiscoveryFeed({ onSelectTicker }: GlobalDiscoveryF
       </div>
 
       {loading ? (
-        <div className="terminal-loading" style={{ height: '300px' }}>
-           <div className="pulsing-text">Scanning Global Liquidity Universe... This takes processing power.</div>
-        </div>
+        <DataPanelState mode="loading" message="Scanning Global Liquidity Universe... This takes processing power." />
       ) : error ? (
-        <div className="terminal-loading" style={{ height: '300px', color: '#ff453a' }}>
-          {error}
-        </div>
+        <DataPanelState mode="error" title="Screener unavailable" message={error} onRetry={load} />
+      ) : opportunities.length === 0 ? (
+        <DataPanelState mode="empty" title="No opportunities now" message="Try again shortly or change market conditions." onRetry={load} />
       ) : (
+        <div>
+        <div className="text-xs text-secondary mb-2">Last updated: {lastUpdated ? lastUpdated.replace('T', ' ').slice(0, 19) : 'n/a'}</div>
         <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(320px, 1fr))', gap: '20px' }}>
           {opportunities.map((opp, idx) => {
             const isDanger = opp.urgency === 'CRITICAL';
@@ -116,6 +124,7 @@ export default function GlobalDiscoveryFeed({ onSelectTicker }: GlobalDiscoveryF
               </div>
             );
           })}
+        </div>
         </div>
       )}
     </div>

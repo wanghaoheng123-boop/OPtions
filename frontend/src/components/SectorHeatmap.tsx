@@ -2,6 +2,7 @@
 import { useEffect, useState } from 'react';
 import axios from 'axios';
 import { extractApiErrorMessage } from '../lib/apiError';
+import DataPanelState from './DataPanelState';
 
 interface SectorData {
   id: string;
@@ -12,14 +13,16 @@ interface SectorData {
 export default function SectorHeatmap() {
   const [sectors, setSectors] = useState<SectorData[]>([]);
   const [error, setError] = useState<string | null>(null);
+  const [lastUpdated, setLastUpdated] = useState<string | null>(null);
 
-  useEffect(() => {
+  const load = () => {
     axios
       .get('/api/heatmap')
       .then((res) => {
         if (Array.isArray(res.data)) {
           setSectors(res.data);
           setError(null);
+          setLastUpdated(new Date().toISOString());
           return;
         }
         setSectors([]);
@@ -29,15 +32,25 @@ export default function SectorHeatmap() {
         setSectors([]);
         setError(extractApiErrorMessage(err, 'Heatmap request failed'));
       });
+  };
+
+  useEffect(() => {
+    load();
   }, []);
 
   if (error) {
-    return <div className="terminal-loading">{error}</div>;
+    return <DataPanelState mode="error" title="Heatmap unavailable" message={error} onRetry={load} />;
+  }
+
+  if (!sectors.length) {
+    return <DataPanelState mode="empty" title="No sector data" message="Try again in a few seconds." onRetry={load} />;
   }
 
   return (
-    <div className="heatmap-grid">
-      {sectors.map((sector) => {
+    <>
+      <div className="text-xs text-secondary mb-2">Last updated: {lastUpdated ? lastUpdated.replace('T', ' ').slice(0, 19) : 'n/a'}</div>
+      <div className="heatmap-grid">
+        {sectors.map((sector) => {
         const isUp = sector.performance >= 0;
         const colorClass = isUp ? 'bg-success' : 'bg-danger';
         // Opacity mapping (crude way to do standard deviation heat)
@@ -54,7 +67,8 @@ export default function SectorHeatmap() {
             <span className="heatmap-label">{sector.id}</span>
           </div>
         );
-      })}
-    </div>
+        })}
+      </div>
+    </>
   );
 }

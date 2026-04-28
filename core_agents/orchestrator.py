@@ -275,10 +275,35 @@ class MarketExpertTeam:
                     if X is not None and len(X) >= 30 and len(np.unique(y)) > 1:
                         train_stats = meta.train_meta_model(X, y)
                         if train_stats.get("is_trained"):
-                            # Get bet size for current market condition
-                            current_feat = features.iloc[-1][meta._feature_names].values
-                            meta_result = meta.get_bet_size(current_feat)
-                            meta.save_model()
+                            # Hold out the latest slice for OOS validation before enabling meta override.
+                            test_size = max(5, int(len(X) * 0.2))
+                            if len(X) > (test_size + 10):
+                                X_oos = X[-test_size:]
+                                y_oos = y[-test_size:]
+                                oos_stats = meta.evaluate_out_of_sample(X_oos, y_oos)
+                                oos_ok = (
+                                    "error" not in oos_stats and
+                                    oos_stats.get("accuracy", 0.0) >= 0.55 and
+                                    (oos_stats.get("f1_score", 0.0) >= 0.52 or oos_stats.get("auc_roc", 0.0) >= 0.55)
+                                )
+                                if oos_ok:
+                                    current_feat = features.iloc[-1][meta._feature_names].values
+                                    meta_result = meta.get_bet_size(current_feat)
+                                    meta_result["oos_validation"] = oos_stats
+                                    meta.save_model()
+                                else:
+                                    meta_result = {
+                                        "bet_size": 1.0,
+                                        "verdict": "APPROVE",
+                                        "confidence": "low",
+                                        "reason": "Meta-model OOS gate failed; fallback to neutral sizing",
+                                        "oos_validation": oos_stats,
+                                    }
+                            else:
+                                current_feat = features.iloc[-1][meta._feature_names].values
+                                meta_result = meta.get_bet_size(current_feat)
+                                meta_result["oos_validation"] = {"warning": "Insufficient samples for OOS holdout gate"}
+                                meta.save_model()
             except Exception:
                 meta_result = None  # Meta-model failed, proceed without it
 
