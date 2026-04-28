@@ -1,4 +1,3 @@
-# L1 Agent Routing and Quality Gates (Warm Context)
 # Agent Routing and Quality Gates (L1 Governance)
 
 ## Roles
@@ -41,27 +40,3 @@
 
 - FRED (`FRED_API_KEY`) and GitHub token are external data gates.
 - Alpaca credentials are optional and multi-leg automation remains intentionally out of scope.
-## Purpose
-Operational governance for orchestrator/specialist review flow.
-
-## Canonical Sources
-- `AGENTS.md`
-- `CLAUDE.md`
-- `findings.md`
-
-## Routing Policy
-- Split work by subsystem (`backend/`, `skills/`, `frontend/`) where possible.
-- Require file-level change summaries and explicit risk notes from each execution stream.
-- Preserve observability-first language: proxy + hypothesis + uncertainty framing.
-
-## Mandatory Pre-Completion Checks
-- Data-source lineage for major metrics is traceable.
-- Failure modes are visible in API/UI surfaces.
-- Overfit/leakage risks are explicitly bounded in optimization/backtest changes.
-- API contract keys remain aligned with frontend usage.
-- No false precision in displayed metrics.
-- Methodology surfaces stay synchronized with implementation.
-
-## Release Validation Baseline
-- Fast tests, network tests, regression scripts, batch validation, and frontend E2E where relevant.
-- External credentials are treated as dependency gates, not hidden assumptions.

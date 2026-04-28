@@ -1,4 +1,3 @@
-# L2 Progress Archive (Cold Context)
 # Progress Archive (L2 Cold History)
 
 ## Snapshot
@@ -27,20 +26,3 @@
 
 - External provider dependencies (FRED, yfinance availability, optional broker credentials) remain runtime gates.
 - Multi-leg live broker automation is intentionally out of scope in current baseline.
-## Purpose
-Historical timeline snapshot for low-frequency retrieval and audit trace.
-
-## Canonical Sources
-- `progress.md`
-- `task_plan.md`
-- `findings.md`
-
-## Archive Digest
-- Multi-phase institutional roadmap reached validated release-hardened state.
-- Quant foundations, optimization flow, orchestration, and UI/API reliability were iteratively hardened.
-- Validation campaigns repeatedly passed across fast, network, regression, and batch gates.
-- Program closure artifacts and phase reports are preserved under `review/`.
-
-## Retrieval Guidance
-- Query this file for chronology, historical rationale, and milestone provenance.
-- Prefer L0/L1 for active design/implementation decisions before consulting this archive.

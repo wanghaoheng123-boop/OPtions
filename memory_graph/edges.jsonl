@@ -27,3 +27,9 @@
 {"id":"comp_meta_labeler__constrains__comp_orchestrator_loop","source":"comp_meta_labeler","relation":"constrains","target":"comp_orchestrator_loop","evidence":"meta verdict can reject sizing/entry recommendations"}
 {"id":"comp_methodology_catalog__produces_metric__comp_orchestrator_loop","source":"comp_methodology_catalog","relation":"produces_metric","target":"comp_orchestrator_loop","evidence":"methodology surfaces provide contextual explanation metadata"}
 {"id":"comp_kalman_filter__feeds__strategy_iron_condor","source":"comp_kalman_filter","relation":"feeds","target":"strategy_iron_condor","evidence":"cross-regime stat-arb diagnostics contribute to strategy gating context"}
+{"id":"comp_market_data_api__feeds__stream_macro_fred","source":"comp_market_data_api","relation":"feeds","target":"stream_macro_fred","evidence":"market_data_api macro adapter feed dependency"}
+{"id":"comp_kalman_filter__produces_metric__comp_kalman_filter","source":"comp_kalman_filter","relation":"produces_metric","target":"comp_kalman_filter","evidence":"kalman_filter module computation registration"}
+{"id":"comp_meta_labeler__produces_metric__comp_meta_labeler","source":"comp_meta_labeler","relation":"produces_metric","target":"comp_meta_labeler","evidence":"meta_model module computation registration"}
+{"id":"comp_methodology_catalog__produces_metric__comp_methodology_catalog","source":"comp_methodology_catalog","relation":"produces_metric","target":"comp_methodology_catalog","evidence":"methodology_catalog computation registration"}
+{"id":"comp_kalman_filter__validates__exec_paper_broker","source":"comp_kalman_filter","relation":"validates","target":"exec_paper_broker","evidence":"kalman diagnostics validate execution risk before routing"}
+{"id":"comp_meta_labeler__constrains__risk_critic_gate","source":"comp_meta_labeler","relation":"constrains","target":"risk_critic_gate","evidence":"meta label output constrains critic approval gate"}

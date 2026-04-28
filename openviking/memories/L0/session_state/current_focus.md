@@ -1,4 +1,3 @@
-# L0 Current Focus (Hot Context)
 # Current Focus (L0 Hot State)
 
 ## Program state
@@ -26,25 +25,3 @@ The 15-phase institutional delivery loop is complete and the codebase is release
 
 - Treat this file as the first read for any new coding session.
 - If context is missing, read `workspace/SESSION_STATE.json` then `openviking/memories/L1/`.
-## Purpose
-Immediate session handoff for active implementation work.
-
-## Sources
-- `activeContext.md`
-- `task_plan.md`
-- latest status from `progress.md`
-
-## Current Program State
-- Program execution baseline is release-hardened and validated.
-- Current operational posture emphasizes reliability, regression safety, and controlled iteration.
-- Outstanding work is optimization quality expansion and optional websocket contract coverage.
-
-## Immediate Operating Priorities
-1. Keep hard risk/quality gates active for any quant or contract changes.
-2. Preserve API contract compatibility for frontend panels and orchestration payloads.
-3. Record every non-trivial optimization loop result in episodic memory before re-running variants.
-
-## Active Invariants
-- Do not claim hidden market intent; only observables + hypothesis + uncertainty.
-- Treat external providers and credentials as explicit dependency gates.
-- Keep methodology and output contracts synchronized whenever logic changes.
