@@ -1,5 +1,6 @@
 import json
 import subprocess
+import sys
 from datetime import datetime, timezone
 from pathlib import Path
 
@@ -10,8 +11,8 @@ OUT_DIR.mkdir(parents=True, exist_ok=True)
 
 
 CHECKS = [
-    ["python", "-m", "pytest", "tests/test_smoke_api.py", "-q"],
-    ["python", "-m", "pytest", "tests/", "-m", "not network", "-q"],
+    [sys.executable, "-m", "pytest", "tests/test_smoke_api.py", "-q"],
+    [sys.executable, "-m", "pytest", "tests/", "-m", "not network", "-q"],
 ]
 
 
