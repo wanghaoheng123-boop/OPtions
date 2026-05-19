@@ -696,6 +696,36 @@ def health_check():
         }
     }
 
+
+def _mirror_routes_without_api_prefix() -> None:
+    """Expose /health alongside /api/health for Vercel routePrefix=/api."""
+    from starlette.routing import Route, WebSocketRoute
+
+    existing = {getattr(r, "path", None) for r in app.router.routes}
+    extras = []
+    for route in list(app.router.routes):
+        path = getattr(route, "path", None)
+        if not path or not path.startswith("/api/"):
+            continue
+        alt = path[4:]
+        if not alt or alt in existing:
+            continue
+        if isinstance(route, WebSocketRoute):
+            extras.append(WebSocketRoute(alt, route.endpoint, name=getattr(route, "name", None)))
+        elif isinstance(route, Route):
+            extras.append(
+                Route(
+                    alt,
+                    route.endpoint,
+                    methods=route.methods,
+                    name=getattr(route, "name", None),
+                )
+            )
+    app.router.routes.extend(extras)
+
+
+_mirror_routes_without_api_prefix()
+
 if __name__ == "__main__":
     import uvicorn
     uvicorn.run(app, host="0.0.0.0", port=8000)
