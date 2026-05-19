@@ -699,7 +699,8 @@ def health_check():
 
 def _mirror_routes_without_api_prefix() -> None:
     """Expose /health alongside /api/health for Vercel routePrefix=/api."""
-    from starlette.routing import Route, WebSocketRoute
+    from fastapi.routing import APIRoute
+    from starlette.routing import WebSocketRoute
 
     existing = {getattr(r, "path", None) for r in app.router.routes}
     extras = []
@@ -712,13 +713,14 @@ def _mirror_routes_without_api_prefix() -> None:
             continue
         if isinstance(route, WebSocketRoute):
             extras.append(WebSocketRoute(alt, route.endpoint, name=getattr(route, "name", None)))
-        elif isinstance(route, Route):
+        elif isinstance(route, APIRoute):
             extras.append(
-                Route(
-                    alt,
-                    route.endpoint,
+                APIRoute(
+                    path=alt,
+                    endpoint=route.endpoint,
                     methods=route.methods,
                     name=getattr(route, "name", None),
+                    response_model=route.response_model,
                 )
             )
     app.router.routes.extend(extras)
