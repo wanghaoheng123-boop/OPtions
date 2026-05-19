@@ -6,7 +6,7 @@
             "framework": "vite"
         },
         "backend": {
-            "entrypoint": "backend/main.py",
+            "entrypoint": "app.py",
             "routePrefix": "/api",
             "framework": "fastapi",
             "maxDuration": 120,
