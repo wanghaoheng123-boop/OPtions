@@ -1,7 +1,16 @@
+import math
 import numpy as np
 import pandas as pd
-import scipy.stats as si
 from typing import Tuple
+
+
+def _norm_cdf(x: float) -> float:
+    return 0.5 * (1.0 + math.erf(x / math.sqrt(2.0)))
+
+
+def _norm_pdf(x: float) -> float:
+    return math.exp(-0.5 * x * x) / math.sqrt(2.0 * math.pi)
+
 
 class GreeksCalculator:
     """
@@ -46,7 +55,7 @@ class GreeksCalculator:
             return max(0, S - K)
         d1 = cls._d1(S, K, T, r, sigma, q)
         d2 = cls._d2(S, K, T, r, sigma, q)
-        return S * np.exp(-q * T) * si.norm.cdf(d1) - K * np.exp(-r * T) * si.norm.cdf(d2)
+        return S * np.exp(-q * T) * _norm_cdf(d1) - K * np.exp(-r * T) * _norm_cdf(d2)
 
     @classmethod
     def put_price(cls, S: float, K: float, T: float, r: float, sigma: float, q: float = 0.0) -> float:
@@ -55,7 +64,7 @@ class GreeksCalculator:
             return max(0, K - S)
         d1 = cls._d1(S, K, T, r, sigma, q)
         d2 = cls._d2(S, K, T, r, sigma, q)
-        return K * np.exp(-r * T) * si.norm.cdf(-d2) - S * np.exp(-q * T) * si.norm.cdf(-d1)
+        return K * np.exp(-r * T) * _norm_cdf(-d2) - S * np.exp(-q * T) * _norm_cdf(-d1)
 
     @classmethod
     def call_delta(cls, S: float, K: float, T: float, r: float, sigma: float, q: float = 0.0) -> float:
@@ -66,7 +75,7 @@ class GreeksCalculator:
         if T <= 0 or sigma <= 0:
             return 1.0 if S > K else 0.0
         d1 = cls._d1(S, K, T, r, sigma, q)
-        return np.exp(-q * T) * si.norm.cdf(d1)
+        return np.exp(-q * T) * _norm_cdf(d1)
 
     @classmethod
     def put_delta(cls, S: float, K: float, T: float, r: float, sigma: float, q: float = 0.0) -> float:
@@ -86,7 +95,7 @@ class GreeksCalculator:
         if T <= 0 or sigma <= 0 or S <= 0:
             return 0.0
         d1 = cls._d1(S, K, T, r, sigma, q)
-        return si.norm.pdf(d1) / (S * sigma * np.sqrt(T))
+        return _norm_pdf(d1) / (S * sigma * np.sqrt(T))
 
     @classmethod
     def vega(cls, S: float, K: float, T: float, r: float, sigma: float, q: float = 0.0) -> float:
@@ -98,7 +107,7 @@ class GreeksCalculator:
         if T <= 0 or sigma <= 0:
             return 0.0
         d1 = cls._d1(S, K, T, r, sigma, q)
-        return S * si.norm.pdf(d1) * np.sqrt(T)
+        return S * _norm_pdf(d1) * np.sqrt(T)
 
     @classmethod
     def theta(cls, S: float, K: float, T: float, r: float, sigma: float, q: float = 0.0,
@@ -115,16 +124,16 @@ class GreeksCalculator:
 
         d1 = cls._d1(S, K, T, r, sigma, q)
         d2 = cls._d2(S, K, T, r, sigma, q)
-        pdf_d1 = si.norm.pdf(d1)
+        pdf_d1 = _norm_pdf(d1)
 
         term1 = -S * pdf_d1 * sigma / (2 * np.sqrt(T))
         term2 = r * K * np.exp(-r * T)
         term3 = q * S * np.exp(-q * T)
 
         if option_type.lower() == 'call':
-            theta = term1 - term2 * si.norm.cdf(d2) + term3 * si.norm.cdf(d1)
+            theta = term1 - term2 * _norm_cdf(d2) + term3 * _norm_cdf(d1)
         else:  # put
-            theta = term1 + term2 * si.norm.cdf(-d2) - term3 * si.norm.cdf(-d1)
+            theta = term1 + term2 * _norm_cdf(-d2) - term3 * _norm_cdf(-d1)
 
         # Return daily theta (divide by 365 for per-day)
         return theta / 365.0
@@ -144,9 +153,9 @@ class GreeksCalculator:
         d2 = cls._d2(S, K, T, r, sigma, q)
 
         if option_type.lower() == 'call':
-            rho = K * T * np.exp(-r * T) * si.norm.cdf(d2)
+            rho = K * T * np.exp(-r * T) * _norm_cdf(d2)
         else:  # put
-            rho = -K * T * np.exp(-r * T) * si.norm.cdf(-d2)
+            rho = -K * T * np.exp(-r * T) * _norm_cdf(-d2)
 
         # Return per 1% change in interest rate
         return rho * 0.01
@@ -168,7 +177,7 @@ class GreeksCalculator:
 
         d1 = cls._d1(S, K, T, r, sigma, q)
         d2 = cls._d2(S, K, T, r, sigma, q)
-        pdf_d1 = si.norm.pdf(d1)
+        pdf_d1 = _norm_pdf(d1)
 
         vanna = pdf_d1 * (d2 - d1) / (sigma * np.sqrt(T))
         return vanna
@@ -188,15 +197,15 @@ class GreeksCalculator:
 
         d1 = cls._d1(S, K, T, r, sigma, q)
         d2 = cls._d2(S, K, T, r, sigma, q)
-        pdf_d1 = si.norm.pdf(d1)
+        pdf_d1 = _norm_pdf(d1)
 
         term1 = -S * pdf_d1 * sigma * np.exp(-q * T) / (2 * np.sqrt(T))
 
         if option_type.lower() == 'call':
-            term2 = q * S * np.exp(-q * T) * si.norm.cdf(d1)
+            term2 = q * S * np.exp(-q * T) * _norm_cdf(d1)
             charm = term1 - term2
         else:  # put
-            term2 = q * S * np.exp(-q * T) * si.norm.cdf(-d1)
+            term2 = q * S * np.exp(-q * T) * _norm_cdf(-d1)
             charm = term1 + term2
 
         # Return daily charm
@@ -214,7 +223,7 @@ class GreeksCalculator:
 
         d1 = cls._d1(S, K, T, r, sigma, q)
         d2 = cls._d2(S, K, T, r, sigma, q)
-        pdf_d1 = si.norm.pdf(d1)
+        pdf_d1 = _norm_pdf(d1)
 
         # Simplified color approximation (full formula is complex)
         color = (-pdf_d1 / (2 * S * T * sigma * np.sqrt(T))) * (
@@ -233,7 +242,7 @@ class GreeksCalculator:
             return 0.0
 
         d1 = cls._d1(S, K, T, r, sigma, q)
-        pdf_d1 = si.norm.pdf(d1)
+        pdf_d1 = _norm_pdf(d1)
         gamma = cls.gamma(S, K, T, r, sigma, q)
 
         speed = pdf_d1 * (2 * gamma + 1/S + d1 / (S * sigma * np.sqrt(T))) / (S ** 2 * sigma * np.sqrt(T))

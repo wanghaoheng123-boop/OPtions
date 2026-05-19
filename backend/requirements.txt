@@ -1,13 +1,11 @@
+# Vercel/serverless runtime (keep bundle under platform limit).
+# Full quant stack (scipy, scikit-learn, hmmlearn, statsmodels) is in repo-root requirements.txt for local/CI.
 fastapi
 uvicorn
 pydantic
 yfinance
 pandas
 numpy
-scipy
 python-dotenv
-statsmodels
-hmmlearn
-scikit-learn
 fredapi
 httpx

@@ -81,16 +81,22 @@ from skills.options_chain_fetcher import OptionsFetcher
 from skills.greeks_calculator import GreeksCalculator
 from skills.gamma_exposure import MarketStructureAnalyzer
 from skills.volatility_skew import VolatilitySkewAnalyzer
-from core_agents.orchestrator import MarketExpertTeam
 from skills.macro_fetcher import macro_client
 from skills.market_data_api import MarketDataAPI
 from skills.methodology_catalog import get_panel as get_methodology_panel, list_panel_ids as list_methodology_panel_ids
 from skills.paper_trader import paper_broker
-from skills.statarb_scanner import StatArbScanner
-from skills.global_screener import GlobalScreener
-from skills.hft_options_pipeline import HFTOptionsPipeline
-from skills.regime_hmm import RegimeDetectorHMM
 from skills.brokers import get_broker, TransactionCostModel, IBKRBroker, AlpacaBroker
+
+
+def _ml_import_error(feature: str) -> HTTPException:
+    return HTTPException(
+        status_code=503,
+        detail=(
+            f"{feature} requires the full quant dependency set "
+            "(scipy, scikit-learn, hmmlearn, statsmodels). "
+            "Install from repo-root requirements.txt for local/CI."
+        ),
+    )
 
 app = FastAPI(title="Agentic Quant Terminal API V2 - Institutional Grade")
 logger = logging.getLogger(__name__)
@@ -188,13 +194,28 @@ def analyze_ticker(request: AnalysisRequest):
         full_vol = VolatilitySkewAnalyzer.full_volatility_analysis(calls_greeks, puts_greeks, current_price, ticker)
         market_structure["full_volatility_analysis"] = full_vol
 
-        agent_result = MarketExpertTeam.run_agentic_loop(
-            ticker=ticker,
-            market_data=market_structure,
-            days=days,
-            use_meta_model=True,
-            use_optimization=True,
-        )
+        try:
+            from core_agents.orchestrator import MarketExpertTeam
+
+            agent_result = MarketExpertTeam.run_agentic_loop(
+                ticker=ticker,
+                market_data=market_structure,
+                days=days,
+                use_meta_model=True,
+                use_optimization=True,
+            )
+        except ImportError:
+            agent_result = {
+                "researcher_context": {
+                    "name": "quant-stack-local-only",
+                    "status": "UNAVAILABLE_ON_SERVERLESS",
+                    "message": "Install full requirements.txt for agentic backtest/meta loop.",
+                },
+                "trader_insight": "GEX/skew computed; agent loop skipped on slim serverless runtime.",
+                "backtest": {},
+                "critic_review": {"verdict": "REJECTED", "reason": "Agent loop unavailable in slim deploy"},
+                "meta_label": {"bet_size": 0.0, "verdict": "SKIP"},
+            }
         canonical_agent_result = _canonicalize_agent_result(agent_result)
 
         critic_verdict = canonical_agent_result.get("critic_review", {}).get("verdict", "REJECTED")
@@ -309,11 +330,15 @@ def run_batch_backtest(request: BatchBacktestRequest):
 @app.get("/api/hmm/{ticker}")
 def get_hmm_regime(ticker: str):
     try:
+        from skills.regime_hmm import RegimeDetectorHMM
+
         hmm = RegimeDetectorHMM(ticker.upper(), n_components=4)
         result = hmm.fit_predict()
         adaptive = hmm.get_adaptive_strategy()
         result["adaptive_strategy"] = adaptive.get("final_strategy", result["recommended_strategy"])
         return sanitized_response(result)
+    except ImportError as e:
+        raise _ml_import_error("HMM regime detection") from e
     except Exception as e:
         msg = f"HMM regime failed ({ticker.upper()}): {e}"
         raise HTTPException(status_code=_status_for_runtime_error(str(e)), detail=msg) from e
@@ -321,9 +346,13 @@ def get_hmm_regime(ticker: str):
 @app.get("/api/hmm/{ticker}/validation")
 def get_hmm_validation(ticker: str):
     try:
+        from skills.regime_hmm import RegimeDetectorHMM
+
         hmm = RegimeDetectorHMM(ticker.upper(), n_components=4)
         validation = hmm.validate_against_historical_events()
         return sanitized_response(validation)
+    except ImportError as e:
+        raise _ml_import_error("HMM validation") from e
     except Exception as e:
         msg = f"HMM validation failed ({ticker.upper()}): {e}"
         raise HTTPException(status_code=_status_for_runtime_error(str(e)), detail=msg) from e
@@ -348,6 +377,8 @@ def get_meta_label(ticker: str):
         current_features = features.iloc[-1][meta._feature_names].values
         result = meta.get_bet_size(current_features)
         return sanitized_response(result)
+    except ImportError as e:
+        raise _ml_import_error("Meta-label model") from e
     except Exception as e:
         msg = f"Meta-model inference failed ({ticker.upper()}): {e}"
         raise HTTPException(status_code=_status_for_runtime_error(str(e)), detail=msg) from e
@@ -359,16 +390,24 @@ def get_meta_label(ticker: str):
 @app.get("/api/statarb/kalman")
 async def get_kalman_statarb():
     try:
+        from skills.statarb_scanner import StatArbScanner
+
         pairs = StatArbScanner.scan_pairs_kalman(days=90)
         return sanitized_response({"pairs": pairs})
+    except ImportError as e:
+        raise _ml_import_error("StatArb Kalman scan") from e
     except Exception as e:
         raise HTTPException(status_code=_status_for_runtime_error(str(e)), detail=f"StatArb kalman scan failed: {e}") from e
 
 @app.get("/api/statarb/institutional")
 async def get_institutional_statarb():
     try:
+        from skills.statarb_scanner import StatArbScanner
+
         pairs = StatArbScanner.get_institutional_pairs_scan(days=90)
         return sanitized_response({"pairs": pairs})
+    except ImportError as e:
+        raise _ml_import_error("StatArb institutional scan") from e
     except Exception as e:
         raise HTTPException(status_code=_status_for_runtime_error(str(e)), detail=f"StatArb institutional scan failed: {e}") from e
 
@@ -469,15 +508,23 @@ def execute_portfolio_trade(request: AnalysisRequest):
 @app.get("/api/statarb")
 async def get_statarb_heatmap():
     try:
+        from skills.statarb_scanner import StatArbScanner
+
         heatmap = StatArbScanner.scan_pairs(days=90)
         return sanitized_response({"pairs": heatmap})
+    except ImportError as e:
+        raise _ml_import_error("StatArb heatmap") from e
     except Exception as e:
         raise HTTPException(status_code=503, detail=f"StatArb scan failed: {e}") from e
 
 @app.get("/api/screener")
 async def get_global_screener():
     try:
+        from skills.global_screener import GlobalScreener
+
         return sanitized_response(GlobalScreener.run_daily_sweep())
+    except ImportError as e:
+        raise _ml_import_error("Global screener") from e
     except Exception as e:
         raise HTTPException(status_code=_status_for_runtime_error(str(e)), detail=f"Screener failed: {e}") from e
 
@@ -570,6 +617,8 @@ def get_gex_live(ticker: str):
         puts = data["puts"]
         r_rf = 0.045
         T = 7.0 / 365.0
+        from skills.hft_options_pipeline import HFTOptionsPipeline
+
         calls_g = GreeksCalculator.attach_greeks_to_chain(calls, current_price, r_rf, T, "call")
         puts_g = GreeksCalculator.attach_greeks_to_chain(puts, current_price, r_rf, T, "put")
         surface = HFTOptionsPipeline.from_option_chain(calls_g, puts_g, current_price)
@@ -583,6 +632,8 @@ def get_gex_live(ticker: str):
 
 
 async def _gex_websocket_loop(websocket: WebSocket):
+    from skills.hft_options_pipeline import HFTOptionsPipeline
+
     await websocket.accept()
     base_spot = 500.0
     try:
