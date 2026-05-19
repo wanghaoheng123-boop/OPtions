@@ -11,7 +11,7 @@
             "framework": "fastapi",
             "maxDuration": 120,
             "memory": 1024,
-            "buildCommand": "rm -rf backend/skills backend/core_agents backend/memory && cp -R skills core_agents memory backend/"
+            "buildCommand": "rm -rf skills core_agents memory && cp -R ../skills ../core_agents ../memory ."
         }
     }
 }
