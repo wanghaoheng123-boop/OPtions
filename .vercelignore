@@ -6,3 +6,11 @@
 .git/**
 OPtions_OpenSourceTest/**
 .cursor/**
+frontend/node_modules/**
+tests/**
+review/**
+episodic_state/**
+vector_rag/**
+openviking/**
+memory_graph/**
+agent-transcripts/**
