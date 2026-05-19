@@ -7,7 +7,7 @@
         },
         "backend": {
             "entrypoint": "backend/main.py",
-            "routePrefix": "/api",
+            "routePrefix": "",
             "framework": "fastapi",
             "maxDuration": 120,
             "memory": 1024,
