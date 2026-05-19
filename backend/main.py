@@ -10,8 +10,12 @@ import logging
 from typing import List, Optional
 import numpy as np
 
-# Add parent path so we can import from skills
-sys.path.append(os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
+# Repo root + backend/ (symlinks skills/, core_agents/, memory/ for serverless bundles)
+_backend_dir = os.path.dirname(os.path.abspath(__file__))
+_repo_root = os.path.dirname(_backend_dir)
+for _path in (_repo_root, _backend_dir):
+    if _path not in sys.path:
+        sys.path.insert(0, _path)
 
 
 def _sanitize(obj):
